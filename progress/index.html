@@ -23,7 +23,7 @@
 <script>
 // アプリのURL（?key= 付き）はこのページのURLの ?u= で受け取る。リポジトリにはキーを置かない
 var u = new URLSearchParams(location.search).get('u') || '';
-if (/^https:\/\/script\.google\.com\//.test(u)) {
+if (/^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec/.test(u)) {
   var f = document.createElement('iframe');
   f.src = u;
   f.allow = 'clipboard-write';
@@ -38,7 +38,7 @@ if (/^https:\/\/script\.google\.com\//.test(u)) {
 }
 function go() {
   var v = document.getElementById('u').value.trim();
-  if (!/^https:\/\/script\.google\.com\//.test(v)) { alert('script.google.com のURLを貼ってください'); return; }
+  if (!/^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec/.test(v)) { alert('…/exec?key=… の形のアプリのURLを貼ってください'); return; }
   location.href = location.pathname + '?u=' + encodeURIComponent(v);
 }
 </script>
