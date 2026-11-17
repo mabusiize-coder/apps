@@ -1,0 +1,343 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="apple-touch-icon" href="art/brief.png"><style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style></head><body><title>朝のニュース動画</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a one-screen news broadcast. Genre-colored stage, big Mincho telop, caption strip, transport at the bottom. Deliberately single dark theme (it is a video). */
+:root{
+  --night:#0C1016; --deep:#06080B; --ink:#F2F4F7; --sub:#9AA6B4; --rule:#2A323D; --chip:#161C24;
+  --sun:#C9461C; --c:#C9461C;
+  --pol:#5B7FD0; --foot:#2FA877; --art:#D2508D; --film:#D39A33; --barca:#E85A90;
+  --v0:#EE9B72; --v1:#7DBCDB;
+  --f-mincho:"Shippori Mincho B1","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
+  --f-body:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--deep);color:var(--ink);font-family:var(--f-body);-webkit-text-size-adjust:100%;word-break:auto-phrase;overflow:hidden}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--sun);outline-offset:3px;border-radius:6px}
+
+.app{height:100%;display:grid;grid-template-rows:auto minmax(0,1fr) auto;max-width:560px;margin:0 auto;background:var(--night);position:relative;overflow:hidden}
+
+/* top: date + chapter progress */
+.top{padding-block:12px 10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:9px;position:relative;z-index:2}
+.trow{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;color:var(--sub);text-transform:uppercase}
+.segs{display:flex;gap:3px;height:3px}
+.segs i{flex:1 1 0;background:var(--rule);border-radius:2px;overflow:hidden;position:relative;cursor:pointer}
+.segs i b{position:absolute;inset:0 auto 0 0;width:0;background:var(--ink)}
+.segs i.done b{width:100%;background:var(--sub)}
+
+/* stage */
+.stage{position:relative;min-height:0;display:grid;grid-template-rows:minmax(0,1fr) auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:4px 0}
+.glow{position:absolute;inset:-20% -30% auto auto;width:120%;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--c) 38%,transparent),transparent 70%);pointer-events:none;transition:background .8s}
+.vis{position:relative;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.illo{width:min(72%,300px);height:auto;color:var(--c);animation:kb 18s ease-in-out infinite alternate}
+@keyframes kb{from{transform:scale(1) translate(0,0)}to{transform:scale(1.12) translate(-3%,2%)}}
+.photo{position:absolute;inset:0;background-size:cover;background-position:center;border-radius:12px;animation:kb 20s ease-in-out infinite alternate;opacity:.9}
+.telop{position:relative;display:grid;gap:8px;padding-block:6px 14px}
+.eb{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-family:var(--f-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--c)}
+.eb .sw{width:9px;height:9px;border-radius:50%;background:var(--c)}
+.tag{font:500 10px/1 var(--f-mono);letter-spacing:.06em;padding:4px 6px 3px;border-radius:3px;color:var(--night);text-transform:none}
+.tag.fav{background:var(--sun);color:#fff}.tag.barca{background:var(--barca);color:#fff}
+.ttl{font-family:var(--f-mincho);font-weight:800;font-size:clamp(23px,6.6vw,31px);line-height:1.45;margin:0;text-wrap:balance}
+.in .ttl,.in .eb{animation:rise .6s cubic-bezier(.2,.7,.2,1) both}
+.in .eb{animation-delay:.05s}
+@keyframes rise{from{opacity:.001;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* figures */
+.fig{width:100%;align-self:center;background:color-mix(in srgb,var(--chip) 88%,transparent);border:1px solid var(--rule);border-radius:12px;padding:16px 16px 12px;position:relative}
+.fl{font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;color:var(--c);text-transform:uppercase}
+.ft{font-weight:700;font-size:15px;line-height:1.5;margin-top:2px}
+.fn{font-size:11px;color:var(--sub);margin-top:10px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:14px;margin-top:12px}
+.sv{font-family:var(--f-mincho);font-weight:800;font-size:clamp(30px,9vw,42px);line-height:1.1;font-variant-numeric:tabular-nums}
+.sv.up{color:#FF8A7E}.sv.down{color:#8DB9F2}
+.sl{font-size:12.5px;color:var(--sub);line-height:1.5;margin-top:4px}
+.bars{display:grid;gap:9px;margin-top:12px}
+.bar{display:grid;grid-template-columns:minmax(0,7.5em) minmax(0,1fr);gap:10px;align-items:center;font-size:12.5px}
+.bar .bl{color:var(--sub);line-height:1.35}
+.bar .tr{display:flex;align-items:center;gap:8px;min-width:0}
+.bar .fi{height:14px;border-radius:0 3px 3px 0;background:#3A4451;flex:none;min-width:2px;transform-origin:left;animation:grow .9s cubic-bezier(.2,.7,.2,1) both}
+.bar.hi .fi{background:var(--c)}.bar.hi .bl{color:var(--ink);font-weight:700}
+.bar .bv{font-family:var(--f-mono);font-size:12px;white-space:nowrap}
+@keyframes grow{from{transform:scaleX(0)}to{transform:none}}
+.tl{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:4px}
+.tl li{display:grid;grid-template-columns:4.2em minmax(0,1fr);gap:10px;font-size:14px;line-height:1.5}
+.tl .td{font-family:var(--f-mono);font-size:12.5px;color:var(--c)}
+.tl li.hi .tx{font-weight:700}
+.mk{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:12px;overflow:hidden;width:100%;align-self:center}
+.mk>div{background:var(--night);padding:12px 14px}
+.mk .l{font-size:11px;color:var(--sub)}
+.mk .v{font-family:var(--f-mono);font-size:20px;font-weight:500;font-variant-numeric:tabular-nums}
+.mk .ch{font-family:var(--f-mono);font-size:11.5px;color:var(--sub)}
+.mk .up{color:#FF8A7E}.mk .down{color:#8DB9F2}
+.big{font-family:var(--f-mincho);font-weight:800;font-size:clamp(84px,26vw,132px);line-height:.9;letter-spacing:-.03em}
+.big .dot{color:var(--sun)}
+.hero{display:grid;gap:18px;width:100%;align-self:center}
+/* debate */
+.dv{display:grid;gap:10px;width:100%;align-self:center}
+.dq{font-weight:700;font-size:14.5px;line-height:1.5}
+.vc{border-radius:12px;padding:12px 14px;border:1px solid var(--rule);border-top:3px solid var(--va);background:var(--chip);opacity:.55;transition:opacity .4s,transform .4s}
+.vc.on{opacity:1;transform:scale(1.015)}
+.vc.v0{--va:var(--v0)}.vc.v1{--va:var(--v1)}
+.vs{font-weight:700;font-size:13px;color:var(--va)}
+.vw{font-size:12px;color:var(--sub);margin-top:4px;line-height:1.5}
+
+/* caption */
+.cap{min-height:5.6em;display:flex;align-items:flex-end;padding-block:0 12px}
+.cap p{margin:0;background:rgba(0,0,0,.55);border-left:3px solid var(--c);padding:9px 12px;border-radius:4px;font-size:15.5px;line-height:1.7;font-weight:500;width:100%}
+
+/* transport */
+.ctl{padding-block:10px 14px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));border-top:1px solid var(--rule);background:var(--deep);display:grid;gap:10px}
+.time{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:11px;color:var(--sub);font-variant-numeric:tabular-nums}
+.scrub{-webkit-appearance:none;appearance:none;width:100%;height:20px;background:transparent;margin:0}
+.scrub::-webkit-slider-runnable-track{height:3px;background:linear-gradient(to right,var(--sun) var(--p,0%),var(--rule) var(--p,0%));border-radius:2px}
+.scrub::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--ink);margin-top:-5.5px}
+.scrub::-moz-range-track{height:3px;background:var(--rule)}.scrub::-moz-range-progress{height:3px;background:var(--sun)}
+.btns{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.btns button{display:grid;place-items:center;background:none;border:1px solid var(--rule);border-radius:999px;width:44px;height:44px;cursor:pointer;flex:none}
+.btns svg{width:17px;height:17px}
+.btns .pp{width:60px;height:60px;background:var(--sun);border-color:var(--sun);color:#fff}
+.btns .pp svg{width:22px;height:22px}
+.btns .txt{width:auto;min-width:44px;padding:0 12px;font:500 12px/1 var(--f-mono)}
+
+/* start cover */
+.cover{position:absolute;inset:0;z-index:5;background:var(--night);display:grid;align-content:center;gap:18px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px));overflow:hidden}
+.cover .sunbg{position:absolute;right:-90px;top:-70px;width:340px;height:340px;color:var(--sun);opacity:.85}
+.cover .lab{font-family:var(--f-mono);font-size:11px;letter-spacing:.2em;color:var(--sub);text-transform:uppercase;position:relative}
+.cover .head{font-family:var(--f-mincho);font-weight:800;font-size:clamp(19px,5.4vw,24px);line-height:1.6;position:relative}
+.cover .go{justify-self:start;display:flex;align-items:center;gap:10px;background:var(--sun);color:#fff;border:0;border-radius:999px;padding:15px 24px;font:700 16px/1 var(--f-body);cursor:pointer;position:relative}
+.cover .go svg{width:16px;height:16px}
+.cover .meta{font-size:12.5px;color:var(--sub);line-height:1.7;position:relative}
+
+/* chapter list */
+.sheet{position:absolute;inset:0;z-index:6;background:rgba(6,8,11,.97);display:grid;grid-template-rows:auto minmax(0,1fr)}
+.sheet .sh{display:flex;justify-content:space-between;align-items:center;padding-block:14px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));border-bottom:1px solid var(--rule);font-weight:700}
+.sheet .sh button{background:none;border:1px solid var(--rule);border-radius:999px;padding:7px 14px;cursor:pointer;font-size:12px}
+.sheet ol{list-style:none;margin:0;padding:6px 0 30px;overflow-y:auto}
+.sheet li button{width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:3.6em minmax(0,1fr);gap:10px;padding-block:12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));cursor:pointer}
+.sheet .st{font-family:var(--f-mono);font-size:11.5px;color:var(--c);padding-top:3px;font-variant-numeric:tabular-nums}
+.sheet .sn{font-size:14.5px;line-height:1.5}
+.sheet .sg{display:block;font-size:11px;color:var(--c);letter-spacing:.1em}
+.sheet li.cur .sn{font-weight:700}
+.sheet li.cur button{background:var(--chip)}
+
+@media (prefers-reduced-motion:reduce){.illo,.photo,.in .ttl,.in .eb,.bar .fi{animation:none}.vc{transition:none}}
+@media (min-height:760px){.ttl{font-size:clamp(25px,7vw,34px)}.cap p{font-size:16.5px}}
+</style>
+
+<div class="app" id="app">
+  <header class="top">
+    <div class="trow"><span id="t-date">Morning Brief</span><span id="t-pos"></span></div>
+    <div class="segs" id="segs"></div>
+  </header>
+  <main class="stage" id="stage">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="vis" id="vis"></div>
+    <div>
+      <div class="telop" id="telop"></div>
+      <div class="cap" aria-live="off"><p id="cap"></p></div>
+    </div>
+  </main>
+  <footer class="ctl">
+    <input class="scrub" id="scrub" type="range" min="0" max="1000" value="0" aria-label="再生位置">
+    <div class="time"><span id="cur">0:00</span><span id="dur">0:00</span></div>
+    <div class="btns">
+      <button type="button" class="txt" id="b-list" aria-label="項目の一覧">一覧</button>
+      <button type="button" id="b-prev" aria-label="前のニュース"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2.5h2v11H3zM14 2.5v11L6 8z" fill="currentColor"/></svg></button>
+      <button type="button" class="pp" id="b-pp" aria-label="再生"></button>
+      <button type="button" id="b-next" aria-label="次のニュース"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11 2.5h2v11h-2zM2 2.5v11L10 8z" fill="currentColor"/></svg></button>
+      <button type="button" class="txt" id="b-rate" aria-label="再生の速さ">1.0×</button>
+    </div>
+  </footer>
+
+  <section class="cover" id="cover">
+    <svg class="sunbg" viewBox="0 0 300 300" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="150" cy="150" r="46" fill="currentColor" stroke="none"/><circle cx="150" cy="150" r="70" opacity=".45"/><circle cx="150" cy="150" r="96" opacity=".28"/><circle cx="150" cy="150" r="124" opacity=".16"/></g></svg>
+    <div class="lab" id="c-lab">Morning Brief</div>
+    <div class="big" id="c-date"></div>
+    <div class="head" id="c-head"></div>
+    <button type="button" class="go" id="c-go"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg><span id="c-go-t">再生する</span></button>
+    <div class="meta" id="c-meta"></div>
+  </section>
+
+  <section class="sheet" id="sheet" hidden>
+    <div class="sh"><span>今日のニュース</span><button type="button" id="s-close">閉じる</button></div>
+    <ol id="s-list"></ol>
+  </section>
+</div>
+<audio id="au" preload="auto" playsinline></audio>
+
+<script type="application/json" id="video-data">{"date": "2026-11-17", "weekday": "火", "headline": "7〜9月期GDPは年率0.1%減と4四半期ぶりのマイナス。AI株安が日米を直撃し、日経平均は1480円下げて6万円割れ、NYダウも739ドル安。ドイツがオランダに大勝し、ジャームッシュの金獅子賞作が20日に日本公開。", "markets": [{"label": "日経平均", "value": "59,662", "change": "−1,480（16日終値）", "dir": "down"}, {"label": "ドル円", "value": "159.60円", "change": "16日 ECB参照値", "dir": "flat"}, {"label": "NYダウ（16日）", "value": "−1.41%", "change": "−739ドル", "dir": "down"}, {"label": "ナスダック（16日）", "value": "−2.49%", "change": "S&P500は−1.91%", "dir": "down"}], "duration": 721.67, "chapters": [{"sec": "", "secName": "Morning Brief", "title": "今日のヘッドライン", "group": null, "fav": null, "barca": null, "img": null, "viz": null, "debate": null, "start": 0.0, "end": 32.66, "sents": [{"t": 0.22, "x": "11月17日、火曜日の朝のニュースです。"}, {"t": 3.66, "x": "7〜9月期GDPは年率0.1%減と4四半期ぶりのマイナス。"}, {"t": 9.3, "x": "AI株安が日米を直撃し、日経平均は1480円下げて6万円割れ、NYダウも739ドル安。"}, {"t": 15.22, "x": "ドイツがオランダに大勝し、ジャームッシュの金獅子賞作が20日に日本公開。"}, {"t": 19.92, "x": "市場の動きです。"}, {"t": 20.3, "x": "日経平均、59,662、下落。"}, {"t": 23.72, "x": "ドル円、159.60円、横ばい。"}, {"t": 25.36, "x": "NYダウ（16日）、−1.41%、下落。"}, {"t": 28.14, "x": "ナスダック（16日）、−2.49%、下落。"}], "srcName": null, "srcUrl": null}, {"sec": "politics", "secName": "政治・経済", "title": "7〜9月期GDP、年率0.1%減で4四半期ぶりマイナス", "group": null, "fav": false, "barca": false, "img": null, "viz": {"type": "stats", "title": "7〜9月期GDP 1次速報", "items": [{"value": "−0.1%", "label": "実質GDP（年率）", "dir": "down"}, {"value": "−0.3%", "label": "個人消費（前期比）・2期連続減", "dir": "down"}, {"value": "+1.6%", "label": "設備投資（前期比）", "dir": "up"}], "note": "出典：内閣府 経済財政政策担当大臣談話、櫻井公認会計士事務所の解説"}, "debate": null, "start": 32.66, "end": 59.02, "sents": [{"t": 32.66, "x": "政治・経済のニュースです。"}, {"t": 34.42, "x": "7〜9月期GDP、年率0.1%減で4四半期ぶりマイナス。"}, {"t": 39.08, "x": "内閣府が16日に公表した7〜9月期の実質GDP速報値は前期比0.0%減、年率換算で0.1%減となり、4四半期ぶりのマイナス成長だった。"}, {"t": 49.58, "x": "個人消費が前期比0.3%減と2期連続で落ち込む一方、設備投資は1.6%増と堅調で、名目GDPは年率1.6%増。"}], "srcName": "内閣府（大臣談話PDF）", "srcUrl": "https://www5.cao.go.jp/keizai1/danwa/1116_danwa.pdf"}, {"sec": "politics", "secName": "政治・経済", "title": "AI株安が日米を直撃、日経平均は1480円安で6万円割れ", "group": null, "fav": false, "barca": false, "img": null, "viz": {"type": "bars", "title": "16日の米株主要指数・銘柄の下落率", "unit": "%", "items": [{"label": "マイクロン", "value": -6, "display": "−6%"}, {"label": "Nvidia", "value": -5, "display": "−5%", "hi": true}, {"label": "ナスダック", "value": -2.49, "display": "−2.49%"}, {"label": "S&P500", "value": -1.91, "display": "−1.91%"}, {"label": "NYダウ", "value": -1.41, "display": "−1.41%"}], "note": "出典：TipRanks（16日終値ベース）"}, "debate": null, "start": 59.02, "end": 78.1, "sents": [{"t": 59.02, "x": "AI株安が日米を直撃、日経平均は1480円安で6万円割れ。"}, {"t": 61.64, "x": "16日の東京市場は米国のAI関連株安を受けて半導体株に売りが集中し、日経平均は前週末比1480円33銭安の5万9662円で取引を終えた。"}, {"t": 72.16, "x": "アドバンテストは11.1%下げ、1銘柄で指数を700円近く押し下げた。"}], "srcName": "OANDA証券（DZH）", "srcUrl": "https://www.oanda.jp/lab-education/market_news/mn_1044145_202611161747/"}, {"sec": "politics", "secName": "政治・経済", "title": "イランがバーレーンをドローン攻撃、米空母は3隻態勢に", "group": null, "fav": false, "barca": false, "img": null, "viz": null, "debate": null, "start": 78.1, "end": 98.68, "sents": [{"t": 78.1, "x": "イランがバーレーンをドローン攻撃、米空母は3隻態勢に。"}, {"t": 82.66, "x": "イラン革命防衛隊は15日、バーレーンの空軍基地にある米軍の早期警戒レーダーを狙ってドローン6機を発射したと発表し、バーレーンは全機を迎撃したとしている。"}, {"t": 91.12, "x": "同じ日に米空母セオドア・ルーズベルトが中東に入り、中東の米空母は3隻になった。"}], "srcName": "The National", "srcUrl": "https://www.thenationalnews.com/news/gulf/2026/11/16/iran-escalates-threats-against-us-forces-and-gulf-states-as-third-american-carrier-arrives/"}, {"sec": "politics", "secName": "政治・経済", "title": "高市首相がマニラ入り、17日にクアッド首脳会合", "group": null, "fav": false, "barca": false, "img": null, "viz": null, "debate": {"q": "クアッドはインド太平洋の柱として生き残るか、存在意義を探す集まりか", "views": [{"side": "存在意義に疑問", "point": "7月の外相会合がASEANの中心性をわざわざ強調したのは、クアッドが自らの役割を探している表れだと指摘した。地域の経済的な重みは中国にあり、クアッドは各国にとって「保険の一つ」にすぎず、ASEANがクアッドを支えている構図だと論じた（8月の寄稿）。", "who": "シャミーク・ゴダラ（The Asia Group シニアアソシエイト）", "src": ["Lowy Institute The Interpreter（8/5）", "https://www.lowyinstitute.org/the-interpreter/the-quad-needs-asean-more-than-asean-needs-the-quad"]}, {"side": "存続を評価", "point": "クアッドは疑念を乗り越えて生き残るという最も重要な試験に合格したと評価した。米国が最も弱い環ではあるものの離脱はしておらず、中国の台頭がリスクとみなされる限り枠組みは続くとし、成熟には海洋安全保障での役割をより明確にすべきだと提案した（8月の寄稿）。", "who": "ラーフル・ミシュラ（タマサート大学 上級研究員／ネルー大学准教授）", "src": ["Asialink（8/21）", "https://asialink.unimelb.edu.au/diplomacy/insights/quad-passes-its-most-critical-test-survivability/"]}]}, "start": 98.68, "end": 129.38, "sents": [{"t": 98.68, "x": "高市首相がマニラ入り、17日にクアッド首脳会合。"}, {"t": 100.76, "x": "高市首相は16日にフィリピン・マニラに到着し、17日にASEAN関連の首脳会議と、日米豪印4カ国（クアッド）の首脳会合に出席する。"}, {"t": 110.78, "x": "クアッド首脳が顔をそろえるのは2024年以来で、19日には中国・深圳でAPEC首脳会議に臨む。"}, {"t": 120.22, "x": "論点です。"}, {"t": 120.52, "x": "クアッドはインド太平洋の柱として生き残るか、存在意義を探す集まりか。"}, {"t": 123.95, "x": "存在意義に疑問、シャミーク・ゴダラさん。"}, {"t": 126.8, "x": "存続を評価、ラーフル・ミシュラさん。"}], "srcName": "8and（11/16）", "srcUrl": "https://8and.jp/2026/11/16/%E9%AB%98%E5%B8%82%E9%A6%96%E7%9B%B8%E3%81%8C11%E6%9C%8816%E6%97%A5%E3%81%AB%E3%83%9E%E3%83%8B%E3%83%A9%E3%81%B8%E5%87%BA%E7%99%BA%E3%80%8017%E6%97%A5%E3%81%AB%E3%82%AF%E3%82%A2%E3%83%83%E3%83%89/"}, {"sec": "politics", "secName": "政治・経済", "title": "ウクライナ、開戦以来最大のドローン攻撃 エストニアは国境閉鎖へ", "group": null, "fav": false, "barca": false, "img": null, "viz": null, "debate": null, "start": 129.38, "end": 146.66, "sents": [{"t": 129.38, "x": "ウクライナ、開戦以来最大のドローン攻撃 エストニアは国境閉鎖へ。"}, {"t": 135.84, "x": "ウクライナが開戦以来最大規模のドローン攻撃をロシアに仕掛け、ロシア側はモスクワやクリミア上空で迎撃したと発表した。"}, {"t": 141.8, "x": "クリミアとロシアを結ぶケルチ橋も攻撃を受け、ロシア大統領府は「軽微な損傷」だとしている。"}], "srcName": "Just Security（11/16）", "srcUrl": "https://www.justsecurity.org/164727/early-edition-november-16-2026/"}, {"sec": "politics", "secName": "政治・経済", "title": "Nvidia、フアン氏の復帰は検討せず　17日に「フアン後」初の決算", "group": "AI・テクノロジー", "fav": false, "barca": false, "img": null, "viz": null, "debate": {"q": "急落したNvidiaは買い場か、さらに下がる始まりか", "views": [{"side": "強気派の見方", "point": "10月の急落局面で、AI半導体の需要はなお供給を上回り、Nvidiaの強みはGPUだけでなくネットワークやシステム全体、CUDAにまで及ぶとして買い場だと主張した。フアン氏の辞任後は、同氏がいる場合といない場合で妥当な株価に差があると試算しつつ、強気の評価を維持している（10月の発言と11月中旬の試算）。", "who": "ダン・アイブス（ウェドブッシュ証券 アナリスト）", "src": ["Yahoo Finance（Barchart、10/21）", "https://finance.yahoo.com/markets/stocks/articles/dan-ives-calls-selloff-nvda-112607108.html"]}, {"side": "弱気派の見方", "point": "業績面では割安に見えても、トップ交代の混乱、市場全体の割高さ、AI関連企業の債務膨張など6つのリスクがそれを上回ると論じた。10月高値から3割超の下落は買い場ではなく、さらに5割下がる局面の入り口になりうると警告している（11/14の寄稿）。", "who": "ショーン・ウィリアムズ（モトリーフール 寄稿アナリスト）", "src": ["The Motley Fool（11/14）", "https://fool.com/investing/2026/11/14/think-nvidia-stock-bargain-6-reasons-face-ai-build-out-can-plunge-50-after-jensen-huang-resignation"]}]}, "start": 146.66, "end": 179.05, "sents": [{"t": 146.66, "x": "AI・テクノロジー。"}, {"t": 150.8, "x": "Nvidia、フアン氏の復帰は検討せず 17日に「フアン後」初の決算。"}, {"t": 154.13, "x": "Nvidia取締役会は辞任したジェンスン・フアン前CEOの復帰を検討していないと米CNBCが16日に報じた。"}, {"t": 163.58, "x": "トランプ大統領は復帰について「悪い考えではない」と述べたが、ベセント財務長官は外部からの起用を求めている。"}, {"t": 170.22, "x": "論点です。"}, {"t": 170.52, "x": "急落したNvidiaは買い場か、さらに下がる始まりか。"}, {"t": 173.64, "x": "強気派の見方、ダン・アイブスさん。"}, {"t": 176.86, "x": "弱気派の見方、ショーン・ウィリアムズさん。"}], "srcName": "MarketScreener（Reuters）", "srcUrl": "https://www.marketscreener.com/news/nvidia-board-is-not-considering-bringing-jensen-huang-back-as-ceo-cnbc-reports-ce785edfdd88ff2d"}, {"sec": "politics", "secName": "政治・経済", "title": "Anthropic、18日に公開価格決定　19日にナスダック上場へ", "group": "AI・テクノロジー", "fav": false, "barca": false, "img": null, "viz": null, "debate": {"q": "1.4兆ドル規模のAnthropic上場は妥当な値付けか、上値の乏しい高値づかみか", "views": [{"side": "値付けを評価", "point": "夏に取り沙汰された約2兆ドルより低い仮条件は、事業の弱さの表れではなく、上場後の値上がり余地と話題性を残すための賢い価格戦略だと評価した。期待を抑えた設定が、上場後の株価を支えるとの見方だ（11/10の報道でのコメント）。", "who": "リオール・プロソル（ベンチャーキャピタルDeep33 ジェネラルパートナー）", "src": ["Fortune（11/10）", "https://fortune.com/2026/11/10/anthropic-lower-than-expected-ipo-valuation-smart-strategy-or-red-flag/"]}, {"side": "リターンに懐疑", "point": "1.3兆ドル前後で上場すれば、そこから企業価値が4兆ドルに育っても上昇余地は限られ、それには年2000億ドル規模の利益が必要になると指摘した。オープンソースや安価な競合との価格競争もリスクに挙げている（11/14のインタビュー）。", "who": "ジェイ・リッター（フロリダ大学 IPO研究の第一人者）", "src": ["TheStreet（11/14）", "https://www.thestreet.com/investing/anthropic-ipo-valuation-risk-1-trillion-ceiling-jay-ritter"]}]}, "start": 179.05, "end": 215.28, "sents": [{"t": 179.05, "x": "Anthropic、18日に公開価格決定 19日にナスダック上場へ。"}, {"t": 183.89, "x": "AI企業Anthropicは18日に新規株式公開（IPO）の価格を決め、19日にナスダックで「ANT」として取引を始める予定だ。"}, {"t": 192.48, "x": "仮条件は1株70〜78ドルで、上限なら約644億ドルを調達し、完全希薄化ベースの企業価値は約1.4兆ドルになる。"}, {"t": 200.83, "x": "論点です。"}, {"t": 201.54, "x": "1.4兆ドル規模のAnthropic上場は妥当な値付けか、上値の乏しい高値づかみか。"}, {"t": 207.52, "x": "値付けを評価、リオール・プロソルさん。"}, {"t": 210.23, "x": "リターンに懐疑、ジェイ・リッターさん。"}], "srcName": "MarketPulse（OANDA）", "srcUrl": "https://www.marketpulse.com/markets/anthropics-ipo-a-make-or-break-test-for-the-trillion-dollar-ai-trade/"}, {"sec": "politics", "secName": "政治・経済", "title": "日米など10カ国、AIサプライチェーン防衛の協定に署名", "group": "AI・テクノロジー", "fav": false, "barca": false, "img": null, "viz": null, "debate": null, "start": 215.28, "end": 241.55, "sents": [{"t": 215.28, "x": "日米など10カ国、AIサプライチェーン防衛の協定に署名。"}, {"t": 216.92, "x": "米国主導の枠組み「パックス・シリカ」の会合で15日、米国と日本、オーストラリア、インド、イスラエル、韓国、カタール、シンガポール、UAE、英国の計10カ国が、AIを支える技術や重要インフラを守る「サンフランシスコ宣言」に署名した。"}, {"t": 232.72, "x": "信頼できる供給網に分散して過度な依存を減らすのが狙いで、英FTは主にレアアースなど中国によるリスクを念頭に置くと報じている。"}], "srcName": "Anadolu（anews）", "srcUrl": "https://www.anews.com.tr/world/2026/11/16/us-9-partners-sign-agreement-to-secure-ai-supply-chains"}, {"sec": "football", "secName": "海外サッカー", "title": "ドイツがオランダに大勝、ヴィルツが2得点", "group": null, "fav": false, "barca": false, "img": null, "viz": null, "debate": null, "start": 241.55, "end": 273.3, "sents": [{"t": 241.55, "x": "海外サッカーのニュースです。"}, {"t": 243.54, "x": "ドイツがオランダに大勝、ヴィルツが2得点。"}, {"t": 246.53, "x": "ネーションズリーグの最終節が16日にベルリンで行われ、ドイツはシェアハントの先制点に続き、60分と71分にヴィルツ、65分にシュロッターベックが決めて71分までに4-0とし、オランダを圧倒した（最終スコアは5-0とする報道もある）。"}, {"t": 263.05, "x": "試合前は勝ち点11のオランダが首位で、ドイツとギリシャが8で追っており、同時刻のギリシャ対セルビアの結果と合わせて準々決勝進出の顔ぶれが決まる。"}], "srcName": "Yahoo Sports（OneFootball）", "srcUrl": "https://sports.yahoo.com/articles/klopp-ing-kidding-germany-thrash-211500508.html"}, {"sec": "football", "secName": "海外サッカー", "title": "バルサ：デ・ヨングとクバルシに検査、ビジャレアル戦の出場は不透明", "group": null, "fav": false, "barca": true, "img": null, "viz": null, "debate": null, "start": 273.3, "end": 298.53, "sents": [{"t": 273.3, "x": "バルサ：デ・ヨングとクバルシに検査、ビジャレアル戦の出場は不透明。"}, {"t": 278.0, "x": "オランダ代表を離脱したフレンキー・デ・ヨングは、シャビ監督が「深刻ではない」と話したものの、恥骨周辺の問題の可能性も報じられ、16日にクラブの練習場で検査を受けた。"}, {"t": 289.39, "x": "イングランド戦で腰（股関節）付近の違和感を訴えてハーフタイムに退いたクバルシも、けがの有無を確かめる検査を受ける予定だ。"}], "srcName": "Yahoo Sports（Barca Universal）", "srcUrl": "https://sports.yahoo.com/articles/barcelona-receive-positive-injury-news-074000310.html"}, {"sec": "football", "secName": "海外サッカー", "title": "ネーションズリーグ8強に仏・ベルギー・英・スペイン・ポルトガル", "group": null, "fav": false, "barca": false, "img": null, "viz": {"type": "timeline", "title": "ネーションズリーグ これからの日程", "items": [{"date": "11/17", "text": "デンマーク対ノルウェー、ウェールズ対ポルトガル（リーグ最終戦）"}, {"date": "11/20", "text": "準々決勝・入れ替え戦の抽選", "hi": true}, {"date": "3/25〜30", "text": "準々決勝・入れ替え戦（2027年）"}, {"date": "6/9〜13", "text": "ファイナルズ（2027年）"}], "note": "出典：UEFA、Football360"}, "debate": null, "start": 298.53, "end": 331.43, "sents": [{"t": 298.77, "x": "ネーションズリーグ8強に仏・ベルギー・英・スペイン・ポルトガル。"}, {"t": 304.09, "x": "リーグAではフランス、ベルギー、イングランド、スペイン、ポルトガルが準々決勝進出を決め、イタリアは3位で敗退、クロアチアは入れ替えプレーオフに回り、チェコはリーグBへの降格が決まった。"}, {"t": 318.57, "x": "17日にはデンマーク対ノルウェー（デンマークは引き分け以上で突破）とウェールズ対ポルトガルが行われ、20日に準々決勝と入れ替え戦の組み合わせ抽選がある。"}], "srcName": "UEFA", "srcUrl": "https://www.uefa.com/uefanationsleague/news/02ab-22096ba64f4d-f179d6d05013-1000--nations-league-quarter-finals-who-is-through-who-can-joi/"}, {"sec": "football", "secName": "海外サッカー", "title": "レアル：チュアメニが代表で負傷離脱、週末のセルタ戦は微妙", "group": null, "fav": false, "barca": false, "img": null, "viz": null, "debate": null, "start": 331.43, "end": 356.11, "sents": [{"t": 331.43, "x": "レアル：チュアメニが代表で負傷離脱、週末のセルタ戦は微妙。"}, {"t": 337.47, "x": "レアル・マドリードのチュアメニは10日のフランス代表の練習で負傷して代表を離れ、スペイン紙マルカは週末のセルタ戦の出場が不透明だと伝えた。"}, {"t": 347.13, "x": "現地記者は大きなけがではないとの見方も示しており、中断明けの中盤の構成に影響しそうだ。"}], "srcName": "Roundtable", "srcUrl": "https://roundtable.io/sports/soccer/la-liga/real-madrid/news/fresh-injury-updates-provided-on-real-madrid-midfield-partners"}, {"sec": "art", "secName": "アート", "title": "近藤亜樹が川端龍子の記念館で個展、21日開幕", "group": "国内", "fav": false, "barca": false, "img": null, "viz": {"type": "timeline", "title": "今週のアート注目日程", "items": [{"date": "11/16", "text": "サザビーズNY「Now & Contemporary」イブニング（現地）"}, {"date": "11/17", "text": "フィリップスNY 近現代イブニング（現地）"}, {"date": "11/18", "text": "サザビーズNY ブラキエ＝アリエタ・コレクション／モダン・イブニング（現地）", "hi": true}, {"date": "11/21", "text": "近藤亜樹「吾は、わたしは、」開幕（大田区立龍子記念館）", "hi": true}, {"date": "12/20", "text": "すみだ五彩の芸術祭 閉幕"}], "note": "出典：Beyond Every Art、Sotheby's、美術手帖（NYは現地時間）"}, "debate": null, "start": 356.11, "end": 381.29, "sents": [{"t": 356.11, "x": "アートのニュースです。"}, {"t": 357.87, "x": "国内。"}, {"t": 358.17, "x": "近藤亜樹が川端龍子の記念館で個展、21日開幕。"}, {"t": 359.67, "x": "大田区立龍子記念館で、画家・近藤亜樹の展覧会「吾は、わたしは、」が21日から2027年1月24日まで開かれる。"}, {"t": 369.07, "x": "日本画家・川端龍子と現代の作家を組み合わせる企画「川端龍子プラスワン」の後期で、精神科医でコレクターの高橋龍太郎のコレクションと合わせて構成する。"}], "srcName": "美術手帖", "srcUrl": "https://bijutsutecho.com/magazine/news/exhibition/33334"}, {"sec": "art", "secName": "アート", "title": "墨田区で初の「すみだ五彩の芸術祭」、12月20日まで", "group": "国内", "fav": false, "barca": false, "img": null, "viz": null, "debate": null, "start": 381.29, "end": 402.67, "sents": [{"t": 381.29, "x": "墨田区で初の「すみだ五彩の芸術祭」、12月20日まで。"}, {"t": 385.23, "x": "東京・墨田区で初めての芸術祭「すみだ五彩の芸術祭」が12月20日まで開かれている。"}, {"t": 391.07, "x": "旧商家や町工場、大学のサテライトキャンパスなど地域の建物を会場に、小泉智貴、山口藍、風間サチコらが参加し、多くの会場は入場無料だ。"}], "srcName": "美術手帖", "srcUrl": "https://bijutsutecho.com/magazine/news/promotion/33290"}, {"sec": "art", "secName": "アート", "title": "浅田政志が箱根を撮る、彫刻の森美術館で来年1月から", "group": "国内", "fav": false, "barca": false, "img": null, "viz": null, "debate": null, "start": 402.67, "end": 424.77, "sents": [{"t": 402.67, "x": "浅田政志が箱根を撮る、彫刻の森美術館で来年1月から。"}, {"t": 406.13, "x": "写真家・浅田政志が神奈川の4つの町を撮るシリーズの箱根編が、2027年1月16日から3月22日まで彫刻の森美術館で展示されることが決まった。"}, {"t": 416.19, "x": "白黒写真に手で色を付けた明治期の「横浜写真」の手法を取り入れ、土地の人々と風景を写す。"}], "srcName": "美術手帖", "srcUrl": "https://bijutsutecho.com/magazine/news/exhibition/33336"}, {"sec": "art", "secName": "アート", "title": "NYで秋の大型オークション週間、ゴッホに約1.8億ドルの声", "group": "海外", "fav": false, "barca": false, "img": null, "viz": null, "debate": null, "start": 424.77, "end": 460.37, "sents": [{"t": 424.77, "x": "海外。"}, {"t": 425.26, "x": "NYで秋の大型オークション週間、ゴッホに約1.8億ドルの声。"}, {"t": 430.18, "x": "ニューヨークでは16日のサザビーズ「Now & Contemporary」を皮切りに秋のイブニングセールが続き、リキテンスタインに2000万〜3000万ドル、草間彌生《No. 3P.B.》に1000万〜1500万ドルの予想がついている。"}, {"t": 451.65, "x": "18日のブラキエ＝アリエタ・コレクションではゴッホ《花咲くマロニエ》が約1.8億ドルと報じられ、市場の冷え込みが続くなかで高額作品の買い手がどこまで戻るかが試される。"}], "srcName": "Beyond Every Art", "srcUrl": "https://www.beyondeveryart.com/new-york-november-2026-auctions-estimates-explained/"}, {"sec": "art", "secName": "アート", "title": "シャネルの文化誌第2号、表紙はシンディ・シャーマン", "group": "海外", "fav": false, "barca": false, "img": null, "viz": null, "debate": null, "start": 460.37, "end": 489.59, "sents": [{"t": 460.37, "x": "シャネルの文化誌第2号、表紙はシンディ・シャーマン。"}, {"t": 466.09, "x": "シャネルが発行する文化誌「ARTS & CULTURE」の第2号が出た。"}, {"t": 472.11, "x": "シンディ・シャーマンが「Fabric Matrons」シリーズの新作で表紙と作品ページを手がけ、パティ・スミスは2026年のCHANELネクスト・プライズ受賞者に向けた手書きの詞を寄せている。"}], "srcName": "美術手帖", "srcUrl": "https://bijutsutecho.com/magazine/news/headline/33345"}, {"sec": "film", "secName": "映画", "title": "ジャームッシュの金獅子賞作『ファーザー マザー シスター ブラザー』、20日公開", "group": null, "fav": true, "barca": false, "img": null, "viz": {"type": "timeline", "title": "これから2週間の公開・映画祭・賞", "items": [{"date": "11/19", "text": "IDFA（アムステルダム）受賞発表"}, {"date": "11/20", "text": "ジャームッシュ新作 日本公開／ズビャギンツェフ『Minotaur』米公開", "hi": true}, {"date": "11/22", "text": "金馬奨授賞式"}, {"date": "11/25", "text": "濱口竜介『All of a Sudden』米公開", "hi": true}, {"date": "11/27", "text": "広瀬奈々子『このごにおよんで愛など』公開"}, {"date": "11/30", "text": "ゴッサム賞授賞式"}], "note": "出典：MOVIE WALKER PRESS、The Film Stage、Focus Taiwan、映画.com"}, "debate": null, "start": 489.59, "end": 523.73, "sents": [{"t": 489.59, "x": "映画のニュースです。"}, {"t": 490.06, "x": "ジャームッシュの金獅子賞作『ファーザー マザー シスター ブラザー』、20日公開。"}, {"t": 494.11, "x": "ジム・ジャームッシュが6年ぶりに撮り、第82回ヴェネチア国際映画祭で金獅子賞を受けた『ファーザー マザー シスター ブラザー』が20日に日本で公開される。"}, {"t": 507.73, "x": "ニュージャージー、ダブリン、パリを舞台に、大人になった子どもと親のぎこちない再会を3つの物語で描き、トム・ウェイツやアダム・ドライバーらが出演する（111分）。"}], "srcName": "MOVIE WALKER PRESS", "srcUrl": "https://press.moviewalker.jp/news/article/1455811/"}, {"sec": "film", "secName": "映画", "title": "濱口竜介『All of a Sudden』、25日に米公開", "group": null, "fav": true, "barca": false, "img": null, "viz": null, "debate": null, "start": 523.73, "end": 545.68, "sents": [{"t": 523.73, "x": "濱口竜介『All of a Sudden』、25日に米公開。"}, {"t": 526.05, "x": "濱口竜介の新作で、カンヌでヴィルジニー・エフィラと岡本多緒が女優賞を受けた『All of a Sudden』が25日に米国で公開される。"}, {"t": 536.71, "x": "ゴッサム賞では最多候補の一つに入っており、賞レースの中で濱口作品がどこまで存在感を示すかが注目される。"}], "srcName": "The Film Stage（11月の注目作）", "srcUrl": "https://thefilmstage.com/15-films-to-see-in-november-2026/"}, {"sec": "film", "secName": "映画", "title": "ポール・トーマス・アンダーソン『Cameron Winter at Carnegie Hall』、20日米公開", "group": null, "fav": true, "barca": false, "img": null, "viz": null, "debate": null, "start": 545.68, "end": 576.41, "sents": [{"t": 545.68, "x": "ポール・トーマス・アンダーソン『Cameron Winter at Carnegie Hall』、20日米公開。"}, {"t": 552.05, "x": "ポール・トーマス・アンダーソンが監督した『Cameron Winter at Carnegie Hall』が20日に米国で公開される。"}, {"t": 565.2, "x": "シンガーソングライターのキャメロン・ウィンターのカーネギー・ホールでの公演を題材にした作品で、ハイム姉妹のMVなど音楽映像でも知られるPTAの演出が見どころになる。"}], "srcName": "The Film Stage", "srcUrl": "https://thefilmstage.com/15-films-to-see-in-november-2026/"}, {"sec": "film", "secName": "映画", "title": "スピルバーグ、ネイサン・フィールダーらのドキュメンタリーを絶賛", "group": null, "fav": false, "barca": false, "img": null, "viz": null, "debate": null, "start": 576.41, "end": 616.88, "sents": [{"t": 576.41, "x": "スピルバーグ、ネイサン・フィールダーらのドキュメンタリーを絶賛。"}, {"t": 583.9, "x": "スティーヴン・スピルバーグがニューヨーク近代美術館（MoMA）の映画ガラで表彰された際、ネイサン・フィールダーとランス・オッペンハイムによる約3時間のドキュメンタリー『You Can See Everything』を、ここ20年ほどで見た中で最も並外れた作品の一つだと米紙に語った。"}, {"t": 606.71, "x": "エリザベス・ホームズを題材にしたA24作品で、テルライドでサプライズ上映され、SCADサバンナ映画祭では観客賞を受けている。"}], "srcName": "World of Reel", "srcUrl": "https://www.worldofreel.com/blog/2026/11/16/steven-spielberg-calls-you-can-see-everything-one-of-the-most-extraordinary-documentaries-hes-seen-in-a-couple-of-decades"}, {"sec": "film", "secName": "映画", "title": "ズビャギンツェフのカンヌ・グランプリ作『Minotaur』、20日米公開", "group": null, "fav": false, "barca": false, "img": null, "viz": null, "debate": null, "start": 616.88, "end": 642.74, "sents": [{"t": 616.88, "x": "ズビャギンツェフのカンヌ・グランプリ作『Minotaur』、20日米公開。"}, {"t": 620.39, "x": "『裁かれるは善人のみ』『ラブレス』のアンドレイ・ズビャギンツェフが、今年のカンヌでグランプリを受けた『Minotaur』が20日に米国で公開される。"}, {"t": 635.45, "x": "ロシアを離れて活動する監督の新作で、社会を見つめる作家の現在地を示す一本として賞レースでも注目される。"}], "srcName": "The Film Stage", "srcUrl": "https://thefilmstage.com/15-films-to-see-in-november-2026/"}, {"sec": "film", "secName": "映画", "title": "『ドリーム・シナリオ』のボルグリ、A24新作にマーゴット・ロビー", "group": null, "fav": true, "barca": false, "img": null, "viz": null, "debate": null, "start": 642.74, "end": 662.36, "sents": [{"t": 642.9, "x": "『ドリーム・シナリオ』のボルグリ、A24新作にマーゴット・ロビー。"}, {"t": 648.28, "x": "不条理なユーモアで知られるノルウェー出身のクリストファー・ボルグリが、A24の新作『The Week of Pain』を撮り、マーゴット・ロビーが出演を決めた。"}, {"t": 658.58, "x": "撮影は2027年の予定だ。"}], "srcName": "World of Reel", "srcUrl": "https://www.worldofreel.com/"}, {"sec": "film", "secName": "映画", "title": "今週のミニシアター：ブルース・ウェバーのミッチャム論と加藤拓也『日曜のあと』", "group": null, "fav": false, "barca": false, "img": null, "viz": null, "debate": null, "start": 662.36, "end": 685.66, "sents": [{"t": 662.36, "x": "今週のミニシアター：ブルース・ウェバーのミッチャム論と加藤拓也『日曜のあと』。"}, {"t": 668.8, "x": "20日には、写真家ブルース・ウェバーが俳優ロバート・ミッチャムを描いたドキュメンタリー『ちゃんとした女の子は朝食までいるもんじゃない』（93分）が公開される。"}, {"t": 680.56, "x": "同じ日には、劇作家・加藤拓也の監督作『日曜のあと』も公開され、黒木華と吉田羊が出演する。"}], "srcName": "Filmarks（公開予定）", "srcUrl": "https://filmarks.com/list/coming"}, {"sec": "film", "secName": "映画", "title": "クライテリオン、2月にバームバック『Jay Kelly』とエゴヤン作品", "group": null, "fav": false, "barca": false, "img": null, "viz": null, "debate": null, "start": 685.66, "end": 715.6, "sents": [{"t": 685.66, "x": "クライテリオン、2月にバームバック『Jay Kelly』とエゴヤン作品。"}, {"t": 691.5, "x": "米クライテリオン・コレクションが2027年2月のラインナップを発表し、ノア・バームバック『Jay Kelly』を監督承認の4Kマスターで16日に出す。"}, {"t": 705.24, "x": "同じ月にアトム・エゴヤン『スウィート ヒアアフター』、ガス・ヴァン・サントの長編デビュー作『マラノーチェ』、カルラ・シモン『Romería』なども加わる。"}], "srcName": "World of Reel", "srcUrl": "https://www.worldofreel.com/blog/2026/11/14/173bifvr99u5tk41ia753ndbqhglm1"}, {"sec": "", "secName": "Morning Brief", "title": "おわり", "group": null, "fav": null, "barca": null, "img": null, "viz": null, "debate": null, "start": 715.6, "end": 721.67, "sents": [{"t": 715.6, "x": "以上、今日の朝のニュースでした。"}, {"t": 718.44, "x": "くわしくは朝のニュースのページでどうぞ。"}], "srcName": null, "srcUrl": null}]}</script>
+<script>
+(function(){
+  var V=JSON.parse(document.getElementById('video-data').textContent), CH=V.chapters;
+  var COL={'':'var(--sun)',politics:'var(--pol)',football:'var(--foot)',art:'var(--art)',film:'var(--film)'};
+  var EN={'':'Morning Brief',politics:'Politics & Economy',football:'European Football',art:'Art',film:'Cinema'};
+  var ILLO={
+   politics:['<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 112h134" opacity=".35"/><path d="M14 92l22-18 20 10 24-34 22 14 30-38"/><circle cx="132" cy="26" r="5" fill="currentColor"/><g opacity=".55"><path d="M30 112V96M52 112V88M74 112V70M96 112V80M118 112V58"/></g></g>','<g fill="none" stroke="currentColor" stroke-width="2"><circle cx="75" cy="64" r="48"/><ellipse cx="75" cy="64" rx="20" ry="48" opacity=".6"/><path d="M27 64h96M33 40h84M33 88h84" opacity=".45"/><path d="M75 16v96" opacity=".6"/><circle cx="116" cy="34" r="6" fill="currentColor" stroke="none"/></g>'],
+   football:['<g fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="14" width="138" height="96" rx="2"/><path d="M75 14v96"/><circle cx="75" cy="62" r="17"/><circle cx="75" cy="62" r="2.5" fill="currentColor"/><path d="M6 38h24v48H6M144 38h-24v48h24" opacity=".7"/><path d="M6 50h9v24H6M144 50h-9v24h9" opacity=".5"/></g><circle cx="104" cy="44" r="7" fill="currentColor"/><path d="M40 84q30-50 64-40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 5" opacity=".7"/>','<g fill="none" stroke="currentColor" stroke-width="2"><circle cx="75" cy="62" r="46"/><path d="M75 40l20 14-8 24H63l-8-24z" fill="currentColor" fill-opacity=".85"/><path d="M75 40V16M95 54l22-8M87 78l14 20M63 78L49 98M55 54l-22-8" opacity=".6"/></g>'],
+   art:['<circle cx="58" cy="58" r="40" fill="currentColor" opacity=".85"/><rect x="66" y="40" width="70" height="70" fill="none" stroke="currentColor" stroke-width="2"/><path d="M14 112L44 70l30 42z" fill="currentColor" opacity=".35"/>','<g fill="none" stroke="currentColor" stroke-width="2"><rect x="10" y="14" width="78" height="96"/><rect x="20" y="24" width="58" height="76" opacity=".45"/></g><circle cx="49" cy="58" r="16" fill="currentColor" opacity=".8"/><path d="M100 110V58q20-30 40 0v52" fill="currentColor" opacity=".3"/><path d="M96 110h52" stroke="currentColor" stroke-width="2"/>'],
+   film:['<g fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="22" width="134" height="80" rx="3"/><path d="M8 38h134M8 86h134" opacity=".6"/><rect x="40" y="44" width="70" height="36" fill="currentColor" fill-opacity=".85" stroke="none"/></g><g fill="currentColor" opacity=".7"><rect x="16" y="27" width="8" height="6" rx="1"/><rect x="36" y="27" width="8" height="6" rx="1"/><rect x="56" y="27" width="8" height="6" rx="1"/><rect x="76" y="27" width="8" height="6" rx="1"/><rect x="96" y="27" width="8" height="6" rx="1"/><rect x="116" y="27" width="8" height="6" rx="1"/><rect x="16" y="91" width="8" height="6" rx="1"/><rect x="36" y="91" width="8" height="6" rx="1"/><rect x="56" y="91" width="8" height="6" rx="1"/><rect x="76" y="91" width="8" height="6" rx="1"/><rect x="96" y="91" width="8" height="6" rx="1"/><rect x="116" y="91" width="8" height="6" rx="1"/></g>','<g fill="none" stroke="currentColor" stroke-width="2"><circle cx="46" cy="40" r="24"/><circle cx="104" cy="40" r="24"/><circle cx="46" cy="40" r="5" fill="currentColor"/><circle cx="104" cy="40" r="5" fill="currentColor"/><rect x="22" y="70" width="92" height="44" rx="4" fill="currentColor" fill-opacity=".85"/><path d="M114 82l26-12v44l-26-12"/></g>']
+  };
+  function el(t,a,kids){var e=document.createElement(t);if(a)for(var k in a){if(k==='text')e.textContent=a[k];else if(k==='html')e.innerHTML=a[k];else e.setAttribute(k,a[k]);}(kids||[]).forEach(function(x){if(x)e.appendChild(typeof x==='string'?document.createTextNode(x):x)});return e;}
+  function fmt(s){s=Math.max(0,Math.floor(s||0));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+  var au=document.getElementById('au'), app=document.getElementById('app');
+  var d=new Date(V.date+'T00:00:00'), MD=(d.getMonth()+1)+'.'+String(d.getDate()).padStart(2,'0');
+  var KEY='nv-pos-'+V.date;
+  var goBtn=document.getElementById('c-go'),goT=document.getElementById('c-go-t'),ready=false;
+  function setReady(){ready=true;goBtn.disabled=false;goBtn.style.opacity='';goT.textContent=goLabel;}
+  goBtn.disabled=true;goBtn.style.opacity='.6';
+  var tried=[];
+  function fail(){var c=document.getElementById('cap');c.textContent='音声を読み込めませんでした（'+tried.join('→')+(au.error?' / code '+au.error.code:'')+'）。ページを開き直してください。';}
+  function asData(b){return new Promise(function(res,rej){var fr=new FileReader();fr.onload=function(){res(String(fr.result).replace(/^data:[^;,]*/,'data:audio/mpeg'))};fr.onerror=rej;fr.readAsDataURL(b);});}
+  var blobP=fetch('audio.mp3').then(function(r){if(!r.ok)throw new Error('http '+r.status);return r.blob();});
+  // 順に試す：ファイル直接 → data URI → blob
+  var CANDS=[['file',function(){return 'audio.mp3';}],['data',function(){return blobP.then(asData);}],['blob',function(){return blobP.then(function(b){return URL.createObjectURL(new Blob([b],{type:'audio/mpeg'}))});}]],ci=0;
+  function tryNext(){
+    if(ci>=CANDS.length){fail();return;}
+    var c=CANDS[ci++];tried.push(c[0]);
+    Promise.resolve().then(c[1]).then(function(u){au.src=u;au.load();setReady();}).catch(function(e){tried[tried.length-1]+='×';tryNext();});
+  }
+  au.addEventListener('error',function(){if(!au.getAttribute('src'))return;tried[tried.length-1]+='×';var wasPlaying=playWanted;tryNext();});
+  var playWanted=false;
+  au.addEventListener('loadeddata',function(){if(playWanted&&au.paused){var r=au.play();if(r&&r.catch)r.catch(function(){});}});
+  tryNext();
+
+  // cover
+  document.getElementById('c-date').innerHTML=(d.getMonth()+1)+'<span class="dot">.</span>'+String(d.getDate()).padStart(2,'0');
+  document.getElementById('c-lab').textContent='Morning Brief · '+V.weekday+'曜日';
+  document.getElementById('c-head').textContent=V.headline;
+  document.getElementById('c-meta').textContent=(CH.length-2)+'本のニュース・約'+Math.round(V.duration/60)+'分。画面を消しても、ほかのアプリを開いても音声は続きます。';
+  document.getElementById('t-date').textContent='Morning Brief  '+MD;
+  document.getElementById('dur').textContent=fmt(V.duration);
+  var saved=0;try{saved=+localStorage.getItem(KEY)||0;}catch(e){}
+  var goLabel=(saved>20&&saved<V.duration-10)?'続きから再生（'+fmt(saved)+'）':'再生する';
+  if(!ready)goT.textContent='読み込み中…';
+
+  // segments + list
+  var segs=document.getElementById('segs'),list=document.getElementById('s-list');
+  CH.forEach(function(c,i){
+    var s=el('i',{title:c.title,style:'flex-grow:'+Math.max(1,(c.end-c.start)).toFixed(1)},[el('b')]);
+    s.addEventListener('click',function(){seekTo(c.start+0.01);});segs.appendChild(s);
+    var b=el('button',{type:'button',style:'--c:'+(COL[c.sec]||'var(--sun)')},[el('span',{class:'st',text:fmt(c.start)}),el('span',{class:'sn'},[(i===0||CH[i-1].secName!==c.secName)?el('span',{class:'sg',text:c.secName}):null,c.title])]);
+    b.addEventListener('click',function(){seekTo(c.start+0.01);closeSheet();if(au.paused)play();});
+    list.appendChild(el('li',null,[b]));
+  });
+
+  // figures
+  function fig(v){
+    if(!v||!v.type)return null;var lab={stats:'Numbers',bars:'Chart',timeline:'Timeline'}[v.type];if(!lab)return null;
+    var f=el('figure',{class:'fig',style:'margin:0'},[el('div',{class:'fl',text:lab}),v.title?el('div',{class:'ft',text:v.title}):null]);
+    if(v.type==='stats'){var g=el('div',{class:'stats'});(v.items||[]).forEach(function(x){g.appendChild(el('div',null,[el('div',{class:'sv '+(x.dir||''),text:x.value}),el('div',{class:'sl',text:x.label})]))});f.appendChild(g);}
+    if(v.type==='bars'){var mx=0;v.items.forEach(function(x){mx=Math.max(mx,Math.abs(+x.value)||0)});var b=el('div',{class:'bars'});
+      v.items.forEach(function(x,i){var w=mx?Math.abs(+x.value)/mx:0;b.appendChild(el('div',{class:'bar'+(x.hi?' hi':'')},[el('span',{class:'bl',text:x.label}),el('span',{class:'tr'},[el('span',{class:'fi',style:'width:calc((100% - 5.5em) * '+w.toFixed(3)+');animation-delay:'+(i*.08)+'s'}),el('span',{class:'bv',text:x.display||(x.value+(v.unit||''))})])]))});f.appendChild(b);}
+    if(v.type==='timeline'){var u=el('ol',{class:'tl'});v.items.forEach(function(x){u.appendChild(el('li',{class:x.hi?'hi':''},[el('span',{class:'td',text:x.date}),el('span',{class:'tx',text:x.text})]))});f.appendChild(u);}
+    if(v.note)f.appendChild(el('div',{class:'fn',text:v.note}));
+    return f;
+  }
+  function illo(c,i){var v=ILLO[c.sec];if(!v)return null;var s=document.createElementNS('http://www.w3.org/2000/svg','svg');s.setAttribute('viewBox','0 0 150 124');s.setAttribute('class','illo');s.setAttribute('aria-hidden','true');s.innerHTML=v[i%v.length];return s;}
+  function markets(){var m=el('div',{class:'mk'});(V.markets||[]).slice(0,4).forEach(function(x){m.appendChild(el('div',null,[el('div',{class:'l',text:x.label}),el('div',{class:'v',text:x.value}),el('div',{class:'ch '+x.dir,text:(x.dir==='up'?'▲ ':x.dir==='down'?'▼ ':'')+x.change})]))});return m;}
+  // which sentence starts the debate, and each side
+  CH.forEach(function(c){c.dbAt=-1;c.sideAt=[];if(!c.debate)return;
+    c.sents.forEach(function(s,k){if(c.dbAt<0&&/^論点です/.test(s.x))c.dbAt=k;});
+    if(c.dbAt>=0)c.debate.views.slice(0,2).forEach(function(v){var k=c.sents.findIndex(function(s,j){return j>c.dbAt&&s.x.indexOf(v.side)===0});c.sideAt.push(k);});});
+
+  var curC=-1,curS=-1,mode='';
+  var vis=document.getElementById('vis'),telop=document.getElementById('telop'),cap=document.getElementById('cap'),stage=document.getElementById('stage');
+  function visual(c,i,k){
+    var m=(c.debate&&c.dbAt>=0&&k>=c.dbAt)?'debate':'main';
+    if(m===mode&&i===curC)return;mode=m;vis.innerHTML='';
+    if(m==='debate'){var dv=el('div',{class:'dv'},[el('div',{class:'fl',text:'Two Views'}),el('div',{class:'dq',text:c.debate.q||''})]);
+      c.debate.views.slice(0,2).forEach(function(v,j){dv.appendChild(el('div',{class:'vc v'+j,'data-j':j},[el('div',{class:'vs',text:v.side}),el('div',{class:'vw',text:v.who||''})]))});vis.appendChild(dv);return;}
+    if(i===0){vis.appendChild(el('div',{class:'hero'},[el('div',{class:'big',html:(d.getMonth()+1)+'<span class="dot">.</span>'+String(d.getDate()).padStart(2,'0')}),markets()]));return;}
+    if(c.img){vis.appendChild(el('div',{class:'photo',style:'background-image:url('+c.img+')'}));}
+    var f=fig(c.viz);if(f){vis.appendChild(f);return;}
+    if(!c.img){var il=illo(c,i);if(il)vis.appendChild(il);}
+  }
+  function fit(){var f=vis.firstElementChild;if(!f||f.tagName==='svg'||f.classList.contains('photo'))return;f.style.transform='';f.style.transformOrigin='center';
+    var h=vis.clientHeight,fh=f.scrollHeight;if(fh>h&&h>0){var s=Math.max(.55,h/fh);f.style.transform='scale('+s.toFixed(3)+')';}}
+  window.addEventListener('resize',fit);
+  function render(i,k){
+    var c=CH[i];if(!c)return;
+    if(i!==curC){
+      app.style.setProperty('--c',COL[c.sec]||'var(--sun)');
+      telop.innerHTML='';
+      var eb=el('div',{class:'eb'},[el('span',{class:'sw'}),EN[c.sec]||'',c.group?' · '+c.group:'']);
+      if(c.fav)eb.appendChild(el('span',{class:'tag fav',text:'★好み'}));if(c.barca)eb.appendChild(el('span',{class:'tag barca',text:'BARÇA'}));
+      telop.appendChild(eb);telop.appendChild(el('h1',{class:'ttl',text:i===0?V.headline.split('。')[0]+'。':c.title}));
+      stage.classList.remove('in');void stage.offsetWidth;stage.classList.add('in');
+      document.getElementById('t-pos').textContent=(i+1)+' / '+CH.length;
+      [].forEach.call(segs.children,function(s,j){s.classList.toggle('done',j<i);if(j!==i)s.firstChild.style.width='';});
+      [].forEach.call(list.children,function(li,j){li.classList.toggle('cur',j===i)});
+      meta(i);
+    }
+    var pm=mode,pc=curC;visual(c,i,k);if(mode!==pm||i!==pc)fit();
+    if(mode==='debate'){vis.querySelectorAll('.vc').forEach(function(v){var j=+v.dataset.j;var a=c.sideAt[j],b=j===0?c.sideAt[1]:9999;v.classList.toggle('on',a>=0&&k>=a&&(b<0||k<b));});}
+    curC=i;
+    if(k!==curS){curS=k;cap.textContent=k>=0?c.sents[k].x:'';}
+  }
+  function locate(t){var i=0;while(i<CH.length-1&&t>=CH[i+1].start)i++;var c=CH[i],k=-1;for(var j=0;j<c.sents.length;j++){if(t>=c.sents[j].t-0.05)k=j;else break;}return [i,k];}
+  var scrub=document.getElementById('scrub'),curEl=document.getElementById('cur'),dragging=false,lastSave=0;
+  function tick(){
+    var t=au.currentTime||0,p=locate(t);render(p[0],p[1]);
+    var c=CH[p[0]];segs.children[p[0]].firstChild.style.width=Math.min(100,(t-c.start)/(c.end-c.start)*100)+'%';
+    if(!dragging){scrub.value=Math.round(t/V.duration*1000);}
+    scrub.style.setProperty('--p',(t/V.duration*100)+'%');curEl.textContent=fmt(t);
+    if(Math.abs(t-lastSave)>5){lastSave=t;try{localStorage.setItem(KEY,String(t))}catch(e){}}
+    posState();
+  }
+  au.addEventListener('timeupdate',tick);au.addEventListener('seeked',tick);
+  au.addEventListener('ended',function(){setPP();try{localStorage.removeItem(KEY)}catch(e){}});
+  au.addEventListener('play',setPP);au.addEventListener('pause',setPP);
+  document.addEventListener('visibilitychange',function(){if(!document.hidden){curC=-1;mode='';tick();}});
+  function seekTo(t){t=Math.max(0,Math.min(V.duration-0.2,t));au.currentTime=t;tick();}
+  scrub.addEventListener('input',function(){dragging=true;var t=scrub.value/1000*V.duration;curEl.textContent=fmt(t);var p=locate(t);render(p[0],p[1]);scrub.style.setProperty('--p',(t/V.duration*100)+'%');});
+  scrub.addEventListener('change',function(){dragging=false;seekTo(scrub.value/1000*V.duration);});
+
+  var I_PLAY='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>',I_PAUSE='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 2.5h3v11h-3zM9.5 2.5h3v11h-3z" fill="currentColor"/></svg>';
+  var pp=document.getElementById('b-pp');
+  function setPP(){pp.innerHTML=au.paused?I_PLAY:I_PAUSE;pp.setAttribute('aria-label',au.paused?'再生':'一時停止');}
+  function play(){playWanted=true;var r=au.play();if(r&&r.catch)r.catch(function(){});}
+  function cur(){return locate(au.currentTime||0)[0];}
+  function next(){var i=cur();if(i<CH.length-1)seekTo(CH[i+1].start+0.01);}
+  function prev(){var i=cur();seekTo((au.currentTime-CH[i].start>3||i===0)?CH[i].start+0.01:CH[i-1].start+0.01);}
+  pp.addEventListener('click',function(){au.paused?play():au.pause();});
+  document.getElementById('b-next').addEventListener('click',next);
+  document.getElementById('b-prev').addEventListener('click',prev);
+  var RATES=[1,1.2,1.4,1.6,0.9],ri=0;try{var r=+localStorage.getItem('nv-rate');if(RATES.indexOf(r)>=0)ri=RATES.indexOf(r);}catch(e){}
+  var rb=document.getElementById('b-rate');
+  function setRate(){au.playbackRate=au.defaultPlaybackRate=RATES[ri];try{au.preservesPitch=true;au.webkitPreservesPitch=true;}catch(e){}rb.textContent=RATES[ri].toFixed(1)+'×';}
+  setRate();au.addEventListener('loadedmetadata',setRate);
+  rb.addEventListener('click',function(){ri=(ri+1)%RATES.length;setRate();try{localStorage.setItem('nv-rate',RATES[ri])}catch(e){}});
+  var sheet=document.getElementById('sheet');
+  function closeSheet(){sheet.hidden=true;}
+  document.getElementById('b-list').addEventListener('click',function(){sheet.hidden=false;var c=list.querySelector('.cur');if(c)c.scrollIntoView({block:'center'});});
+  document.getElementById('s-close').addEventListener('click',closeSheet);
+  document.getElementById('c-go').addEventListener('click',function(){
+    document.getElementById('cover').hidden=true;
+    if(saved>20&&saved<V.duration-10)au.currentTime=saved;
+    play();tick();
+  });
+
+  // lock screen / control center
+  var MS=navigator.mediaSession,ART={'':'art/brief.png',politics:'art/politics.png',football:'art/football.png',art:'art/art.png',film:'art/film.png'};
+  function abs(p){try{return new URL(p,location.href).href}catch(e){return p}}
+  function meta(i){if(!MS||!window.MediaMetadata)return;var c=CH[i];
+    try{MS.metadata=new MediaMetadata({title:i===0?'今日のヘッドライン':c.title,artist:c.secName+(c.group?'・'+c.group:''),album:'朝のニュース '+MD,artwork:[{src:abs(ART[c.sec]||ART['']),sizes:'512x512',type:'image/png'}]});}catch(e){}}
+  var lastPS=0;
+  function posState(){if(!MS||!MS.setPositionState)return;var n=Date.now();if(n-lastPS<4000)return;lastPS=n;try{MS.setPositionState({duration:V.duration,playbackRate:au.playbackRate||1,position:Math.min(V.duration,au.currentTime||0)});}catch(e){}}
+  if(MS){[['play',play],['pause',function(){au.pause()}],['nexttrack',next],['previoustrack',prev],
+     ['seekforward',function(e){seekTo(au.currentTime+((e&&e.seekOffset)||15))}],['seekbackward',function(e){seekTo(au.currentTime-((e&&e.seekOffset)||15))}],
+     ['seekto',function(e){if(e&&e.seekTime!=null)seekTo(e.seekTime)}]].forEach(function(h){try{MS.setActionHandler(h[0],h[1])}catch(e){}});}
+
+  setPP();
+  var p0=locate(saved>20?saved:0);render(p0[0],-1);cap.textContent='';
+  document.addEventListener('keydown',function(e){if(e.target.tagName==='INPUT')return;if(e.code==='Space'){e.preventDefault();au.paused?play():au.pause();}if(e.key==='ArrowRight')next();if(e.key==='ArrowLeft')prev();});
+})();
+</script>
+</body></html>
