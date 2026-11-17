@@ -145,7 +145,7 @@ def jtalk_audio(tracks):
 GEMINI_MODELS = [m for m in os.environ.get("GEMINI_TTS_MODELS",
                  "gemini-2.5-flash-preview-tts,gemini-3.1-flash-tts-preview").split(",") if m]
 GEMINI_VOICE = os.environ.get("GEMINI_TTS_VOICE", "Kore")
-CHUNK_CHARS = 2200     # 1回の依頼で読ませる文字数の上限（約5分）
+CHUNK_CHARS = 650      # 1回の依頼の上限。長いと後半で声が崩れるので短く（約1.5分）
 STYLE = ("朝のニュース番組のアナウンサーとして、明るく落ち着いた声で、テンポよく読み上げてください。"
          "本文は一字一句そのまま読み、付け足しや省略はしないでください。段落の切れ目では少し間をあけてください。\n\n")
 
@@ -286,8 +286,8 @@ def main(data_path, out_dir):
     import wave
     with wave.open(wav, "wb") as w:
         w.setnchannels(1); w.setsampwidth(2); w.setframerate(sr); w.writeframes(a.tobytes())
-    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", wav, "-ac", "1", "-ar", "22050",
-                    "-c:a", "libmp3lame", "-b:a", "32k",
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", wav, "-ac", "1", "-ar", "24000",
+                    "-c:a", "libmp3lame", "-b:a", "48k",
                     os.path.join(out_dir, "audio.mp3")], check=True)
     os.remove(wav)
 
