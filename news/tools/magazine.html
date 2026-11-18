@@ -24,8 +24,9 @@
   --gut:max(22px,env(safe-area-inset-left,0px));
 }
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;scroll-padding-top:calc(60px + env(safe-area-inset-top,0px))}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-jp);font-size:16px;line-height:2;letter-spacing:.04em;-webkit-font-smoothing:antialiased;padding-top:env(safe-area-inset-top,0px);overflow-x:hidden}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:calc(60px + var(--sat))}
+:root{--sat:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-jp);font-size:16px;line-height:2;letter-spacing:.04em;-webkit-font-smoothing:antialiased;padding-top:var(--sat);overflow-x:hidden}
 [hidden]{display:none!important}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--ink);outline-offset:3px}
@@ -85,8 +86,9 @@ p,.vp,.tx{overflow-wrap:anywhere}
 .favbtn[aria-pressed=true]{background:var(--ink);color:#fff}
 
 /* sticky nav */
-.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:#fff;border-bottom:1.5px solid var(--ink);margin-top:64px}
-.nav::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:env(safe-area-inset-top,0px);background:#fff}
+.navslot{margin-top:64px;min-height:47px}
+.nav{z-index:20;background:#fff;border-bottom:1.5px solid var(--ink)}
+.nav.fix{position:fixed;top:0;left:0;right:0;padding-top:var(--sat)}
 .nav .in{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-block:9px}
 .nav .in::-webkit-scrollbar{display:none}
 .nav a{flex:none;text-decoration:none;font:700 12px/1 var(--f-jp);letter-spacing:.06em;padding:8px 12px 7px;border:1.5px solid var(--ink);border-radius:999px}
@@ -314,13 +316,13 @@ body.listening #tmbox,body.listening #selask{bottom:calc(var(--plh,150px) + 12px
   <button type="button" class="favbtn" id="favbtn" aria-pressed="false" hidden></button>
 </div></section>
 
-<nav class="nav" aria-label="ジャンル"><div class="in" id="nav"></div><div class="prog" id="prog"></div></nav>
+<div class="navslot" id="navslot"><nav class="nav" aria-label="ジャンル"><div class="in" id="nav"></div><div class="prog" id="prog"></div></nav></div>
 <main id="main"></main>
 
 <footer class="foot"><div class="in">
   <div class="lg">THE MORNING<br>BRIEF</div>
   直近24時間（日本時間）のニュースを、一次ソースと信頼できる報道機関からまとめています。各記事の出典から原文を確認できます。<br>
-  <span id="updated"></span>
+  <span id="updated"></span> <span style="opacity:.55">v3</span>
 </div></footer>
 
 <div id="tmbox" role="dialog" aria-label="用語の解説" hidden><button type="button" class="x" aria-label="閉じる">×</button><div class="k">KEYWORD</div><div class="w"></div><div class="d"></div><a class="go" target="_blank" rel="noopener">Claudeにもっと聞く →</a></div>
@@ -642,7 +644,15 @@ body.listening #tmbox,body.listening #selask{bottom:calc(var(--plh,150px) + 12px
     var pl=document.getElementById('player');if(pl&&!pl.hidden)document.body.style.setProperty('--plh',pl.offsetHeight+'px');
     tmClose();selask.hidden=false;},350);});
   var links=[].slice.call(nav.querySelectorAll('a')),prog=document.getElementById('prog');
+  /* ジャンルのタブ：sticky はホーム画面アプリで効かないことがあるので、通り過ぎたら fixed に切り替える */
+  var slot=document.getElementById('navslot'),bar=slot.firstElementChild,rt=document.documentElement;
+  (function(){var pb=document.createElement('div');pb.style.cssText='position:fixed;top:0;left:0;width:0;height:env(safe-area-inset-top,0px);visibility:hidden';document.body.appendChild(pb);var sa=pb.offsetHeight;pb.remove();
+    var alone=window.navigator.standalone===true||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches);
+    if(alone&&!sa&&window.innerHeight>=screen.height-1)rt.style.setProperty('--sat','54px');})();
+  function sat(){return parseFloat(getComputedStyle(document.body).paddingTop)||0;}
   function onScroll(){
+    var fx=slot.getBoundingClientRect().top<=sat();
+    if(fx!==bar.classList.contains('fix')){if(fx)slot.style.height=slot.offsetHeight+'px';bar.classList.toggle('fix',fx);if(!fx)slot.style.height='';}
     var y=window.scrollY+90,cur=null;
     document.querySelectorAll('.ch').forEach(function(ch){if(!ch.hidden&&ch.offsetTop<=y)cur=ch.id;});
     links.forEach(function(a){var on=a.getAttribute('href')==='#'+cur;if(on&&!a.classList.contains('on'))a.scrollIntoView({inline:'center',block:'nearest'});a.classList.toggle('on',on);});
