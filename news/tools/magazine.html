@@ -271,6 +271,22 @@ body.listening .foot{padding-bottom:220px}
 .pl-note{font-size:11px;color:var(--sub);line-height:1.5}
 
 @media (min-width:900px){ body{font-size:17px} .in{max-width:720px} }
+
+/* ---- 用語タップ解説・Claudeに聞く ---- */
+.tm{border-bottom:1px dotted var(--faint);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.tm.on{background:var(--ic)}
+.srcs a.askc{border:1.5px solid var(--ink);background:var(--ic-t);color:var(--ink);font-weight:700;text-decoration:none;padding:3px 9px 2px;white-space:nowrap}
+#tmbox{position:fixed;z-index:60;left:max(12px,env(safe-area-inset-left,0px));right:max(12px,env(safe-area-inset-right,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px));max-width:520px;margin:0 auto;background:#fff;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ic);padding:14px 16px 14px}
+#tmbox[hidden],#selask[hidden]{display:none}
+#tmbox .k{font:800 10px/1 var(--f-en);letter-spacing:.16em;color:var(--sub)}
+#tmbox .w{margin-top:6px;font-weight:900;font-size:18px;line-height:1.5;padding-right:34px;overflow-wrap:anywhere}
+#tmbox .d{margin-top:6px;font-size:14.5px;line-height:1.85;overflow-wrap:anywhere}
+#tmbox .x{position:absolute;top:6px;right:6px;width:36px;height:36px;border:0;background:none;font-size:20px;line-height:1;color:var(--ink);cursor:pointer}
+#tmbox .go,#selask{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:#fff;text-decoration:none;font-weight:700;font-size:14px;line-height:1;padding:11px 14px 10px}
+#tmbox .go{margin-top:12px}
+#selask{position:fixed;z-index:61;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));border:2px solid #fff;box-shadow:0 2px 14px rgba(0,0,0,.28);max-width:calc(100vw - 32px);white-space:nowrap}
+#selask b{max-width:11em;overflow:hidden;text-overflow:ellipsis;font-weight:700}
+body.listening #tmbox,body.listening #selask{bottom:calc(var(--plh,150px) + 12px)}
 </style>
 </head>
 <body>
@@ -306,6 +322,9 @@ body.listening .foot{padding-bottom:220px}
   <span id="updated"></span>
 </div></footer>
 
+<div id="tmbox" role="dialog" aria-label="用語の解説" hidden><button type="button" class="x" aria-label="閉じる">×</button><div class="k">KEYWORD</div><div class="w"></div><div class="d"></div><a class="go" target="_blank" rel="noopener">Claudeにもっと聞く →</a></div>
+<a id="selask" target="_blank" rel="noopener" hidden>「<b></b>」をClaudeに聞く →</a>
+
 <div class="player" id="player" hidden><div class="in">
   <div class="pl-now"><span class="pl-sec" id="pl-sec"></span><span class="pl-ttl" id="pl-ttl"></span><span class="pl-pos" id="pl-pos"></span></div>
   <div class="pl-bar"><i id="pl-bar"></i></div>
@@ -324,6 +343,7 @@ body.listening .foot{padding-bottom:220px}
 <script>
 (function(){
   var D=JSON.parse(document.getElementById('news-data').textContent);
+  var ASK='https://claude.ai/new?q=';
   function el(t,a,kids){var e=document.createElement(t);if(a)for(var k in a){if(k==='text')e.textContent=a[k];else if(k==='html')e.innerHTML=a[k];else e.setAttribute(k,a[k]);}(kids||[]).forEach(function(x){if(x)e.appendChild(typeof x==='string'?document.createTextNode(x):x)});return e;}
   function pad(n,w){return String(n).padStart(w||2,'0');}
   var d=new Date(D.date+'T00:00:00');
@@ -433,7 +453,7 @@ body.listening .foot{padding-bottom:220px}
     return f;
   }
   function tags(t,it){if(it.fav)t.appendChild(el('span',{class:'tag fav',text:'★ 好み'}));if(it.barca)t.appendChild(el('span',{class:'tag barca',text:'BARÇA'}));return t;}
-  function srcs(it){if(!it.src||!it.src.length)return null;var s=el('div',{class:'srcs'},[el('b',{text:'SOURCE'})]);it.src.forEach(function(x){s.appendChild(el('a',{href:x[1],target:'_blank',rel:'noopener',text:x[0]}))});return s;}
+  function srcs(it){if(!it.src||!it.src.length)return null;var s=el('div',{class:'srcs'},[el('b',{text:'SOURCE'})]);it.src.forEach(function(x){s.appendChild(el('a',{href:x[1],target:'_blank',rel:'noopener',text:x[0]}))});if(it.title)s.appendChild(el('a',{class:'askc',href:askArticle(it),target:'_blank',rel:'noopener',text:'Claudeに聞く'}));return s;}
   function debate(it){
     var v=it.debate;if(!v||!v.views||v.views.length<2)return null;
     var box=el('div',{class:'vw'},[el('span',{class:'chip lb',text:'論点　Two Views'}),v.q?el('div',{class:'vq',text:v.q}):null]);
@@ -584,6 +604,42 @@ body.listening .foot{padding-bottom:220px}
       redraw();
     });
   }
+  /* ---- 用語タップ解説・Claudeに聞く ---- */
+  function askArticle(it){var b=String(it.body||it.lead||'').slice(0,260);
+    return ASK+encodeURIComponent('今朝のニュースで読んだ記事について教えてください。\n\n記事：「'+it.title+'」\n'+(b?'概要：'+b+'\n':'')+'\nこの話の背景と、今後どこに注目すればいいかを、わかりやすく説明してください。');}
+  function askWord(w,ctx){return ASK+encodeURIComponent('今朝のニュースを読んでいて「'+w+'」が気になりました。'+(ctx?'記事は「'+ctx+'」です。':'')+'この記事の文脈に沿って、背景も含めてわかりやすく教えてください。');}
+  function ctxOf(n){var e=n&&(n.nodeType===1?n:n.parentNode);var a=e&&e.closest&&e.closest('article,.ftr');var h=a&&a.querySelector('h3,h2');return h?h.textContent.replace(/\s+/g,' ').trim():'';}
+  function mark(root,terms){if(!root||!terms||!terms.length)return;
+    terms.forEach(function(t){if(!t||!t.w||!t.d||String(t.w).length<2)return;
+      var tw=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null),n;
+      while((n=tw.nextNode())){var pe=n.parentNode;
+        if(!pe.closest('p,li')||pe.closest('.tm,a,button,h2,h3,.srcs,.chip,.tag,.folio'))continue;
+        var i=n.nodeValue.indexOf(t.w);if(i<0)continue;
+        var r=n.splitText(i);r.splitText(t.w.length);
+        r.parentNode.replaceChild(el('span',{class:'tm',role:'button',tabindex:'0','data-d':t.d,text:t.w}),r);break;}});}
+  D.sections.forEach(function(s){(s.items||[]).forEach(function(it,i){mark(document.getElementById(s.id+'-'+i),it.terms);});});
+  (D.features||(D.feature?[D.feature]:[])).forEach(function(F,fi){if(F&&F.title)mark(document.getElementById('feature'+(fi?'-'+(fi+1):'')),F.terms);});
+  var tmbox=document.getElementById('tmbox'),tmOn=null,selask=document.getElementById('selask');
+  function tmClose(){tmbox.hidden=true;if(tmOn)tmOn.classList.remove('on');tmOn=null;}
+  function tmOpen(e){tmClose();tmOn=e;e.classList.add('on');
+    tmbox.querySelector('.w').textContent=e.textContent;tmbox.querySelector('.d').textContent=e.getAttribute('data-d');
+    tmbox.querySelector('.go').href=askWord(e.textContent,ctxOf(e));
+    var pl=document.getElementById('player');if(pl&&!pl.hidden)document.body.style.setProperty('--plh',pl.offsetHeight+'px');
+    selask.hidden=true;tmbox.hidden=false;
+    var over=e.getBoundingClientRect().bottom-(tmbox.getBoundingClientRect().top-24);if(over>0)window.scrollBy({top:over,behavior:'smooth'});}
+  document.addEventListener('click',function(ev){var t=ev.target.closest&&ev.target.closest('.tm');
+    if(t){ev.preventDefault();if(t===tmOn)tmClose();else tmOpen(t);return;}
+    if(!tmbox.hidden&&(!ev.target.closest('#tmbox')||ev.target.closest('#tmbox .x')))tmClose();});
+  document.addEventListener('keydown',function(ev){if(ev.key==='Escape')tmClose();
+    else if((ev.key==='Enter'||ev.key===' ')&&ev.target.classList&&ev.target.classList.contains('tm')){ev.preventDefault();tmOpen(ev.target);}});
+  var selT=0;
+  document.addEventListener('selectionchange',function(){clearTimeout(selT);selT=setTimeout(function(){
+    var sel=window.getSelection(),tx=sel&&!sel.isCollapsed?String(sel).replace(/\s+/g,' ').trim():'';
+    var an=sel&&sel.anchorNode,ae=an&&(an.nodeType===1?an:an.parentNode);
+    if(!tx||tx.length>80||!ae||!ae.closest('#main')){selask.hidden=true;return;}
+    selask.querySelector('b').textContent=tx;selask.href=askWord(tx,ctxOf(an));
+    var pl=document.getElementById('player');if(pl&&!pl.hidden)document.body.style.setProperty('--plh',pl.offsetHeight+'px');
+    tmClose();selask.hidden=false;},350);});
   var links=[].slice.call(nav.querySelectorAll('a')),prog=document.getElementById('prog');
   function onScroll(){
     var y=window.scrollY+90,cur=null;
