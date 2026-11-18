@@ -113,7 +113,7 @@ def og_image(url, out):
     if os.path.exists(out): os.remove(out)
     return None
 
-ART = {"": "#C9461C", "politics": "#2D4F95", "football": "#127A55", "art": "#AE2E69", "film": "#9C6406"}
+ART = {"": "#C9461C", "politics": "#2D4F95", "football": "#127A55", "art": "#AE2E69", "film": "#9C6406", "science": "#17738A"}
 
 def artwork(out_dir):
     """ロック画面に出す正方形のジャケット（ジャンル色＋朝日の輪）"""
@@ -146,7 +146,7 @@ GEMINI_MODELS = [m for m in os.environ.get("GEMINI_TTS_MODELS",
                  "gemini-2.5-flash-preview-tts,gemini-3.1-flash-tts-preview").split(",") if m]
 GEMINI_VOICE = os.environ.get("GEMINI_TTS_VOICE", "Kore")
 # 大見出し（ジャンル）ごとに男女交互で声を変える。GEMINI_TTS_VOICES="politics=Charon,..." で上書き可
-VOICES = {"": GEMINI_VOICE, "politics": "Charon", "football": "Leda", "art": "Iapetus", "film": "Aoede"}
+VOICES = {"": GEMINI_VOICE, "politics": "Charon", "football": "Leda", "art": "Iapetus", "film": "Aoede", "science": "Orus"}
 VOICES.update(dict(kv.split("=", 1) for kv in os.environ.get("GEMINI_TTS_VOICES", "").split(",") if "=" in kv))
 def voice_for(sec): return VOICES.get(sec or "", GEMINI_VOICE)
 CHUNK_CHARS = 650      # 1回の依頼の上限。長いと後半で声が崩れるので短く（約1.5分）

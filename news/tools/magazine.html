@@ -424,6 +424,23 @@ body.listening #tmbox,body.listening #selask{bottom:calc(var(--plh,150px) + 12px
      '<circle cx="110" cy="120" r="22" fill="'+c+'"/><circle cx="164" cy="92" r="20" fill="'+YE+'"/><circle cx="226" cy="96" r="20" fill="'+SK+'"/><circle cx="118" cy="182" r="20" fill="'+K+'"/><circle cx="180" cy="200" r="16" fill="'+PE+'"/>'+
      '<path d="M300 30l-90 130" stroke="'+K+'" stroke-width="8" stroke-linecap="round"/><path d="M214 152l-14 26 24-14z" fill="'+c+'" stroke="'+K+'" stroke-width="3" stroke-linejoin="round"/>';}
    ],
+   science:[
+    function(c){return '<path d="M30 246h340" stroke="'+K+'" stroke-width="3"/>'+
+     '<path d="M176 40h48v70l62 116a14 14 0 0 1-12 20H126a14 14 0 0 1-12-20l62-116z" fill="'+W+'" stroke="'+K+'" stroke-width="4" stroke-linejoin="round"/>'+
+     '<path d="M150 170h100l34 62a8 8 0 0 1-7 12H123a8 8 0 0 1-7-12z" fill="'+c+'"/><rect x="166" y="30" width="68" height="14" fill="'+K+'"/>'+
+     '<g fill="'+W+'" stroke="'+K+'" stroke-width="2.5"><circle cx="186" cy="204" r="9"/><circle cx="222" cy="188" r="6"/><circle cx="212" cy="222" r="5"/></g>'+
+     '<g fill="'+YE+'"><circle cx="200" cy="142" r="7"/><circle cx="216" cy="112" r="5"/></g>'+
+     '<rect x="52" y="150" width="34" height="96" fill="'+SK+'" stroke="'+K+'" stroke-width="3"/><path d="M52 190h34" stroke="'+K+'" stroke-width="3"/><rect x="314" y="176" width="34" height="70" fill="'+PE+'" stroke="'+K+'" stroke-width="3"/>';},
+    function(c){return '<rect x="30" y="24" width="340" height="232" fill="'+K+'"/>'+
+     '<g fill="'+W+'"><circle cx="70" cy="60" r="3"/><circle cx="330" cy="54" r="3"/><circle cx="300" cy="210" r="3"/><circle cx="90" cy="220" r="2.5"/><circle cx="238" cy="50" r="2"/><circle cx="56" cy="140" r="2"/><circle cx="346" cy="130" r="2.5"/></g>'+
+     '<circle cx="186" cy="146" r="62" fill="'+c+'"/><path d="M130 122c30 14 80 14 112-4M126 158c40 16 86 14 120-6" fill="none" stroke="'+K+'" stroke-width="5"/>'+
+     '<ellipse cx="186" cy="146" rx="118" ry="26" fill="none" stroke="'+W+'" stroke-width="5" transform="rotate(-16 186 146)"/>'+
+     '<circle cx="312" cy="96" r="16" fill="'+YE+'"/><circle cx="92" cy="92" r="9" fill="'+SK+'"/>';},
+    function(c){return '<path d="M30 246h340" stroke="'+K+'" stroke-width="3"/>'+
+     '<g stroke="'+K+'" stroke-width="5"><path d="M200 140L112 86M200 140l92-50M200 140l-64 80M200 140l84 66M112 86L70 150M292 90l40-44"/></g>'+
+     '<circle cx="200" cy="140" r="34" fill="'+c+'" stroke="'+K+'" stroke-width="4"/><circle cx="112" cy="86" r="24" fill="'+W+'" stroke="'+K+'" stroke-width="4"/><circle cx="292" cy="90" r="22" fill="'+YE+'" stroke="'+K+'" stroke-width="4"/>'+
+     '<circle cx="136" cy="220" r="20" fill="'+SK+'" stroke="'+K+'" stroke-width="4"/><circle cx="284" cy="206" r="26" fill="'+K+'"/><circle cx="70" cy="150" r="14" fill="'+PE+'" stroke="'+K+'" stroke-width="4"/><circle cx="332" cy="46" r="13" fill="'+W+'" stroke="'+K+'" stroke-width="4"/>';}
+   ],
    film:[
     function(c){return '<path d="M30 240h340" stroke="'+K+'" stroke-width="3"/>'+
      '<rect x="96" y="118" width="208" height="122" fill="'+K+'"/><path d="M118 150h164M118 176h120M118 202h140" stroke="'+W+'" stroke-width="5"/>'+
@@ -470,7 +487,7 @@ body.listening #tmbox,body.listening #selask{bottom:calc(var(--plh,150px) + 12px
   }
   function sechead(s,m,lede){return el('div',{class:'sechead'},[el('div',{class:'lede2',text:lede}),el('div',{class:'t'},[el('span',{text:s.name}),el('span',{text:'で読む'})])]);}
 
-  var META={politics:{en:'Politics & Economy',short:'Politics'},football:{en:'Football',short:'Football'},art:{en:'Art',short:'Art'},film:{en:'Cinema',short:'Cinema'}};
+  var META={politics:{en:'Politics & Economy',short:'Politics'},football:{en:'Football',short:'Football'},art:{en:'Art',short:'Art'},film:{en:'Cinema',short:'Cinema'},science:{en:'Science',short:'Science'}};
   var STYLES=['label','map','cards','outline'];
   var R={};
   /* --- STYLE label --- */
@@ -544,7 +561,7 @@ body.listening #tmbox,body.listening #selask{bottom:calc(var(--plh,150px) + 12px
     });
     return out;
   };
-  var VOICE={politics:'Charon',football:'Leda',art:'Iapetus',film:'Aoede'};
+  var VOICE={politics:'Charon',football:'Leda',art:'Iapetus',film:'Aoede',science:'Orus'};
 
   var nav=document.getElementById('nav'),main=document.getElementById('main'),toc=document.getElementById('toc'),favN=0,no=0,afters=[];
   D.sections.forEach(function(s,si){
