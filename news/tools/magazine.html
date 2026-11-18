@@ -524,12 +524,12 @@ body.listening .foot{padding-bottom:220px}
   var VOICE={politics:'Charon',football:'Leda',art:'Iapetus',film:'Aoede'};
 
   /* ---- 今日の特集 ---- */
-  (function(){
-    var F=D.feature;if(!F||!F.title)return;
+  (D.features||(D.feature?[D.feature]:[])).forEach(function(F,fi){
+    if(!F||!F.title)return;var FID='feature'+(fi?'-'+(fi+1):'');
     var EN={ai:'AI',film:'CINEMA',fashion:'FASHION'}[F.topic]||String(F.topic||'FEATURE').toUpperCase();
-    var sec=el('section',{class:'ch ftr',id:'feature',style:'padding-top:0'});
+    var sec=el('section',{class:'ch ftr',id:FID,style:fi?'padding-top:56px':'padding-top:0'});
     sec.appendChild(el('div',{class:'hero'},[el('div',{class:'bg',text:EN}),el('div',{class:'in'},[
-      el('div',{class:'row'},[el('span',{class:'chip',text:'今日の特集'}),el('span',{class:'pill',style:'background:#fff;font-size:13px',text:F.label||EN})]),
+      el('div',{class:'row'},[el('span',{class:'chip',text:'今日の特集 '+pad(fi+1)}),el('span',{class:'pill',style:'background:#fff;font-size:13px',text:F.label||EN})]),
       F.kicker?el('div',{class:'kick',text:F.kicker}):null,el('h2',{text:F.title}),F.lead?el('p',{class:'ld',text:F.lead}):null])]));
     var w=el('div',{class:'in'});
     if(F.facts&&F.facts.length){var dl=el('dl',{class:'facts'});F.facts.forEach(function(x){dl.appendChild(el('div',null,[el('dt',{text:x.k}),el('dd',{text:x.v})]));});w.appendChild(dl);}
@@ -545,12 +545,12 @@ body.listening .foot{padding-bottom:220px}
         x.url&&/^https?:\/\//.test(x.url)?el('a',{href:x.url,target:'_blank',rel:'noopener',text:x.linkText||'公式ページを見る'}):null,img])]));});
       w.appendChild(its);}
     var sr=srcs(F);if(sr)w.appendChild(sr);
-    w.appendChild(el('div',{class:'folio'},[el('span',{text:'002'}),el('span',{text:'特集　'+(F.label||EN)}),el('span',{text:'003'})]));
+    w.appendChild(el('div',{class:'folio'},[el('span',{text:pad(fi*2+2,3)}),el('span',{text:'特集　'+(F.label||EN)}),el('span',{text:pad(fi*2+3,3)})]));
     sec.appendChild(w);
     document.getElementById('main').appendChild(sec);
-    document.getElementById('toc').appendChild(el('li',null,[el('a',{href:'#feature'},[el('span',{class:'no',text:'00'}),el('span',{class:'nm'},[el('small',{text:'Feature / '+EN}),'特集：'+F.title]),el('span',{class:'ct',text:'特集'})])]));
-    document.getElementById('nav').appendChild(el('a',{href:'#feature',text:'特集'}));
-  })();
+    document.getElementById('toc').appendChild(el('li',null,[el('a',{href:'#'+FID},[el('span',{class:'no',text:'F'+(fi+1)}),el('span',{class:'nm'},[el('small',{text:'Feature / '+EN}),'特集：'+F.title]),el('span',{class:'ct',text:'特集'})])]));
+    document.getElementById('nav').appendChild(el('a',{href:'#'+FID,text:'特集:'+(F.label||EN)}));
+  });
   var nav=document.getElementById('nav'),main=document.getElementById('main'),toc=document.getElementById('toc'),favN=0,no=0,afters=[];
   D.sections.forEach(function(s,si){
     if(!s.items||!s.items.length)return;
