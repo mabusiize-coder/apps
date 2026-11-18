@@ -1,395 +1,395 @@
-<!doctype html><html><head><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="apple-touch-icon" href="art/brief.png"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#ffffff">
+<link rel="apple-touch-icon" href="art/brief.png">
 <title>朝のニュース</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800;900&family=Archivo+Narrow:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap">
 <style>
-/* Layout: a newspaper "visual special" — dark masthead band, then one full-bleed chapter per genre: big Mincho opener, a lead story set large, the rest as a tappable index */
 :root{
-  --paper:#F5F6F8; --sheet:#FFFFFF; --ink:#111418; --sub:#4E5864; --faint:#8A94A0; --rule:#DADFE5;
-  --night:#0C1016; --night-ink:#F2F4F7; --night-sub:#9AA6B4; --night-rule:#2A323D;
-  --pol:#2D4F95; --foot:#127A55; --art:#AE2E69; --film:#9C6406;
-  --up:#C8372D; --down:#2763AD; --fav:#C9461C; --barca:#A50044; --onacc:#FFFFFF; --barc:#C9D0D9;
-  --f-mincho:"Shippori Mincho B1","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
-  --f-body:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
-  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+  --paper:#FFFFFF; --ink:#141414; --sub:#5C5C5C; --faint:#9A9A9A; --rule:#E6E6E6; --hair:#141414;
+  --cream:#F4EFE6; --tint:#F6F6F4;
+  --pol:#1E4FD6; --foot:#0E8A55; --art:#E2463F; --film:#D99300;
+  --pol-t:#E9EEFB; --foot-t:#E5F3EC; --art-t:#FCEAE8; --film-t:#FBF2DE;
+  --up:#D23B2F; --down:#1E4FD6;
+  --f-en:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-en-n:"Archivo Narrow","Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-jp:"Zen Kaku Gothic New","Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  --gut:max(24px,env(safe-area-inset-left,0px));
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --paper:#0F1318; --sheet:#161B22; --ink:#E8ECF0; --sub:#A7B1BC; --faint:#6F7A86; --rule:#28303A;
-  --night:#06080B; --night-rule:#222A34;
-  --pol:#8EAEEB; --foot:#5ACB98; --art:#EC86B8; --film:#E9B45A;
-  --up:#F27F72; --down:#7FB0EC; --fav:#F2915F; --barca:#E85A90; --onacc:#0C1016; --barc:#3A4451; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --paper:#0F1318; --sheet:#161B22; --ink:#E8ECF0; --sub:#A7B1BC; --faint:#6F7A86; --rule:#28303A;
-  --night:#06080B; --night-rule:#222A34;
-  --pol:#8EAEEB; --foot:#5ACB98; --art:#EC86B8; --film:#E9B45A;
-  --up:#F27F72; --down:#7FB0EC; --fav:#F2915F; --barca:#E85A90; --onacc:#0C1016; --barc:#3A4451; color-scheme:dark}
 *{box-sizing:border-box}
-body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.8;-webkit-text-size-adjust:100%;word-break:auto-phrase}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:20;background:var(--night)}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:64px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-jp);font-size:16.5px;line-height:2;letter-spacing:.03em;font-feature-settings:"palt" 0;-webkit-font-smoothing:antialiased;padding-top:env(safe-area-inset-top,0px)}
+[hidden]{display:none!important}
 a{color:inherit}
-:focus-visible{outline:2px solid var(--fav);outline-offset:3px;border-radius:4px}
-.in{max-width:680px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.in{max-width:640px;margin:0 auto;padding-left:var(--gut);padding-right:max(24px,env(safe-area-inset-right,0px))}
+.en{font-family:var(--f-en);letter-spacing:.02em}
+.lab{font-family:var(--f-en-n);font-weight:700;font-size:11px;letter-spacing:.22em;text-transform:uppercase}
 
-/* masthead */
-.mast{background:var(--night);color:var(--night-ink)}
-.mast .in{padding-block:28px 0}
-.mrow{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;color:var(--night-sub);text-transform:uppercase}
-.bigdate{font-family:var(--f-mincho);font-weight:800;font-size:clamp(76px,24vw,128px);line-height:.9;letter-spacing:-.03em;margin-top:18px;font-variant-numeric:tabular-nums}
-.bigdate .dot{color:var(--fav)}
-.dow{font-family:var(--f-mincho);font-weight:600;font-size:18px;margin-top:10px;color:var(--night-sub)}
-.lede{font-family:var(--f-mincho);font-weight:800;font-size:clamp(23px,6.2vw,30px);line-height:1.55;margin:26px 0 0;letter-spacing:.01em}
-.mk{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:30px;border-top:1px solid var(--night-rule)}
-.mk>div{padding:14px 10px 18px 0;min-width:0}
-.mk>div+div{padding-left:12px;border-left:1px solid var(--night-rule)}
-.mk .l{font-size:11px;color:var(--night-sub);letter-spacing:.06em}
-.mk .v{font-family:var(--f-mono);font-size:17px;font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap;line-height:1.5}
-.mk .c{font-family:var(--f-mono);font-size:12px;font-variant-numeric:tabular-nums}
-.mk .up{color:#FF8A7E} .mk .down{color:#8DB9F2} .mk .flat{color:var(--night-sub)}
-@media (max-width:460px){.mk{grid-template-columns:repeat(2,minmax(0,1fr))}.mk>div:nth-child(3){padding-left:0;border-left:0}.mk>div:nth-child(n+3){border-top:1px solid var(--night-rule)}}
+/* ---------- cover ---------- */
+.cover{padding-top:28px}
+.mast{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--hair);padding-bottom:10px}
+.logo{font-family:var(--f-en);font-weight:900;font-size:clamp(40px,13vw,72px);line-height:.82;letter-spacing:-.045em;margin:0}
+.logo small{display:block;font-size:.3em;letter-spacing:.02em;font-weight:800;margin-bottom:.35em}
+.issue{text-align:right;font-family:var(--f-en-n);font-weight:700;font-size:12px;line-height:1.5;letter-spacing:.08em}
+.issue b{display:block;font-family:var(--f-en);font-weight:900;font-size:26px;letter-spacing:-.02em;line-height:1}
+.cv-art{margin:28px 0 0;background:var(--cream);border-radius:2px;aspect-ratio:10/7;overflow:hidden}
+.cv-art svg{display:block;width:100%;height:100%}
+.cv-cap{display:flex;justify-content:space-between;margin-top:8px;color:var(--faint)}
+.lede,.art h3,.op .jp,.vq,.ft{word-break:auto-phrase}
+.lede{font-weight:700;font-size:clamp(19px,5vw,24px);line-height:1.8;letter-spacing:.02em;margin:40px 0 0}
+.mk{display:grid;grid-template-columns:1fr 1fr;margin-top:40px;border-top:1px solid var(--hair)}
+.mk>div{padding:14px 0 16px;border-bottom:1px solid var(--rule)}
+.mk>div:nth-child(odd){padding-right:14px;border-right:1px solid var(--rule)}
+.mk>div:nth-child(even){padding-left:16px}
+.mk .l{font-size:12px;color:var(--sub);line-height:1.4}
+.mk .v{font-family:var(--f-en);font-weight:800;font-size:26px;letter-spacing:-.02em;line-height:1.25;margin-top:4px;font-variant-numeric:tabular-nums}
+.mk .c{font-size:12px;line-height:1.4;font-variant-numeric:tabular-nums}
+.mk .c.up{color:var(--up)} .mk .c.down{color:var(--down)}
 
-/* sticky chapter nav */
-.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--night);border-bottom:1px solid var(--night-rule)}
-.nav .in{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-block:0}
+/* ---------- listen ---------- */
+.lsn{margin-top:56px}
+.lsn .in>div{display:flex;align-items:center;gap:18px;border:1.5px solid var(--hair);border-radius:999px;padding:10px 10px 10px 24px}
+.lsn .lt{flex:1;min-width:0;line-height:1.5}
+.lsn .lt b{display:block;font-size:15px}
+.lsn .lt span{font-size:12px;color:var(--sub)}
+.go{flex:none;display:flex;align-items:center;gap:8px;background:var(--ink);color:#fff;border:0;border-radius:999px;padding:13px 22px;font:700 14px/1 var(--f-jp);letter-spacing:.08em;cursor:pointer}
+.go svg{width:12px;height:12px}
+
+/* ---------- contents ---------- */
+.toc{margin-top:88px}
+.toc h2{margin:0 0 6px;font-family:var(--f-en);font-weight:900;font-size:40px;letter-spacing:-.03em;line-height:1}
+.toc ol{list-style:none;margin:20px 0 0;padding:0;border-top:2px solid var(--hair)}
+.toc li a{display:grid;grid-template-columns:48px 1fr auto;align-items:baseline;gap:8px;padding:16px 0;border-bottom:1px solid var(--rule);text-decoration:none}
+.toc .no{font-family:var(--f-en);font-weight:800;font-size:15px;color:var(--c)}
+.toc .nm{font-weight:700;font-size:17px;line-height:1.5}
+.toc .nm small{display:block;font-family:var(--f-en-n);font-weight:500;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+.toc .ct{font-family:var(--f-en-n);font-size:12px;color:var(--sub);letter-spacing:.1em}
+.favbtn{margin-top:18px;background:none;border:1px solid var(--rule);border-radius:999px;padding:8px 16px;font:500 13px/1 var(--f-jp);color:var(--sub);cursor:pointer}
+.favbtn[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* ---------- sticky nav ---------- */
+.nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule);margin-top:88px}
+.nav .in{display:flex;gap:22px;overflow-x:auto;scrollbar-width:none;padding-block:0}
 .nav .in::-webkit-scrollbar{display:none}
-.nav a,.nav button{flex:none;display:flex;align-items:center;gap:6px;color:var(--night-sub);text-decoration:none;font:500 13px/1 var(--f-body);padding:14px 10px;border:0;background:none;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
-.nav a.on{color:var(--night-ink);border-bottom-color:var(--c)}
-.nav a .sw{width:7px;height:7px;border-radius:50%;background:var(--c)}
-.nav button[aria-pressed="true"]{color:var(--onacc);background:var(--fav);border-radius:999px;padding:7px 12px;margin-block:7px}
-.prog{position:absolute;left:0;bottom:-1px;height:2px;background:var(--night-ink);opacity:.5;width:0}
+.nav a{flex:none;text-decoration:none;font-family:var(--f-en-n);font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);padding:15px 0 13px;border-bottom:2px solid transparent}
+.nav a.on{color:var(--ink);border-color:var(--c)}
+.prog{height:2px;background:var(--ink);width:0;transition:width .15s linear}
 
-/* chapters */
-.ch{scroll-margin-top:calc(env(safe-area-inset-top,0px) + 46px)}
-.opener{border-top:6px solid var(--c);background:var(--sheet)}
-.opener .in{padding-block:36px 8px}
-.en{font-family:var(--f-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--c)}
-.opener h2{font-family:var(--f-mincho);font-weight:800;font-size:clamp(40px,12vw,60px);line-height:1.15;margin:6px 0 0;letter-spacing:.02em}
-.opener .meta{font-size:13px;color:var(--sub);margin-top:6px}
+/* ---------- section opener ---------- */
+.ch{padding-top:96px}
+.op .no{font-family:var(--f-en);font-weight:900;font-size:15px;color:var(--c);letter-spacing:.04em}
+.op h2{margin:10px 0 0;font-family:var(--f-en);font-weight:900;font-size:clamp(46px,14vw,80px);line-height:.92;letter-spacing:-.045em}
+.op .jp{margin-top:14px;font-weight:700;font-size:15px;display:flex;gap:12px;align-items:center}
+.op .jp::before{content:"";width:28px;height:2px;background:var(--c)}
+.op .ill{margin-top:36px;background:var(--t);aspect-ratio:10/7;overflow:hidden}
+.op .ill svg{display:block;width:100%;height:100%}
 
-.lead{background:var(--sheet)}
-.lead .in{padding-block:18px 34px}
-.lead h3{font-family:var(--f-mincho);font-weight:800;font-size:clamp(23px,6vw,28px);line-height:1.5;margin:0}
-.lead p{font-size:16.5px;line-height:1.95;margin:14px 0 0;color:var(--ink);max-width:60ch}
+/* ---------- articles ---------- */
+.art{padding-top:64px}
+.art+.art{margin-top:8px}
+.kick{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.kick .n{font-family:var(--f-en);font-weight:800;font-size:13px;color:var(--c)}
+.kick .g{font-size:12px;font-weight:500;color:var(--sub);letter-spacing:.08em}
+.tag{display:inline-block;font:700 10.5px/1 var(--f-en-n);letter-spacing:.14em;padding:5px 8px 4px;border-radius:99px;vertical-align:3px;margin-left:6px;white-space:nowrap}
+.tag.fav{background:var(--ink);color:#fff}
+.tag.barca{background:#A50044;color:#fff}
+.art h3{margin:12px 0 0;font-weight:900;font-size:clamp(22px,6vw,27px);line-height:1.55;letter-spacing:.01em}
+.art.lead h3{font-size:clamp(26px,7.6vw,34px);line-height:1.45}
+.art p{margin:22px 0 0}
+.art.lead>p{font-size:17.5px}
+.art.lead>p::first-letter{font-weight:900}
+.art .rule{height:1px;background:var(--rule);margin-top:64px}
+.srcs{margin-top:22px;font-size:12px;line-height:1.9;color:var(--faint)}
+.srcs span{font-family:var(--f-en-n);font-weight:700;letter-spacing:.18em;margin-right:10px;color:var(--sub)}
+.srcs a{margin-right:12px;text-underline-offset:3px;text-decoration-color:var(--rule)}
+.speaking{position:relative}
+.speaking::before{content:"";position:absolute;left:calc(var(--gut) * -1 + 6px);top:64px;bottom:0;width:3px;background:var(--c)}
+@media (min-width:700px){.speaking::before{left:max(6px,calc((100vw - 640px)/2 - 18px))}}
 
-.idx{background:var(--paper)}
-.idx .in{padding-block:8px 44px}
-.grp{font-family:var(--f-body);font-weight:700;font-size:12px;letter-spacing:.14em;color:var(--c);margin:26px 0 4px;display:flex;align-items:center;gap:10px}
-.grp::after{content:"";flex:1;height:1px;background:var(--rule)}
-.item{border-bottom:1px solid var(--rule)}
-.item summary{list-style:none;cursor:pointer;display:flex;gap:14px;align-items:flex-start;padding-block:16px}
-.item summary::-webkit-details-marker{display:none}
-.item .t{flex:1;min-width:0;font-weight:700;font-size:16.5px;line-height:1.6}
-.pm{flex:none;width:22px;height:22px;margin-top:2px;border-radius:50%;border:1px solid var(--rule);position:relative}
-.pm::before,.pm::after{content:"";position:absolute;left:50%;top:50%;width:9px;height:1.5px;background:var(--sub);transform:translate(-50%,-50%)}
-.pm::after{transform:translate(-50%,-50%) rotate(90deg);transition:transform .2s}
-.item[open] .pm::after{transform:translate(-50%,-50%) rotate(0deg)}
-.item .b{padding-bottom:18px}
-.item .b p{margin:0;font-size:15.5px;line-height:1.9;color:var(--ink);max-width:60ch}
-
-.tag{display:inline-block;font:500 10px/1 var(--f-mono);letter-spacing:.06em;padding:4px 6px 3px;border-radius:3px;margin-left:8px;vertical-align:3px;color:var(--onacc);white-space:nowrap}
-.tag.fav{background:var(--fav)} .tag.barca{background:var(--barca)}
-.srcs{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:12px;font-size:12.5px}
-.srcs a{color:var(--c);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px}
-.srcs a::after{content:" ↗";color:var(--faint)}
-.srcs span{color:var(--faint);font-family:var(--f-mono);font-size:10px;letter-spacing:.12em}
-
-.foot{background:var(--night);color:var(--night-sub);font-size:12px;line-height:1.8}
-.foot .in{padding-block:32px 40px}
-.foot b{color:var(--night-ink);font-family:var(--f-mincho);font-size:16px;display:block;margin-bottom:6px}
-
-/* illustrations & figures */
-.mast{position:relative;overflow:hidden}
-.sun{position:absolute;right:-60px;top:-40px;width:300px;height:300px;color:var(--fav);opacity:.9;pointer-events:none}
-.mast .in{position:relative}
-.otop{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
-.illo{width:clamp(92px,26vw,132px);height:auto;color:var(--c);display:block;flex:none}
-.fig{margin:22px 0 0;padding:18px 16px 14px;background:var(--paper);border-radius:10px}
-.idx .fig{background:var(--sheet)}
-.fig .fl{font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;color:var(--c);text-transform:uppercase}
-.fig .ft{font-weight:700;font-size:14.5px;line-height:1.5;margin-top:2px}
-.fig .fn{font-size:11.5px;color:var(--faint);margin-top:10px;line-height:1.6}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:14px;margin-top:12px}
-.stats .sv{font-family:var(--f-mincho);font-weight:800;font-size:clamp(30px,9vw,40px);line-height:1.1;font-variant-numeric:tabular-nums}
+/* figures */
+.fig{margin:40px 0 0;padding:26px 0 0;border-top:2px solid var(--hair)}
+.fig .fl{color:var(--c)}
+.fig .ft{font-weight:700;font-size:15px;margin-top:6px;line-height:1.6}
+.fig .fn{font-size:11.5px;color:var(--faint);margin-top:14px;line-height:1.7}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:20px 18px;margin-top:18px}
+.stats .sv{font-family:var(--f-en);font-weight:900;font-size:40px;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
 .stats .sv.up{color:var(--up)} .stats .sv.down{color:var(--down)}
-.stats .sl{font-size:12.5px;color:var(--sub);line-height:1.5;margin-top:4px}
-.bars{display:grid;gap:9px;margin-top:12px}
-.bar{display:grid;grid-template-columns:minmax(0,7.5em) minmax(0,1fr);gap:10px;align-items:center;font-size:12.5px}
-.bar .bl{color:var(--sub);line-height:1.35;overflow-wrap:anywhere}
+.stats .sl{font-size:12px;color:var(--sub);line-height:1.6;margin-top:8px}
+.bars{margin-top:18px;display:grid;gap:12px}
+.bar{display:grid;grid-template-columns:6.5em 1fr;align-items:center;gap:10px;font-size:13px;line-height:1.4}
 .bar .track{display:flex;align-items:center;gap:8px;min-width:0}
-.bar .fill{height:14px;border-radius:0 3px 3px 0;background:var(--barc);flex:none;min-width:2px}
-.bar.hi .fill{background:var(--c)} .bar.hi .bl{color:var(--ink);font-weight:700}
-.bar .bv{font-family:var(--f-mono);font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap}
-.tl{list-style:none;margin:14px 0 0;padding:0;position:relative}
-.tl::before{content:"";position:absolute;left:5px;top:8px;bottom:8px;width:1.5px;background:var(--rule)}
-.tl li{position:relative;padding-left:26px;display:grid;grid-template-columns:4.2em minmax(0,1fr);gap:10px;padding-block:6px;font-size:14px;line-height:1.55}
-.tl li::before{content:"";position:absolute;left:0;top:12px;width:12px;height:12px;border-radius:50%;background:var(--sheet);border:2px solid var(--c);box-sizing:border-box}
-.tl li.hi::before{background:var(--c)}
-.tl .td{font-family:var(--f-mono);font-size:12.5px;color:var(--c);font-weight:500;padding-top:1px}
+.bar .fill{height:12px;background:var(--ink);opacity:.18;flex:none}
+.bar.hi .fill{background:var(--c);opacity:1}
+.bar .bv{font-family:var(--f-en);font-weight:700;font-size:13px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tl{list-style:none;margin:18px 0 0;padding:0}
+.tl li{display:grid;grid-template-columns:5.5em minmax(0,1fr);gap:12px;padding:10px 0;border-top:1px solid var(--rule);font-size:14px;line-height:1.7}
+.tl .td{font-family:var(--f-en-n);font-weight:700;font-size:13px;color:var(--sub)}
+.tl li.hi .td{color:var(--c)}
 .tl li.hi .tx{font-weight:700}
-/* debate: two opposing views */
-:root{--v0:#A8512A;--v1:#2C6A87}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--v0:#EE9B72;--v1:#7DBCDB}}
-:root[data-theme="dark"]{--v0:#EE9B72;--v1:#7DBCDB}
-.vw{margin:22px 0 0;border-top:1px solid var(--rule);padding-top:14px}
-.vl{font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;color:var(--c);text-transform:uppercase}
-.vq{font-weight:700;font-size:14.5px;line-height:1.5;margin-top:2px}
-.vg{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-top:10px}
-.vc{background:var(--paper);border-radius:10px;padding:14px 14px 12px;border-top:3px solid var(--va);min-width:0}
-.idx .vc{background:var(--sheet)}
-.vc.v0{--va:var(--v0)} .vc.v1{--va:var(--v1)}
-.vs{font-weight:700;font-size:13px;color:var(--va);letter-spacing:.04em}
-.vc p.vp{margin:6px 0 0;font-size:14.5px;line-height:1.8;color:var(--ink)}
-.vwho{font-size:12px;color:var(--sub);margin-top:8px;line-height:1.5}
-.va{display:inline-block;font-size:12px;color:var(--va);text-decoration:none;border-bottom:1px solid currentColor;margin-top:6px}
-.va::after{content:" ↗";color:var(--faint)}
-@media (prefers-reduced-motion:reduce){.pm::after{transition:none}}
-/* home-screen install guide */
-.inst{background:var(--night);color:var(--night-ink);border-top:1px solid var(--night-rule)}
-.inst .in{padding-block:16px 18px;display:grid;gap:10px}
-.inst .ih{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.inst b{font-family:var(--f-mincho);font-size:16px}
-.inst .x{flex:none;font:500 12px/1 var(--f-body);color:var(--night-sub);background:none;border:1px solid var(--night-rule);border-radius:999px;padding:7px 12px;cursor:pointer}
-.inst ol{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:13.5px;line-height:1.6;color:var(--night-sub)}
-.inst ol li{display:grid;grid-template-columns:5.5em minmax(0,1fr);gap:8px}
-.inst ol li span:first-child{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;color:var(--fav);padding-top:2px}
-.inst .k{color:var(--night-ink);font-weight:700}
-.inst .nt{font-size:12px;color:var(--night-sub);line-height:1.6}
-.again{background:none;border:0;color:var(--night-sub);font:inherit;text-decoration:underline;cursor:pointer;padding:0;margin-top:6px}
+.tx,.vp,.art p,.art h3,.bl{overflow-wrap:anywhere}
 
-/* listen: read-aloud player */
-.lsn{background:var(--night);border-top:1px solid var(--night-rule)}
-.lsn .in{padding-block:14px 16px;display:flex;align-items:center;gap:14px}
-.lsn .lt{flex:1;min-width:0;color:var(--night-sub);font-size:13px;line-height:1.5}
-.lsn .lt b{display:block;color:var(--night-ink);font-family:var(--f-mincho);font-size:17px}
-.lsn .go{flex:none;display:flex;align-items:center;gap:8px;background:var(--fav);color:var(--onacc);border:0;border-radius:999px;padding:11px 18px;font:700 14px/1 var(--f-body);cursor:pointer}
-.lsn .go svg{width:14px;height:14px}
-.player{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--night);color:var(--night-ink);border-top:1px solid var(--night-rule);padding-bottom:env(safe-area-inset-bottom,0px)}
-.player .in{padding-block:10px 12px;display:grid;gap:8px}
-.pl-now{display:flex;gap:10px;align-items:baseline;min-width:0}
-.pl-sec{flex:none;font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--pc,var(--night-sub))}
-.pl-ttl{flex:1;min-width:0;font-size:13.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pl-pos{flex:none;font-family:var(--f-mono);font-size:11px;color:var(--night-sub);font-variant-numeric:tabular-nums}
-.pl-bar{height:3px;background:var(--night-rule);border-radius:2px;overflow:hidden}
-.pl-bar i{display:block;height:100%;width:0;background:var(--fav);transition:width .3s}
-.pl-ctl{display:flex;align-items:center;gap:8px}
-.pl-ctl button{display:grid;place-items:center;background:none;border:1px solid var(--night-rule);color:var(--night-ink);border-radius:999px;width:42px;height:42px;cursor:pointer;flex:none}
-.pl-ctl button svg{width:16px;height:16px}
-.pl-ctl .pp{width:52px;height:52px;background:var(--fav);border-color:var(--fav);color:var(--onacc)}
-.pl-ctl .pp svg{width:20px;height:20px}
-.pl-ctl .rate{width:auto;padding:0 12px;font:500 12px/1 var(--f-mono);height:34px}
+/* two views */
+.vw{margin-top:40px;background:var(--tint);padding:28px 24px 24px}
+.vw .vq{font-weight:900;font-size:18px;line-height:1.65;margin-top:8px}
+.vc{margin-top:22px;padding-top:18px;border-top:1px solid var(--rule)}
+.vc .vs{font-weight:700;font-size:14px;display:flex;gap:8px;align-items:center}
+.vc .vs::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--c)}
+.vc.v1 .vs::before{background:transparent;box-shadow:inset 0 0 0 2px var(--c)}
+.vc .vp{margin:10px 0 0;font-size:14.5px;line-height:1.95}
+.vc .vwho{margin-top:10px;font-size:12px;color:var(--sub);line-height:1.7}
+.vc .va{display:inline-block;margin-top:4px;font-size:11.5px;color:var(--faint);text-underline-offset:3px}
+
+/* footer */
+.foot{margin-top:120px;border-top:2px solid var(--hair);padding:28px 0 64px;font-size:12px;line-height:1.9;color:var(--sub)}
+.foot .logo{font-size:30px;margin-bottom:14px;color:var(--ink)}
+body.listening .foot{padding-bottom:220px}
+
+/* ---------- player ---------- */
+.player{position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff;border-top:1.5px solid var(--hair);padding-bottom:env(safe-area-inset-bottom,0px)}
+.player .in{padding-block:12px 12px;display:grid;gap:10px}
+.pl-now{display:flex;align-items:baseline;gap:10px;min-width:0;line-height:1.4}
+.pl-sec{flex:none;font-family:var(--f-en-n);font-weight:700;font-size:11px;letter-spacing:.14em;color:var(--pc,var(--ink))}
+.pl-ttl{flex:1;min-width:0;font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-pos{flex:none;font-family:var(--f-en-n);font-size:11px;color:var(--faint)}
+.pl-bar{height:2px;background:var(--rule)}
+.pl-bar i{display:block;height:100%;width:0;background:var(--pc,var(--ink))}
+.pl-ctl{display:flex;align-items:center;gap:10px}
+.pl-ctl button{background:none;border:1px solid var(--rule);color:var(--ink);border-radius:999px;height:42px;min-width:42px;display:grid;place-items:center;cursor:pointer;font:600 12px/1 var(--f-en)}
+.pl-ctl button svg{width:14px;height:14px}
+.pl-ctl .pp{background:var(--ink);border-color:var(--ink);color:#fff;width:52px;height:52px}
+.pl-ctl .pp svg{width:16px;height:16px}
+.pl-ctl .rate{padding:0 12px}
 .pl-ctl .sp{flex:1}
-.pl-ctl .x{width:auto;height:34px;padding:0 12px;font:500 12px/1 var(--f-body);color:var(--night-sub)}
-.pl-note{font-size:11.5px;color:var(--night-sub);line-height:1.5}
-body.listening .foot .in{padding-bottom:190px}
-.speaking{box-shadow:inset 4px 0 0 var(--c)}
-@media (prefers-reduced-motion:reduce){.pl-bar i{transition:none}}
+.pl-ctl .x{padding:0 14px;font-family:var(--f-jp);font-weight:500}
+.pl-note{font-size:11px;color:var(--faint);line-height:1.5}
+.pl-note a{color:var(--sub)}
 
-/* desktop: wider sheet, larger type, two-column masthead and story index */
-@media (min-width:768px){
+@media (min-width:900px){
   body{font-size:17px}
-  .in{max-width:880px;padding-left:max(40px,env(safe-area-inset-left,0px));padding-right:max(40px,env(safe-area-inset-right,0px))}
-  .lead h3{font-size:32px}
-  .lead p{font-size:18px;max-width:68ch}
-  .item .t{font-size:17.5px}
-  .item .b p{font-size:16.5px;max-width:none}
-  .vc p.vp{font-size:15.5px}
-  .srcs{font-size:13.5px}
-  .nav a,.nav button{font-size:14.5px;padding:16px 14px}
-}
-@media (min-width:1100px){
-  body{font-size:18px}
-  .in{max-width:1180px;padding-left:max(56px,env(safe-area-inset-left,0px));padding-right:max(56px,env(safe-area-inset-right,0px))}
-  .mast .in{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr);column-gap:72px;padding-block:40px 0}
-  .mrow,.mk{grid-column:1/-1}
-  .bigdate{grid-column:1;grid-row:2;font-size:168px;margin-top:22px}
-  .dow{grid-column:1;grid-row:3;font-size:22px}
-  .lede{grid-column:2;grid-row:2/span 2;align-self:end;font-size:34px;line-height:1.6;margin:0 0 6px}
-  .mk{margin-top:40px}
-  .mk>div{padding:18px 16px 22px 0}
-  .mk>div+div{padding-left:20px}
-  .mk .l{font-size:13px}
-  .mk .v{font-size:24px}
-  .mk .c{font-size:14px}
-  .sun{width:440px;height:440px;right:-230px;top:-150px;opacity:.5}
-  .dow{align-self:end;margin-bottom:8px}
-  .lede{max-width:22em}
-  .inst .in,.lsn .in{padding-block:18px 20px}
-  .lsn .lt b{font-size:19px}
-  .opener .in{padding-block:52px 10px}
-  .opener h2{font-size:76px}
-  .opener .meta{font-size:14px}
-  .illo{width:156px}
-  .lead .in{padding-block:22px 48px}
-  .lead h3{font-size:38px;line-height:1.45;max-width:30em}
-  .lead p{font-size:19px;line-height:2}
-  .fig{max-width:760px;padding:22px 22px 18px}
-  .fig .ft{font-size:16px}
-  .stats .sv{font-size:44px}
-  .stats .sl{font-size:13.5px}
-  .bar{font-size:14px;grid-template-columns:minmax(0,10em) minmax(0,1fr)}
-  .bar .bv{font-size:13.5px}
-  .tl li{font-size:15.5px;grid-template-columns:5em minmax(0,1fr)}
-  .vq{font-size:16.5px}
-  .vs{font-size:14px}
-  .vc{padding:18px 20px 16px}
-  .vc p.vp{font-size:16px}
-  .vwho,.va{font-size:13px}
-  .idx .in{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:56px;align-items:start;padding-block:16px 56px}
-  .grp{grid-column:1/-1;font-size:13px;margin:34px 0 6px}
-  .item summary{padding-block:20px}
-  .item .t{font-size:18.5px}
-  .item .b p{font-size:17px;line-height:1.95}
-  .item .vg{grid-template-columns:1fr}
-  .foot .in{padding-block:40px 52px;font-size:13px}
-  .player .in{max-width:880px}
+  .in{max-width:700px}
+  .cover{padding-top:56px}
 }
 </style>
+</head>
+<body>
 
-<header class="mast">
-  <svg class="sun" viewBox="0 0 300 300" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="150" cy="150" r="46" fill="currentColor" stroke="none" opacity=".9"/><circle cx="150" cy="150" r="70" opacity=".45"/><circle cx="150" cy="150" r="96" opacity=".28"/><circle cx="150" cy="150" r="124" opacity=".16"/><circle cx="150" cy="150" r="148" opacity=".08"/></g></svg>
-  <div class="in">
-    <div class="mrow"><span>Morning Brief</span><span id="year"></span></div>
-    <div class="bigdate" id="date"></div>
-    <div class="dow" id="dow"></div>
-    <p class="lede" id="headline"></p>
-    <div class="mk" id="markets"></div>
+<header class="cover"><div class="in">
+  <div class="mast">
+    <h1 class="logo"><small>The</small>MORNING<br>BRIEF</h1>
+    <div class="issue"><b id="iss-d"></b><span id="iss-w"></span><br><span id="iss-y"></span></div>
   </div>
-</header>
-<section class="inst" id="inst" aria-label="ホーム画面に追加する方法"><div class="in">
-  <div class="ih"><b>ホーム画面に置いて、アプリのように開く</b><button type="button" class="x" id="inst-close">閉じる</button></div>
-  <ol>
-    <li><span>iPhone</span><span>このページをSafariで開き、下の<span class="k">共有ボタン</span>から<span class="k">「ホーム画面に追加」</span>を選びます。</span></li>
-    <li><span>Android</span><span>Chromeで開き、右上の<span class="k">︙</span>から<span class="k">「ホーム画面に追加」</span>を選びます。</span></li>
-  </ol>
-  <div class="nt">URLは毎朝同じなので、一度置けば最新のニュースが開きます。</div>
+  <div class="cv-art" id="cv-art"></div>
+  <div class="cv-cap lab"><span>Today's Issue</span><span id="cv-n"></span></div>
+  <p class="lede" id="headline"></p>
+  <div class="mk" id="markets"></div>
+</div></header>
+
+<section class="lsn" id="lsn" aria-label="音声で聞く"><div class="in"><div>
+  <div class="lt"><b>歩きながら聞く</b><span id="lsn-sub">約11分・画面を消しても続きます</span><span id="lsn-meta" hidden></span></div>
+  <button type="button" class="go" id="lsn-go"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg><span>聞く</span></button>
+</div></div></section>
+
+<section class="toc" aria-label="目次"><div class="in">
+  <div class="lab" style="color:var(--faint)">Contents</div>
+  <h2>In This Issue</h2>
+  <ol id="toc"></ol>
+  <button type="button" class="favbtn" id="favbtn" aria-pressed="false" hidden></button>
 </div></section>
-<section class="lsn" id="lsn" aria-label="音声で聞く"><div class="in"><div class="lt"><b>歩きながら聞く</b><span>Geminiの声で約12分。画面を消しても再生が続きます</span><span id="lsn-meta" hidden></span></div><button type="button" class="go" id="lsn-go"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg><span>聞く</span></button></div></section>
+
+<nav class="nav" aria-label="ジャンル"><div class="in" id="nav"></div><div class="prog" id="prog"></div></nav>
+<main id="main"></main>
+
+<footer class="foot"><div class="in">
+  <div class="logo">MORNING<br>BRIEF</div>
+  直近24時間（日本時間）のニュースを、一次ソースと信頼できる報道機関からまとめています。各記事の出典から原文を確認できます。<br>
+  <span id="updated"></span>
+</div></footer>
+
 <div class="player" id="player" hidden><div class="in">
   <div class="pl-now"><span class="pl-sec" id="pl-sec"></span><span class="pl-ttl" id="pl-ttl"></span><span class="pl-pos" id="pl-pos"></span></div>
   <div class="pl-bar"><i id="pl-bar"></i></div>
   <div class="pl-ctl">
-    <button type="button" id="pl-prev" aria-label="前の項目"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2.5h2v11H3zM14 2.5v11L6 8z" fill="currentColor"/></svg></button>
+    <button type="button" id="pl-prev" aria-label="前の記事"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2.5h2v11H3zM14 2.5v11L6 8z" fill="currentColor"/></svg></button>
     <button type="button" class="pp" id="pl-pp" aria-label="一時停止"></button>
-    <button type="button" id="pl-next" aria-label="次の項目"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11 2.5h2v11h-2zM2 2.5v11L10 8z" fill="currentColor"/></svg></button>
-    <button type="button" class="rate" id="pl-rate" aria-label="読み上げの速さ">1.0×</button>
+    <button type="button" id="pl-next" aria-label="次の記事"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11 2.5h2v11h-2zM2 2.5v11L10 8z" fill="currentColor"/></svg></button>
+    <button type="button" class="rate" id="pl-rate" aria-label="再生の速さ">1.0×</button>
     <span class="sp"></span>
-    <button type="button" class="x" id="pl-stop">終了</button>
+    <button type="button" class="x" id="pl-stop">閉じる</button>
   </div>
-  <div class="pl-note" id="pl-note">画面を消しても続きます。<a href="video.html" style="color:inherit">テロップ画面で見る</a></div>
+  <div class="pl-note" id="pl-note">画面を消しても続きます。<a href="video.html">テロップ画面で見る</a></div>
 </div></div>
-<nav class="nav" aria-label="ジャンル"><div class="in" id="nav"></div><div class="prog" id="prog"></div></nav>
-<main id="main"></main>
-<footer class="foot"><div class="in"><b>朝のニュース</b>直近24時間（日本時間）のニュースを、一次ソースと信頼できる報道機関からまとめています。各項目の出典から原文を確認できます。<br><span id="updated"></span><br><button type="button" class="again" id="inst-open">ホーム画面に追加する方法</button></div></footer>
 
 <script type="application/json" id="news-data">{"date": "2026-11-18", "weekday": "水", "headline": "クアッド首脳がマニラで2年ぶりに会合し、エヌビディアは売上高1158億ドルで予想を上回る。米国の利上げ観測とAI不安で日米の株価は続落し、日経平均は5万8860円。ハーランドの96分の決勝弾でノルウェーが8強入りし、パナヒ監督への新たな判決にカンヌが抗議。", "markets": [{"label": "日経平均", "value": "58,860", "change": "−802（17日終値）", "dir": "down"}, {"label": "ドル円", "value": "159.12円", "change": "17日NY終値", "dir": "flat"}, {"label": "NYダウ（17日）", "value": "50,759", "change": "−849ドル（−1.6%）", "dir": "down"}, {"label": "米10年債", "value": "5.10%", "change": "−0.02（引け前）", "dir": "down"}], "sections": [{"id": "politics", "name": "政治・経済", "items": [{"title": "クアッド首脳会合、2年ぶりにマニラで開催　海洋監視と重要鉱物で合意", "body": "17日、トランプ大統領、モディ首相、アルバニージー首相、高市首相の4人がASEAN関連会議に合わせてマニラで会合を開いた。共同文書は中国を名指ししなかった。そのうえで、力や威圧で現状を変えることに反対し、恣意的な輸出規制などの「経済的威圧」に深い懸念を示した。具体策として、海洋監視協力の新設、4カ国の哨戒機による2027年の共同演習、重要鉱物の供給網に関する協定を打ち出している。トランプ氏にとって初めてのクアッド会合で、米印の関税摩擦で止まっていた枠組みが動き出した。高市首相とトランプ氏も会場で短く懇談した。", "src": [["ホワイトハウス", "https://www.whitehouse.gov/briefings-statements/2026/11/quad-leaders-summit-joint-press-release/"], ["Al Jazeera", "https://www.aljazeera.com/news/2026/11/17/trump-announces-critical-minerals-agreements-at-quad-meeting-in-manila"], ["神奈川新聞（共同）", "https://www.kanaloco.jp/news/government/article-1321475.html"]], "debate": {"q": "クアッドは実務で成果を出せる枠組みか、構造的な限界を抱えた集まりか", "views": [{"side": "実務で成果を出せる", "point": "会合が続いていること自体が枠組みの存続を示しており、海洋状況把握などの初期成果からも実務的な結果を出せると評価した。分野を絞って焦点を定めれば、具体的な利益を生みやすくなるとみる（2026年5月の外相会合の分析）。", "who": "アクリティ・ヴァスデヴァ・カリヤンカル（スティムソン・センター フェロー）", "src": ["Stimson Center（2026年5月）", "https://www.stimson.org/2026/takeaways-from-the-quad-foreign-ministers-meeting/"]}, {"side": "構造的な限界がある", "point": "弱点の原因は特定の政権ではなく構造にあり、各国の利害がずれているうえ、特にインドは戦略的な自律を重んじると指摘した。発表と実績の差が続いているので、過去の約束の実行状況を点検する仕組みが必要だと論じる（同じく2026年5月）。", "who": "ケリー・グリエコ（スティムソン・センター シニアフェロー）", "src": ["Stimson Center（2026年5月）", "https://www.stimson.org/2026/takeaways-from-the-quad-foreign-ministers-meeting/"]}]}}, {"title": "高市首相、初の訪中でAPEC深圳へ　日中首脳会談は見通せず", "body": "高市首相はマニラから中国・深圳に移り、18日に始まるAPEC首脳会議に出席する。就任後初めての訪中で、19日に帰国する予定だ。首相が国会で台湾有事に触れて以降、中国は貿易制限や渡航への注意喚起で対抗しており、日中関係は大きく冷え込んでいる。習近平主席との正式な会談の調整は難航していると伝えられ、短い接触にとどまるかどうかが焦点だ。", "src": [["NHK", "https://news.web.nhk/newsweb/na/nd-20261118de77459"], ["nippon.com（時事）", "https://www.nippon.com/ja/articles/-/57367"], ["China-Global South Project（AFP）", "https://chinaglobalsouth.com/analysis/takaichi-xi-meeting-apec-china-japan-taiwan/"]], "debate": {"q": "日中関係を動かす「次の一手」は日本と中国のどちらが打つべきか", "views": [{"side": "日本の歩み寄りが前提", "point": "日本が謝罪に近いシグナルを出さないかぎり、習氏が会談に応じる可能性は極めて低いとみる。中国は自国の懸念に日本が応じるまで、どの問題でも関与しない姿勢だと分析した（11/16のAFP報道でのコメント）。", "who": "ボニー・グレーザー（ジャーマン・マーシャル・ファンド インド太平洋プログラム）", "src": ["AFP（China-Global South Project, 11/16）", "https://chinaglobalsouth.com/analysis/takaichi-xi-meeting-apec-china-japan-taiwan/"]}, {"side": "軟化を迫られているのは中国", "point": "中国の態度がやわらいできたのは、日本企業の撤退などで経済的な打撃を受けたためで、強硬路線は目的を果たせていないとみる。高市首相の応答を引き出すには、拘束中の日本人の解放など中国がよりはっきりした行動を示す必要があると論じた（同じ報道）。", "who": "高原明生（東京女子大学 特任教授）", "src": ["AFP（China-Global South Project, 11/16）", "https://chinaglobalsouth.com/analysis/takaichi-xi-meeting-apec-china-japan-taiwan/"]}]}}, {"title": "19日に初の米中ロ首脳会談　「新ヤルタ」への警戒も", "body": "中国外務省は、習主席、トランプ大統領、プーチン大統領による初めての3カ国首脳会談を19日に深圳で開くと発表した。議題は公表されていない。米国は核軍備管理への中国の参加を重視しており、新START条約は2026年2月に失効している。ロシアはウクライナと欧州の安全保障を議題にしたい考えだ。大国が頭越しに勢力圏を取引することへの懸念が、ウクライナ、台湾、欧州で広がっている。トランプ氏がアジアで何を約束するかは、日本にとっても重い意味を持つ。", "src": [["Tribune India", "https://www.tribuneindia.com/news/world/china-confirms-first-xi-trump-putin-summit-on-november-19/"], ["Al-Monitor（ロイター）", "https://www.al-monitor.com/originals/2026/11/analysis-new-yalta-trump-and-putin-push-meeting-xi-wary-hosting"]], "debate": {"q": "米中ロ3首脳の会談は世界を安定させるか", "views": [{"side": "米国に不利でリスクが大きい", "point": "米国にとっては得るものより、悪い方向に転ぶリスクのほうが大きいとみる。ウクライナでも3カ国の軍備管理でも、突破口は期待しにくいと論じた（11/12の論考）。", "who": "ライアン・ハス（ブルッキングス研究所）", "src": ["Brookings（11/12）", "https://www.brookings.edu/articles/trump-xi-and-putin-what-to-expect-from-the-apec-summit/"]}, {"side": "直接対話には意味がある", "point": "ウクライナや軍備管理がすぐに解決するわけではないが、首脳が直接会えば緊張が激化するリスクを下げられると主張した。エネルギーや供給網での協力にも利点があるとし、中国が大国による世界の分割を認めないことを条件に支持した（10月5日の社説）。", "who": "The Standard（香港の英字紙）社説", "src": ["The Standard（10/5）", "https://www.thestandard.com.hk/editorial/article/344570/The-Shenzhen-tripartite-proposition-optical-power-strategic-realism-and-global-stability"]}]}}, {"title": "米連銀総裁「春までに複数回の利上げ」　ダウ849ドル安、日経平均も続落", "body": "セントルイス連銀のムサレム総裁は17日の講演で、近いうちに利上げが必要で、2027年春までにさらに複数回の利上げが要るとの考えを示した。物価上昇率が総合とコアの両方で3%を超え、上昇が幅広い品目に広がっていることを理由に挙げている。AI関連株への不安も重なり、NYダウは848.75ドル安の5万759ドルで引けた。東京市場も日経平均が801円安の5万8860円と2日続けて下げ、5万9000円を割り込んだ。日米の金利差を通じて円相場にも響く話だ。", "src": [["Yahoo Finance", "https://finance.yahoo.com/economy/policy/article/st-louis-feds-musalem-calls-for-interest-rate-hikes-soon-132554806.html"], ["WTOC（AP）", "https://www.wtoc.com/2026/11/17/another-wipeout-hits-wall-street-nvidia-other-jittery-ai-stocks-swing-lower/"], ["財経新聞", "https://www.zaikei.co.jp/article/20261117/878046.html"]], "viz": {"type": "bars", "title": "17日の日米株価指数の下落率", "unit": "%", "items": [{"label": "NYダウ", "value": -1.6, "display": "−1.6%", "hi": true}, {"label": "日経平均", "value": -1.34, "display": "−1.34%"}, {"label": "S&P500", "value": -1.0, "display": "−1.0%"}, {"label": "ナスダック", "value": -0.7, "display": "−0.7%"}], "note": "出典：AP（WTOC）、財経新聞。日経平均の率は801.59円安÷前日終値59,662円で計算"}, "debate": {"q": "FRBはイラン戦争に伴う物価高に利上げで応じるべきか", "views": [{"side": "利上げに慎重", "point": "今のインフレはイラン戦争によるエネルギーの供給ショックが原因で、そのショックは和らぎ始めていると主張した。大幅な利上げは避けて先を見た判断をすべきで、昨年利下げしたばかりで急に方向を変えるのは賢明でないとの立場だ（11/13）。", "who": "スコット・ベッセント（米財務長官）", "src": ["ロイター（WHBL, 11/13）", "https://whbl.com/2026/11/13/us-treasury-chief-says-fed-should-not-hike-rates-over-energy-shock-tied-to-iran-war/"]}, {"side": "引き締めが必要", "point": "物価の上昇は原油と関係の薄いサービスや医療にまで広がっており、エネルギーだけでは説明できないと指摘した。原油価格がどうなっても解消しない問題で、FRBには信認を取り戻す仕事が残っていると論じる（同じ報道）。", "who": "オースタン・グールズビー（シカゴ連銀総裁）", "src": ["ロイター（WHBL, 11/13）", "https://whbl.com/2026/11/13/us-treasury-chief-says-fed-should-not-hike-rates-over-energy-shock-tied-to-iran-war/"]}]}}, {"title": "米軍、ホルムズ海峡のケシム島でイランのミサイル拠点を攻撃", "body": "米軍機は17日、ホルムズ海峡に浮かぶイランのケシム島で、革命防衛隊のミサイル発射拠点を精密誘導弾で攻撃した。米側は、イランによる米軍要員や施設への攻撃に対する自衛だと説明している。イランはバーレーンの米軍レーダーを無人機で攻撃したと発表し、米中央軍は迎撃したとしている。バーレーンが狙われたのは1週間足らずで3回目だ。北海ブレント原油は1バレル93ドル台に上がった。前日まではイラン側の攻撃が続いていたが、今回は米国が反撃に出た。", "src": [["The National", "https://www.thenationalnews.com/news/us/2026/11/17/us-jets-strike-irgc-missile-launch-site-on-irans-qeshm-island-in-self-defence/"], ["WTOC（AP）", "https://www.wtoc.com/2026/11/17/another-wipeout-hits-wall-street-nvidia-other-jittery-ai-stocks-swing-lower/"]], "debate": {"q": "米国の海上封鎖による圧力はイランに効いているか", "views": [{"side": "時間は米国に有利", "point": "経済的な痛みに耐える力は米国のほうが大きく、イランは経済的に追い詰められていくとみる。ただし、封鎖を破るためにイランが湾岸の産油国を攻撃するおそれもあり、双方が引かないこう着が続くと分析した（11/17）。", "who": "タルハ・アブドゥルラザク（英エクセター大学 戦略安全保障研究所 研究員）", "src": ["Al Jazeera（11/17）", "https://www.aljazeera.com/news/2026/11/17/is-the-us-israel-war-on-iran-turning-into-a-frozen-conflict"]}, {"side": "封鎖はもろい", "point": "ホルムズの包囲が続くのは、米国にとってコストが安い間だけだと指摘した。米兵の死者、燃料価格の急騰、高濃縮ウランの移送の兆しのどれかが出れば崩れるとし、査察の再開と封鎖の解除を組み合わせた水面下の取引が現実的な出口だと論じる（同じ記事）。", "who": "ムハナド・セルーム（ドーハ大学院大学 助教）", "src": ["Al Jazeera（11/17）", "https://www.aljazeera.com/news/2026/11/17/is-the-us-israel-war-on-iran-turning-into-a-frozen-conflict"]}]}}, {"group": "AI・テクノロジー", "title": "エヌビディア、フアン氏退任後初の決算で予想超え　次の四半期は1300億ドル見通し", "body": "エヌビディアの8〜10月期の売上高は1158億ドルで、前年同期の約2倍になった。データセンター部門は1076億ドルで、市場予想の約1091億ドルを上回っている。11〜1月期の売上高は1300億ドル（±3%）と予想を超える見通しを示したが、この数字に中国向けのデータセンター用チップは含まれていない。株価は時間外取引で2〜3%上がった。暫定CEOを務めるクレス氏は、次世代の「Vera Rubin」の出だしが好調だと強調している。トップ交代の混乱が続くなかでも、AI需要の強さを数字で示した決算だ。", "src": [["NVIDIA（GlobeNewswire）", "https://www.globenewswire.com/news-release/2026/11/17/3405200/0/en/nvidia-announces-financial-results-for-third-quarter-fiscal-2027.html"], ["24/7 Wall St.", "https://247wallst.com/investing/2026/11/17/nvidias-first-report-without-jensen-huang-115-8-billion-in-revenue-a-130-billion-forecast-and-the-stock-is-up-2-3-after-hours/"], ["CBS News", "https://www.cbsnews.com/news/nvidia-earnings-jensen-huang-colette-kress/"]], "viz": {"type": "stats", "title": "エヌビディア 8〜10月期決算", "items": [{"value": "$115.8B", "label": "売上高（前年同期比+103%）", "dir": "up"}, {"value": "$107.6B", "label": "データセンター部門", "dir": "up"}, {"value": "$130B", "label": "11〜1月期の売上見通し（±3%）", "dir": "up"}], "note": "出典：NVIDIA決算発表、CBS News"}, "debate": {"q": "決算を前に、エヌビディア株は買い場だったのか", "views": [{"side": "悲観が行き過ぎ", "point": "市場はAI需要のピークを2028年とみて、利益率の大幅な低下まで株価に織り込んでいると指摘した。その前提はあまりに厳しすぎるとして、悲観が行き過ぎているとの見方を示した（決算前の11月中旬のコメント）。", "who": "ティム・アーキュリ（UBS 半導体アナリスト）", "src": ["Yahoo Finance（ライブ解説）", "https://finance.yahoo.com/technology/live/nvidia-live-updates-interim-ceo-kress-prepares-for-q3-earnings-with-huang-reportedly-planning-comeback-153114076.html"]}, {"side": "今は買いを勧めにくい", "point": "投資判断を「市場並み」に下げ、目標株価を400ドルから200ドルに半分にした。トップ交代の不透明さなどを踏まえ、今の段階で買いを勧めるのは難しいとの立場だ（決算前の11月中旬）。", "who": "ステーシー・ラスゴン（バーンスタイン アナリスト）", "src": ["Yahoo Finance（ライブ解説）", "https://finance.yahoo.com/technology/live/nvidia-live-updates-interim-ceo-kress-prepares-for-q3-earnings-with-huang-reportedly-planning-comeback-153114076.html"]}]}}, {"group": "AI・テクノロジー", "title": "Anthropic、公開価格は仮条件の上限以上か　申込は6〜7倍", "body": "Anthropicの新規株式公開（IPO）は、17日夕方（米東部時間）に投資家の申込を締め切った。Bloombergは、公開価格が仮条件（70〜78ドル）の上限かそれを上回る見通しだと報じている。申込は募集株数の6〜7倍に達した。新たに出された書類では、上場後にAmazonが約15%、Googleが約14%の株を持つことがわかった。価格は米国時間18日に決まり、19日にナスダックで取引が始まる。AI関連株全体の行方を占う試金石とみられている。", "src": [["The Next Web", "https://thenextweb.com/news/anthropic-ipo-price-top-of-range-amazon-google-stakes-coatue"], ["MarketPulse", "https://www.marketpulse.com/markets/anthropics-ipo-a-make-or-break-test-for-the-trillion-dollar-ai-trade/"]], "debate": {"q": "時価総額1.4兆ドル規模での上場は、長期投資に値するか", "views": [{"side": "長期の成長株として買う", "point": "運用するアルティメーターはIPOで50億ドルを投じる計画で、これは同社の過去最大の投資の5倍にあたる。Anthropicを長く複利で成長し続ける中核銘柄とみているという（11/17の報道）。", "who": "ブラッド・ガースナー（アルティメーター・キャピタル創業者）", "src": ["The Next Web（11/17）", "https://thenextweb.com/news/anthropic-ipo-price-top-of-range-amazon-google-stakes-coatue"]}, {"side": "成長はすでに織り込み済み", "point": "最大1.4兆ドルという評価は厳しい試練に直面すると指摘した。将来の成長の多くはすでに公開価格に織り込まれている可能性があり、申込が多いことは上場後の株価の強さを保証しないと論じる（11/16）。", "who": "ケルビン・ウォン（OANDA MarketPulse シニアマーケットアナリスト）", "src": ["MarketPulse（11/16）", "https://www.marketpulse.com/markets/anthropics-ipo-a-make-or-break-test-for-the-trillion-dollar-ai-trade/"]}]}}, {"group": "AI・テクノロジー", "title": "OpenAI、新モデル「GPT-6.2 Astra／Sol」　価格を約2割下げて対抗", "body": "OpenAIは17日、難しい専門業務向けの「GPT-6.2 Astra」と日常業務向けの「GPT-6.2 Sol」を公開した。Astraの利用料金は前のモデルより約2割安い。第三者機関Artificial Analysisの総合指数では、AnthropicのClaude Fable 5.2に次ぐ2位だった。一方でOpenAIは、AIが自らを改良する能力について、自社の安全基準で初めて「High」に達したモデルだと公表している。最先端モデルの競争が、性能だけでなくコストと安全性に広がっていることを示す発表だ。", "src": [["The Decoder", "https://the-decoder.com/openai-launches-gpt-6-2-astra-and-sol-with-lower-api-prices-and-some-benchmark-gains/"], ["Artificial Analysis", "https://artificialanalysis.ai/articles/openai-has-the-2-model-in-the-intelligence-index-with-the-release-of-gpt-6-2-astra-and-gpt-6-2-sol"], ["9to5Google", "https://9to5google.com/2026/11/17/openai-releases-gpt-6-2-astra-and-sol-for-complex-projects-a-week-after-claude-5-2/"]], "debate": {"q": "GPT-6.2はOpenAIの巻き返しになるか", "views": [{"side": "癖はあるが実力あり", "point": "試用版は出来にむらがあり、ほかのモデルより扱いにくいと認めた。それでも、野心的なプロジェクトを任せるとやり遂げる力があったと評価している（11/17）。", "who": "イーサン・モリック（ペンシルベニア大学ウォートン校 教授）", "src": ["Implicator.ai（11/17）", "https://www.implicator.ai/openai-gpt-6-2-astra-sol-cost-per-task/"]}, {"side": "期待外れ", "point": "競合のFable 5.2と比べると全体として期待外れの出来だと評した。文章の質は前のモデルより落ち、実際のプログラミングでは途中で止まりやすいと指摘している（11/18）。", "who": "ダン・シッパー（米メディアEvery CEO）", "src": ["OfficeChai（11/18）", "https://officechai.com/ai/gpt-6-2-astra-early-tester-harsh-reviews/"]}]}}]}, {"id": "football", "name": "海外サッカー", "items": [{"title": "ハーランドが96分にPKで決勝点、ノルウェーが逆転でネーションズリーグ8強", "body": "17日、ノルウェーは敵地コペンハーゲンでデンマークに3-2で逆転勝ちした。デンマークはホイルンドとホイビュアの得点で序盤に2点を先行した。ノルウェーはハーランドとウーデゴールの得点で追いつき、後半アディショナルタイム6分にハーランドがPKを決めて勝ち越した。引き分け以上で突破できたデンマークは、勝ち点で並ばれたうえ直接対決で負け越して3位に落ち、入れ替えプレーオフに回る。これで準々決勝に進む8チームが出そろった。", "src": [["ESPN", "https://www.espn.com/soccer/match/_/gameId/401861194"], ["UEFA", "https://www.uefa.com/uefanationsleague/news/02ab-2209792f2fda-6a523d4500bb-1000--nations-league-latest-on-quarter-final-qualification-promotion/"], ["GOAL", "https://www.goal.com/en/news/nations-league-haaland-scores-in-the-96th-minute-norway-reach-the-play-offs-hojlund-scores-ramos-disappoints/bltdbeb21c20a382b5c"]], "viz": {"type": "timeline", "title": "代表ウィーク明けの主な日程", "items": [{"date": "11/20", "text": "ネーションズリーグ準々決勝・入れ替え戦の組み合わせ抽選", "hi": true}, {"date": "11/21", "text": "ニューカッスル対アーセナル"}, {"date": "11/22", "text": "バルセロナ対ビジャレアル（カンプ・ノウ、日本時間22:00）", "hi": true}, {"date": "11/22", "text": "リバプール対マンU（ポチェッティーノ新監督の初陣予定）"}], "note": "出典：UEFA、DAZN、Sky Sports、AOL（日付は現地時間）"}}, {"title": "バルサ：デ・ヨングはビジャレアル戦に出場見込み、クバルシは様子見", "barca": true, "body": "バルセロナは検査結果を発表した。フレンキー・デ・ヨングは腰の付け根あたりの筋肉の軽い損傷で、すでに通常どおり練習しており、22日のビジャレアル戦に出られる見込みだ。スペイン代表のイングランド戦で前半だけで退いたクバルシは、股関節まわりの筋肉の張りと診断された。復帰の時期は示されず、出場は練習での回復しだいになる。フリック監督にとっては、中盤の主力が戻るめどが立った一方、最終ラインには不安が残る。", "src": [["Yahoo Sports", "https://sports.yahoo.com/articles/mixed-news-jong-cubars-bar-135100979.html"], ["Catalunya Press", "https://www.catalunyapress.es/articulo/deportes/2026-11-17/6094394-cara-cruz-enfermeria-fc-barcelona-comunicado-medico-oficial-sobre-jong-cubarsi"], ["DAZN", "https://www.dazn.com/es-ES/news/futbol/alineacion-barcelona-hoy-once-banquillo-suplentes/1pu8xhq5ywmza1ctxnrwdu4j9s"]]}, {"title": "10人のポルトガル、ウェールズに3-2で勝って首位通過", "body": "すでに8強入りを決めていたポルトガルは、カーディフでウェールズに3-2で勝った。ブルーノ・フェルナンデス、ペドロ・ネト、カルロス・フォルブスが得点し、ネトは後半に2枚目の警告で退場している。最下位のウェールズは入れ替えプレーオフに回る。この期間中に代表を負傷で離れたベルナルド・シウバについては、所属するレアル・マドリードの検査で損傷が見つからなかった。これにポルトガル協会の医師が反論し、クラブと代表のあいだで食い違いが話題になっている。", "src": [["ESPN", "https://www.espn.com/soccer/match/_/gameId/401861189/portugal-wales"], ["101 Great Goals", "https://www.101greatgoals.com/match-reports/wales-2-3-portugal-report-result-goals/"], ["GOAL（スペイン語）", "https://www.goal.com/es/noticias/el-medico-de-portugal-responde-traiciono-bernardo-silva-a-la-seleccion-por-el-real-madrid/blt81e897fcc9dd37f8"]]}, {"title": "マンUはポチェッティーノ体制へ、最下位パレスはフランクを招へい", "body": "マンチェスター・ユナイテッドは、リーグ10試合で1勝と降格圏に沈んだキャリック監督を12日に解任し、米国代表監督のポチェッティーノ氏を後任とすることで合意した。正式発表の時期は媒体によって伝え方が分かれている。同氏は米国代表の試合を終えてから合流し、22日のリバプール戦が初陣になる見込みだ。最下位のクリスタル・パレスも監督を解任し、トーマス・フランク氏を2年半契約で迎えた。", "src": [["Sky Sports", "https://www.skysports.com/football/news/13611745/mauricio-pochettino-manchester-united-agree-two-and-a-half-year-deal-with-usa-manager-to-replace-michael-carrick"], ["GOAL", "https://www.goal.com/en/news/mauricio-pochettino-manchester-united-manager-usmnt-liverpool/bltce123719a1128621"], ["Weekend Argus", "https://weekendargus.co.za/sport/soccer/2026-11-17-palace-appoint-frank-in-quest-for-premier-league-survival/"]]}, {"title": "アーセナル、スビメンディが代表戦で負傷　ニューカッスル戦は微妙", "body": "スペイン代表のスビメンディは15日のイングランド戦で右ハムストリングを痛めて途中交代し、アーセナルは診断結果を待っている。21日にはニューカッスル戦がある。サカも太ももの負傷で12月上旬まで戻れない見込みで、首位争いを続けるチームにとって中盤と前線の主力が同時に欠ける心配が出てきた。", "src": [["Sports Mole", "https://www.sportsmole.co.uk/football/arsenal/injury-news/news/big-blow-mikel-arteta-faces-fresh-arsenal-injury-concern-as-gbp55m-star-limps-off_609190.html"], ["AOL", "https://www.aol.co.uk/articles/zubimendi-tzolis-saka-dowman-arsenal-151720000.html"]]}]}, {"id": "art", "name": "アート", "items": [{"group": "国内", "title": "ポーラ美術館がゴンザレス＝トレス《パーフェクト・ラヴァーズ》を収蔵、12月4日から公開", "body": "箱根のポーラ美術館が、フェリックス・ゴンザレス＝トレスの代表作《「無題」（パーフェクト・ラヴァーズ）》（1987〜90年）を収蔵した。同じ時刻に合わせた2つの掛け時計を並べた作品で、時計は少しずつずれ、やがてどちらかが先に止まる。エイズ危機の時代に、パートナーとの関係を背景に生まれた。12月4日から開催中の「あたらしい目―モネと21世紀のアート」（2027年4月7日まで）で公開される。90年代以降の現代美術を代表する一点が、日本の美術館に入ることになる。", "src": [["美術手帖", "https://bijutsutecho.com/magazine/news/headline/33354"]]}, {"group": "国内", "title": "国立美術館の所蔵作品展が1000円に、専門家が値上げの使い道に懸念", "body": "東京国立近代美術館と国立西洋美術館の所蔵作品展は500円から1000円に、国立工芸館は300円から1000円に、10月から段階的に値上げされている。背景には、展示事業の自己収入の比率を2030年度までに65%以上にするよう求めた文部科学省の目標がある。美術手帖は17日、文化政策の専門家・太下義之氏の見方を掲載した。太下氏は、値上げで得た収入が新しい展示や鑑賞しやすさの改善ではなく、基本的な運営費の穴埋めに回るおそれを指摘している。", "src": [["美術手帖", "https://bijutsutecho.com/magazine/insight/33348"]]}, {"group": "国内", "title": "大阪府の20世紀美術コレクションと子どもの作品を並べる展示、20日開幕", "body": "大阪・中之島のアートエリアB1で、「つくってみようよ展覧会」が11月20日から12月23日まで無料で開かれる。キュレーターは檜山真有さんだ。カルティエ＝ブレッソン、植田正治、田中一光らの大阪府コレクションを、府内の子どもたちやワークショップ参加者の作品と並べる。作品の価値を歴史や値段ではなく「出会いの記憶」から問い直す試みで、来場者が感想を書き込んで完成させる大きなカタログも用意される。", "src": [["美術手帖", "https://bijutsutecho.com/magazine/news/exhibition/33349"]]}, {"group": "国内", "title": "アンドリュー・クランストン、京都・両足院でアジア初の個展（22日まで）", "body": "スコットランドの画家アンドリュー・クランストンが、京都・祇園の禅寺、両足院で個展「Birds, beasts, and flowers」を開いている（22日まで）。寺の室礼に合わせて描いた大型の新作絵画5点と、茶室に置いた木版画3点で構成する。テートなども所蔵する画家の初来日で、ARTnews JAPANが17日にインタビューを載せた。会期は残り数日だ。", "src": [["ARTnews JAPAN", "https://artnewsjapan.com/article/93117"]]}, {"group": "海外", "title": "サザビーズNYの2セールで計3億7870万ドル、草間彌生が自身の最高額を更新", "body": "ニューヨークで16日夜、サザビーズの2つのセールが続けて開かれた。「Now and Contemporary」は手数料込みで約2億6870万ドル、バウム夫妻のコレクションは全24点が売れて約1億1000万ドルとなり、合計は3億7870万ドルだった。草間彌生《No. 3P.B.》（1960年）は約1500万ドルで落札され、作家のオークション最高額を更新した。ただしバウム・コレクションの3分の1は予想の下限を下回っており、買い手の慎重さも目立つ。", "src": [["The Art Newspaper", "https://www.theartnewspaper.com/2026/11/16/yayoi-kusama-sets-15m-auction-record-as-sothebys-opens-new-york-mega-sales"], ["USA Art News", "https://usaartnews.com/auctions/sothebys-november-sales-achieve-3787-million-amid-cautious-bidding/"]], "viz": {"type": "bars", "title": "サザビーズNY 11/16 上位の落札額（手数料込み）", "unit": "", "items": [{"label": "リキテンスタイン", "value": 24.6, "display": "$24.6M"}, {"label": "デ・クーニング", "value": 20.3, "display": "$20.3M"}, {"label": "ジョーン・ミッチェル", "value": 19.3, "display": "$19.3M"}, {"label": "ウォーホル", "value": 18.2, "display": "$18.2M"}, {"label": "ロスコ", "value": 17.7, "display": "$17.7M"}, {"label": "サム・フランシス", "value": 17.1, "display": "$17.1M"}, {"label": "草間彌生", "value": 15.0, "display": "$15.0M", "hi": true}], "note": "出典：The Art Newspaper（媒体によって±0.1Mの差あり）"}}, {"group": "海外", "title": "18日競売のゴッホ（予想約1.8億ドル）に、直前で返還請求", "body": "サザビーズが18日（NY時間）に競売にかけるゴッホ《花咲くマロニエ》（1890年）について、ユダヤ系の出版人サミュエル・フィッシャーの相続人が出品の取り下げを求めた。1936年の売却はナチスの迫害による強制的な売却だったという主張だ。サザビーズは、当時としては高い価格での自発的な売却だったとして、予定どおり出品するとしている。今週最大級の作品が、来歴をめぐる議論を抱えたまま競売にかけられる。", "src": [["ARTnews", "https://www.artnews.com/art-news/news/sothebys-van-gogh-180-million-restitution-claim-1936-sale-1234806093/"], ["ARTnews JAPAN", "https://artnewsjapan.com/article/93281"]]}, {"group": "海外", "title": "安藤忠雄と「もの派」の展覧会、2027年春にヴェネチアで", "body": "ピノー・コレクションのプンタ・デラ・ドガーナ（ヴェネチア）で、「Tadao Ando & Mono-ha. The Five Elements」が2027年3月21日から11月21日まで開かれる。未公開を含む、安藤が自ら撮った建築写真数百点を、同コレクションが所蔵するもの派の作品と並べる。会場そのものが安藤の改修した建物で、素材と空間に向き合う両者の姿勢が建築と呼応する企画になる。", "src": [["美術手帖", "https://bijutsutecho.com/magazine/news/exhibition/33351"]]}]}, {"id": "film", "name": "映画", "items": [{"title": "パナヒ監督に禁錮5年超の新判決、カンヌ映画祭が「司法による迫害」と非難", "body": "イランの革命裁判所が、ジャファル・パナヒ監督に禁錮5年1カ月の判決を言い渡した。あわせて2年間の出国とSNSの禁止、財産の没収も命じている。カンヌ映画祭は17日に声明を出し、表現を理由に投獄されるべき芸術家はいないとして、国際社会に行動を求めた。パルムドール受賞作『シンプル・アクシデント』の監督は、亡命を拒んで国内にとどまっている。映画をつくること自体が罪に問われる状況が続いている。", "src": [["Screen Daily", "https://www.screendaily.com/news/cannes-film-festival-condemns-new-prison-sentence-for-jafar-panahi-calls-for-international-action/5222489.article"], ["Deadline", "https://deadline.com/2026/11/cannes-protests-sanctions-iranian-director-jafar-panahi-1237226517/"]], "viz": {"type": "timeline", "title": "これから2週間の映画祭・賞・公開", "items": [{"date": "11/19", "text": "IDFA（アムステルダム国際ドキュメンタリー映画祭）受賞発表"}, {"date": "11/20", "text": "東京フィルメックス開幕（〜29日）／マラケシュ映画祭開幕"}, {"date": "11/22", "text": "金馬奨授賞式（SABU監督作が最多11部門の候補）", "hi": true}, {"date": "11/27", "text": "ベルリン銀熊賞『アニカの伝言』公開"}, {"date": "11/28", "text": "『インサイド・ガザ』『戦場のボヘミアン』公開"}, {"date": "11/30", "text": "ゴッサム賞授賞式（濱口竜介が監督賞候補）", "hi": true}, {"date": "12/4", "text": "エニェディ『静かな友人』、ライトン『ピリオン』公開"}], "note": "出典：DutchNews、Focus Taiwan、TheWrap、Real Sound、Le360、映画.com"}}, {"title": "ヨーロッパ映画賞の候補発表、パヴリコフスキ『Fatherland』が最多11部門", "body": "第39回ヨーロッパ映画賞の候補が発表され、パヴェウ・パヴリコフスキの『Fatherland』が最多の11部門、『La Bola Negra』が10部門、クリスティアン・ムンジウ『Fjord』が5部門で続いた。監督賞の候補にはズビャギンツェフ（『Minotaur』）らが入っている。ドキュメンタリー賞には『NAZA ナザ』、新人を対象とするディスカバリー賞にはガザを題材にした『Thirteen in Gaza』が選ばれた。授賞式は2027年1月16日にアテネで開かれ、アカデミー国際長編映画賞の行方を占う材料にもなる。", "src": [["Screen Daily", "https://www.screendaily.com/news/european-film-awards-unveils-2026-nominations/5222404.article"], ["cinefilos.it", "https://cinefilos.it/cinema-news/2026/european-film-awards-2027-tutte-le-nomination-fatherland-guida-la-corsa-con-11-candidature-730933"]]}, {"title": "賞レースが山場に：IDFA、金馬奨、ゴッサム賞が続く", "fav": true, "body": "19日にはIDFAの受賞が発表される。22日に台北で開かれる金馬奨では、日本のSABU監督の『狂忘警探 Arrested Memory』が最多の11部門で候補になっており、スー・チーの初監督作『女孩 Girl』が10部門で続く。30日のゴッサム賞では濱口竜介が『All of a Sudden』で監督賞の候補に入り、ドキュメンタリー賞は『NAZA ナザ』と『You Can See Everything』が争う。日本の監督が中華圏の最大の映画賞で最多候補になっている点も見逃せない。", "src": [["Screen Daily（金馬奨）", "https://www.screendaily.com/news/sabus-arrested-memory-shu-qis-girl-lead-golden-horse-awards-2026-nominations/5220955.article"], ["TheWrap（ゴッサム賞）", "https://thewrap.com/industry-news/awards/gotham-awards-2026-nominations/"], ["DutchNews（IDFA）", "https://www.dutchnews.nl/2026/11/whats-on-at-idfa-2026-five-documentaries-to-watch/"]]}, {"title": "東京フィルメックスが20日開幕、原田マハの初監督作がオープニング", "body": "第27回東京フィルメックスが11月20日から29日まで開かれる。オープニングは、小説家の原田マハが自作の短編を自ら脚色し監督した『無用の人』だ。コンペティションは10本で、日本映画は杉田協士の『十月のうた』1本、国際審査員にはリー・カンションが加わる。入江悠監督の初のドキュメンタリー『館長、最後の日』も特別招待で上映される。アジアの作家映画と新しい才能に出会える国内の主要な場だ。", "src": [["Real Sound", "https://realsound.jp/movie/2026/10/post-2559084.html"], ["映画.com", "https://eiga.com/l/Oq2lZ"]]}, {"title": "戦争と報道の記録映画、11月28日に日本公開が重なる", "fav": true, "body": "外国メディアが入れないガザで取材を続けるAFPの記者4人を追った『インサイド・ガザ 封鎖の内側から』（エレーヌ・ラム・トロン監督）が、28日からポレポレ東中野などで順次公開される。同じ日には、ベトナム戦争などを撮った報道写真家・石川文洋を描く『戦場のボヘミアン』も公開される。公開中の『NAZA ナザ』がヨーロッパ映画賞とゴッサム賞の両方で候補になったこともあり、戦争と報道を見つめる作品を続けて観られる時期だ。", "src": [["映画.com", "https://eiga.com/movie/106102/"], ["キネマ旬報（ジョルダン）", "https://movie.jorudan.co.jp/news/kine-latest-20260903-nw-d98316/"]]}, {"title": "新鋭・岩崎裕介のデビュー作『チルド』、12月17日からNetflixで配信", "fav": true, "body": "CMディレクター出身の岩崎裕介が初めて撮った長編で、染谷将太が主演するコンビニを舞台にしたホラーだ。ベルリン映画祭フォーラム部門で国際映画批評家連盟賞を受けている。7月の劇場公開に続き、12月17日からNetflixで世界に配信される。シュールでブラックな感覚を持つ日本の若手が、国際的な評価を経て広く届くことになる。", "src": [["シネマトゥデイ", "https://www.cinematoday.jp/news/N0158012"]]}, {"title": "エニェディ『静かな友人』12月4日公開、トニー・レオンが来日へ", "body": "『心と体と』のイルディコー・エニェディ監督が、2025年のヴェネチアのコンペに出した『静かな友人』が12月4日に公開される。トニー・レオンにとって初めての欧州映画の主演作で、共演のルナ・ベドラーは同映画祭で新人俳優賞を受けた。17日の発表によると、レオンと監督は12月3日から6日にかけて東京と大阪で舞台あいさつをする予定だ。", "src": [["シネマトゥデイ", "https://www.cinematoday.jp/news/N0158015"], ["映画.com", "https://eiga.com/movie/104402/"]]}, {"title": "アダム・ドライバー主演、ジェームズ・グレイ『Paper Tiger』が米限定公開で好発進", "fav": true, "body": "ネオン配給のジェームズ・グレイ監督作『Paper Tiger』が、ニューヨークとロサンゼルスの6スクリーンで公開され、興行収入21.5万ドルを上げた。1スクリーンあたり約3.6万ドルは、グレイ作品で最高とされる。35mmで撮影された大人向けのクライム映画で、ゴッサム賞の作品賞候補にも入っている。カンヌでは評価が割れたが、作家性の強い作品が興行でも健闘している。", "src": [["World of Reel", "https://www.worldofreel.com/blog/2026/11/15/what-did-you-see-this-weekend-ebenezer-paper-tiger-opens-victorian-psycho-how-to-rob-a-bank-wild-horse-nine-goes-wide"]]}, {"title": "カンヌ「ある視点」脚本賞のデビュー作『ピリオン』、12月4日公開", "body": "ハリー・ライトン監督の長編デビュー作で、アレクサンダー・スカルスガルドが支配的なバイク乗り、ハリー・メリングが内気な青年を演じ、2人の主従関係のような恋を描く。2025年のカンヌ「ある視点」部門で脚本賞を受けた。ユーモアと居心地の悪さが同居する新人のデビュー作として注目されている。", "src": [["映画.com", "https://eiga.com/movie/106574/"]]}, {"title": "ベルリン銀熊賞のアルゼンチン映画『アニカの伝言』、27日公開", "body": "イバン・フンド監督の『El Mensaje』が、『アニカの伝言』の題で27日からユーロスペースなどで公開される。第75回ベルリン映画祭で審査員賞（銀熊賞）を受けた作品だ。中南米の作家映画を劇場で観られる貴重な機会になる。", "src": [["Real Sound", "https://realsound.jp/movie/2026/09/post-2538327.html"], ["映画.com（公開予定）", "https://eiga.com/coming/"]]}]}]}</script>
 <script>
 (function(){
   var D=JSON.parse(document.getElementById('news-data').textContent);
-  var META={politics:{c:'var(--pol)',en:'Politics & Economy'},football:{c:'var(--foot)',en:'European Football'},art:{c:'var(--art)',en:'Art'},film:{c:'var(--film)',en:'Cinema'}};
+  var META={politics:{c:'var(--pol)',t:'var(--pol-t)',en:'Politics & Economy'},football:{c:'var(--foot)',t:'var(--foot-t)',en:'Football'},art:{c:'var(--art)',t:'var(--art-t)',en:'Art'},film:{c:'var(--film)',t:'var(--film-t)',en:'Cinema'}};
   function el(t,a,kids){var e=document.createElement(t);if(a)for(var k in a){if(k==='text')e.textContent=a[k];else e.setAttribute(k,a[k]);}(kids||[]).forEach(function(x){if(x)e.appendChild(typeof x==='string'?document.createTextNode(x):x)});return e;}
+  function pad(n){return String(n).padStart(2,'0');}
   var d=new Date(D.date+'T00:00:00');
-  var dt=document.getElementById('date');
-  dt.appendChild(document.createTextNode(String(d.getMonth()+1)));dt.appendChild(el('span',{class:'dot',text:'.'}));dt.appendChild(document.createTextNode(String(d.getDate()).padStart(2,'0')));
-  document.getElementById('year').textContent=String(d.getFullYear());
-  document.getElementById('dow').textContent=D.weekday+'曜日の朝刊';
+  var EW=['SUN','MON','TUE','WED','THU','FRI','SAT'];
+  document.getElementById('iss-d').textContent=(d.getMonth()+1)+'.'+pad(d.getDate());
+  document.getElementById('iss-w').textContent=EW[d.getDay()]+' / '+D.weekday+'曜日';
+  document.getElementById('iss-y').textContent=String(d.getFullYear());
   document.getElementById('headline').textContent=D.headline;
-  document.getElementById('updated').textContent='更新 '+D.date.replace(/-/g,'.');
+  document.getElementById('updated').textContent='Updated '+D.date.replace(/-/g,'.');
   var mk=document.getElementById('markets');
   (D.markets||[]).slice(0,4).forEach(function(m){mk.appendChild(el('div',null,[el('div',{class:'l',text:m.label}),el('div',{class:'v',text:m.value}),el('div',{class:'c '+m.dir,text:(m.dir==='up'?'▲ ':m.dir==='down'?'▼ ':'')+m.change})]))});
   if(!mk.children.length)mk.hidden=true;
 
-
-  var NS='http://www.w3.org/2000/svg';
+  /* ---- illustrations (flat, limited palette) ---- */
+  var K='#141414',W='#FFFFFF',CR='#F4EFE6',PE='#F2A27E',SK='#A9CBEA',YE='#F4C744',GR='#C9C2B6';
   var ILLO={
-   politics:['<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 112h134" opacity=".35"/><path d="M14 92l22-18 20 10 24-34 22 14 30-38"/><circle cx="132" cy="26" r="5" fill="currentColor"/><g opacity=".55"><path d="M30 112V96M52 112V88M74 112V70M96 112V80M118 112V58"/></g></g>','<g fill="none" stroke="currentColor" stroke-width="2"><circle cx="75" cy="64" r="48"/><ellipse cx="75" cy="64" rx="20" ry="48" opacity=".6"/><path d="M27 64h96M33 40h84M33 88h84" opacity=".45"/><path d="M75 16v96" opacity=".6"/><circle cx="116" cy="34" r="6" fill="currentColor" stroke="none"/></g>'],
-   football:['<g fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="14" width="138" height="96" rx="2"/><path d="M75 14v96"/><circle cx="75" cy="62" r="17"/><circle cx="75" cy="62" r="2.5" fill="currentColor"/><path d="M6 38h24v48H6M144 38h-24v48h24" opacity=".7"/><path d="M6 50h9v24H6M144 50h-9v24h9" opacity=".5"/></g><circle cx="104" cy="44" r="7" fill="currentColor"/><path d="M40 84q30-50 64-40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 5" opacity=".7"/>','<g fill="none" stroke="currentColor" stroke-width="2"><circle cx="75" cy="62" r="46"/><path d="M75 40l20 14-8 24H63l-8-24z" fill="currentColor" fill-opacity=".85"/><path d="M75 40V16M95 54l22-8M87 78l14 20M63 78L49 98M55 54l-22-8" opacity=".6"/></g>'],
-   art:['<circle cx="58" cy="58" r="40" fill="currentColor" opacity=".85"/><rect x="66" y="40" width="70" height="70" fill="none" stroke="currentColor" stroke-width="2"/><path d="M14 112L44 70l30 42z" fill="currentColor" opacity=".35"/>','<g fill="none" stroke="currentColor" stroke-width="2"><rect x="10" y="14" width="78" height="96"/><rect x="20" y="24" width="58" height="76" opacity=".45"/></g><circle cx="49" cy="58" r="16" fill="currentColor" opacity=".8"/><path d="M100 110V58q20-30 40 0v52" fill="currentColor" opacity=".3"/><path d="M96 110h52" stroke="currentColor" stroke-width="2"/>'],
-   film:['<g fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="22" width="134" height="80" rx="3"/><path d="M8 38h134M8 86h134" opacity=".6"/><rect x="40" y="44" width="70" height="36" fill="currentColor" fill-opacity=".85" stroke="none"/></g><g fill="currentColor" opacity=".7"><rect x="16" y="27" width="8" height="6" rx="1"/><rect x="36" y="27" width="8" height="6" rx="1"/><rect x="56" y="27" width="8" height="6" rx="1"/><rect x="76" y="27" width="8" height="6" rx="1"/><rect x="96" y="27" width="8" height="6" rx="1"/><rect x="116" y="27" width="8" height="6" rx="1"/><rect x="16" y="91" width="8" height="6" rx="1"/><rect x="36" y="91" width="8" height="6" rx="1"/><rect x="56" y="91" width="8" height="6" rx="1"/><rect x="76" y="91" width="8" height="6" rx="1"/><rect x="96" y="91" width="8" height="6" rx="1"/><rect x="116" y="91" width="8" height="6" rx="1"/></g>','<g fill="none" stroke="currentColor" stroke-width="2"><circle cx="46" cy="40" r="24"/><circle cx="104" cy="40" r="24"/><circle cx="46" cy="40" r="5" fill="currentColor"/><circle cx="104" cy="40" r="5" fill="currentColor"/><rect x="22" y="70" width="92" height="44" rx="4" fill="currentColor" fill-opacity=".85"/><path d="M114 82l26-12v44l-26-12"/></g>']
+   cover:[function(c){return ''+
+    '<rect width="400" height="280" fill="'+CR+'"/>'+
+    '<rect x="236" y="26" width="132" height="150" fill="'+SK+'"/><circle cx="318" cy="92" r="30" fill="'+YE+'"/><path d="M236 101h132M302 26v150" stroke="'+W+'" stroke-width="6"/><rect x="236" y="26" width="132" height="150" fill="none" stroke="'+K+'" stroke-width="3"/>'+
+    '<rect x="0" y="198" width="400" height="82" fill="'+PE+'"/><path d="M0 198h400" stroke="'+K+'" stroke-width="3"/>'+
+    '<g transform="rotate(-8 140 190)"><rect x="52" y="140" width="176" height="104" fill="'+W+'" stroke="'+K+'" stroke-width="3"/><path d="M140 140v104" stroke="'+K+'" stroke-width="2"/><rect x="64" y="152" width="64" height="12" fill="'+K+'"/><path d="M64 176h64M64 186h64M64 196h50M64 206h64M64 216h40M152 154h64M152 164h64M152 174h54" stroke="'+K+'" stroke-width="2.5"/><rect x="152" y="186" width="64" height="44" fill="'+c+'"/></g>'+
+    '<path d="M272 196c0 30 14 44 34 44s34-14 34-44z" fill="'+W+'" stroke="'+K+'" stroke-width="3"/><path d="M340 204c16 0 16 22 0 22" fill="none" stroke="'+K+'" stroke-width="3"/><ellipse cx="306" cy="242" rx="50" ry="7" fill="'+W+'" stroke="'+K+'" stroke-width="3"/>'+
+    '<path d="M294 182c-8-10 8-16 0-28M314 182c-8-10 8-16 0-28" fill="none" stroke="'+K+'" stroke-width="2.5" stroke-linecap="round"/>';}],
+   politics:[
+    function(c){return '<rect x="40" y="40" width="320" height="200" fill="none"/>'+
+     '<circle cx="200" cy="120" r="78" fill="'+SK+'"/><path d="M134 92c30 8 34-20 62-6s20 40 52 28 28 8 28 8M128 140c24-6 30 16 54 8s22-26 48-10" fill="none" stroke="'+W+'" stroke-width="5" stroke-linecap="round"/>'+
+     '<rect x="128" y="168" width="144" height="86" fill="'+c+'"/><rect x="128" y="168" width="144" height="16" fill="'+K+'"/>'+
+     '<path d="M178 168v-50M222 168v-50" stroke="'+K+'" stroke-width="4"/><rect x="170" y="104" width="16" height="22" rx="8" fill="'+K+'"/><rect x="214" y="104" width="16" height="22" rx="8" fill="'+K+'"/>'+
+     '<rect x="186" y="204" width="28" height="28" fill="'+W+'"/><circle cx="200" cy="218" r="8" fill="'+c+'"/>'+
+     '<path d="M40 254h320" stroke="'+K+'" stroke-width="3"/>';},
+    function(c){return '<path d="M40 236h320" stroke="'+K+'" stroke-width="3"/>'+
+     '<rect x="70" y="160" width="40" height="76" fill="'+GR+'"/><rect x="126" y="124" width="40" height="112" fill="'+GR+'"/><rect x="182" y="140" width="40" height="96" fill="'+GR+'"/><rect x="238" y="96" width="40" height="140" fill="'+c+'"/><rect x="294" y="62" width="40" height="174" fill="'+K+'"/>'+
+     '<path d="M70 150l70-46 56 20 64-58 70-30" fill="none" stroke="'+K+'" stroke-width="4" stroke-linejoin="round"/><path d="M314 30l18 6-6 18" fill="none" stroke="'+K+'" stroke-width="4" stroke-linejoin="round"/>'+
+     '<circle cx="94" cy="70" r="24" fill="'+YE+'"/>';},
+    function(c){return '<path d="M30 246h340" stroke="'+K+'" stroke-width="3"/>'+
+     '<path d="M140 120a60 60 0 0 1 120 0z" fill="'+c+'"/><rect x="196" y="40" width="8" height="22" fill="'+K+'"/><rect x="120" y="120" width="160" height="14" fill="'+K+'"/>'+
+     '<g fill="'+W+'" stroke="'+K+'" stroke-width="3"><rect x="132" y="134" width="20" height="92"/><rect x="170" y="134" width="20" height="92"/><rect x="210" y="134" width="20" height="92"/><rect x="248" y="134" width="20" height="92"/></g>'+
+     '<rect x="100" y="226" width="200" height="20" fill="'+K+'"/>'+
+     '<rect x="56" y="92" width="44" height="28" fill="'+SK+'"/><path d="M56 92v150" stroke="'+K+'" stroke-width="3"/><rect x="300" y="92" width="44" height="28" fill="'+PE+'"/><path d="M344 92v150" stroke="'+K+'" stroke-width="3"/>';}
+   ],
+   football:[
+    function(c){return '<rect x="40" y="30" width="320" height="220" fill="'+c+'"/>'+
+     '<g fill="none" stroke="'+W+'" stroke-width="3"><rect x="56" y="46" width="288" height="188"/><path d="M200 46v188"/><circle cx="200" cy="140" r="30"/><rect x="56" y="98" width="40" height="84"/><rect x="304" y="98" width="40" height="84"/></g>'+
+     '<g fill="'+K+'"><circle cx="146" cy="96" r="8"/><circle cx="168" cy="170" r="8"/><circle cx="120" cy="140" r="8"/></g><g fill="'+YE+'"><circle cx="244" cy="110" r="8"/><circle cx="262" cy="176" r="8"/><circle cx="296" cy="140" r="8"/></g>'+
+     '<circle cx="218" cy="134" r="7" fill="'+W+'" stroke="'+K+'" stroke-width="2.5"/><path d="M168 170c20-10 30-24 46-32" fill="none" stroke="'+W+'" stroke-width="2.5" stroke-dasharray="5 6"/>';},
+    function(c){return '<path d="M30 238h340" stroke="'+K+'" stroke-width="3"/>'+
+     '<g fill="none" stroke="'+K+'" stroke-width="5"><path d="M70 238V90h260v148"/></g><g stroke="'+GR+'" stroke-width="1.5"><path d="M90 92v146M110 92v146M130 92v146M150 92v146M170 92v146M190 92v146M210 92v146M230 92v146M250 92v146M270 92v146M290 92v146M310 92v146M72 110h256M72 130h256M72 150h256M72 170h256M72 190h256M72 210h256M72 230h256"/></g>'+
+     '<circle cx="250" cy="176" r="34" fill="'+W+'" stroke="'+K+'" stroke-width="3"/><path d="M250 162l13 10-5 15h-16l-5-15z" fill="'+K+'"/><path d="M250 162v-20M263 172l18-6M258 187l10 16M242 187l-10 16M237 172l-18-6" stroke="'+K+'" stroke-width="2.5"/>'+
+     '<path d="M120 60l14-40M160 60l4-42" stroke="'+c+'" stroke-width="6" stroke-linecap="round"/><circle cx="352" cy="46" r="18" fill="'+YE+'"/>';},
+    function(c){return '<path d="M30 250h340" stroke="'+K+'" stroke-width="3"/>'+
+     '<path d="M150 50l-70 34 18 50 30-12v114h144V122l30 12 18-50-70-34c-6 18-24 28-50 28s-44-10-50-28z" fill="'+c+'" stroke="'+K+'" stroke-width="3" stroke-linejoin="round"/>'+
+     '<path d="M150 50c6 18 24 28 50 28s44-10 50-28" fill="none" stroke="'+W+'" stroke-width="6"/>'+
+     '<text x="200" y="200" text-anchor="middle" font-family="Archivo,Arial,sans-serif" font-weight="900" font-size="78" fill="'+W+'">8</text>';}
+   ],
+   art:[
+    function(c){return '<rect x="0" y="0" width="400" height="200" fill="none"/><path d="M30 222h340" stroke="'+K+'" stroke-width="3"/>'+
+     '<rect x="112" y="34" width="176" height="140" fill="'+W+'" stroke="'+K+'" stroke-width="8"/>'+
+     '<circle cx="168" cy="96" r="36" fill="'+c+'"/><rect x="196" y="72" width="66" height="76" fill="'+SK+'"/><path d="M130 160l40-50 40 50z" fill="'+YE+'"/>'+
+     '<rect x="150" y="222" width="100" height="14" fill="'+K+'"/><path d="M162 236v20M238 236v20" stroke="'+K+'" stroke-width="4"/>'+
+     '<path d="M200 0v34" stroke="'+K+'" stroke-width="2"/>';},
+    function(c){return '<path d="M30 236h340" stroke="'+K+'" stroke-width="3"/><rect x="30" y="236" width="340" height="30" fill="'+GR+'"/>'+
+     '<path d="M92 236V120c0-14 10-20 10-34V60h20v26c0 14 10 20 10 34v116z" fill="'+SK+'" stroke="'+K+'" stroke-width="3"/>'+
+     '<rect x="146" y="130" width="70" height="106" fill="'+W+'" stroke="'+K+'" stroke-width="3"/><rect x="164" y="116" width="34" height="14" fill="'+W+'" stroke="'+K+'" stroke-width="3"/>'+
+     '<path d="M232 236c-16-30-16-64 0-80h56c16 16 16 50 0 80z" fill="'+c+'" stroke="'+K+'" stroke-width="3"/><rect x="246" y="138" width="28" height="18" fill="'+c+'" stroke="'+K+'" stroke-width="3"/>'+
+     '<rect x="300" y="176" width="44" height="60" fill="'+YE+'" stroke="'+K+'" stroke-width="3"/>';},
+    function(c){return '<ellipse cx="190" cy="150" rx="150" ry="98" fill="'+W+'" stroke="'+K+'" stroke-width="3"/><circle cx="268" cy="196" r="18" fill="'+CR+'" stroke="'+K+'" stroke-width="3"/>'+
+     '<circle cx="110" cy="120" r="22" fill="'+c+'"/><circle cx="164" cy="92" r="20" fill="'+YE+'"/><circle cx="226" cy="96" r="20" fill="'+SK+'"/><circle cx="118" cy="182" r="20" fill="'+K+'"/><circle cx="180" cy="200" r="16" fill="'+PE+'"/>'+
+     '<path d="M300 30l-90 130" stroke="'+K+'" stroke-width="8" stroke-linecap="round"/><path d="M214 152l-14 26 24-14z" fill="'+c+'" stroke="'+K+'" stroke-width="3" stroke-linejoin="round"/>';}
+   ],
+   film:[
+    function(c){return '<path d="M30 240h340" stroke="'+K+'" stroke-width="3"/>'+
+     '<rect x="96" y="118" width="208" height="122" fill="'+K+'"/><path d="M118 150h164M118 176h120M118 202h140" stroke="'+W+'" stroke-width="5"/>'+
+     '<g transform="rotate(-14 96 118)"><rect x="96" y="84" width="208" height="34" fill="'+W+'" stroke="'+K+'" stroke-width="4"/><path d="M128 84l-20 34M168 84l-20 34M208 84l-20 34M248 84l-20 34M288 84l-20 34" stroke="'+K+'" stroke-width="10"/></g>'+
+     '<circle cx="330" cy="70" r="22" fill="'+c+'"/>';},
+    function(c){return '<rect x="40" y="26" width="320" height="130" fill="'+W+'" stroke="'+K+'" stroke-width="4"/><path d="M60 140l60-60 40 40 50-70 70 90" fill="none" stroke="'+c+'" stroke-width="6" stroke-linejoin="round"/><circle cx="300" cy="66" r="16" fill="'+YE+'"/>'+
+     '<g fill="'+c+'" stroke="'+K+'" stroke-width="3"><rect x="44" y="188" width="56" height="44" rx="10"/><rect x="116" y="188" width="56" height="44" rx="10"/><rect x="188" y="188" width="56" height="44" rx="10"/><rect x="260" y="188" width="56" height="44" rx="10"/></g>'+
+     '<g fill="'+K+'"><rect x="80" y="216" width="56" height="40" rx="10"/><rect x="152" y="216" width="56" height="40" rx="10"/><rect x="224" y="216" width="56" height="40" rx="10"/><rect x="296" y="216" width="56" height="40" rx="10"/></g>';},
+    function(c){return '<path d="M30 246h340" stroke="'+K+'" stroke-width="3"/>'+
+     '<circle cx="130" cy="130" r="86" fill="'+K+'"/><g fill="'+W+'"><circle cx="130" cy="84" r="18"/><circle cx="130" cy="176" r="18"/><circle cx="84" cy="130" r="18"/><circle cx="176" cy="130" r="18"/></g><circle cx="130" cy="130" r="8" fill="'+c+'"/>'+
+     '<path d="M244 120h88l-12 126h-64z" fill="'+W+'" stroke="'+K+'" stroke-width="3"/><path d="M262 120l6 126M288 120v126M314 120l-6 126" stroke="'+c+'" stroke-width="9"/>'+
+     '<g fill="'+YE+'" stroke="'+K+'" stroke-width="2.5"><circle cx="256" cy="112" r="14"/><circle cx="280" cy="102" r="15"/><circle cx="306" cy="110" r="14"/><circle cx="324" cy="118" r="11"/><circle cx="292" cy="88" r="12"/></g>';}
+   ]
   };
   var doy=Math.floor((d-new Date(d.getFullYear(),0,0))/864e5);
-  function illo(id,i){var v=ILLO[id];if(!v)return null;var s=document.createElementNS(NS,'svg');s.setAttribute('viewBox','0 0 150 124');s.setAttribute('class','illo');s.setAttribute('aria-hidden','true');s.innerHTML=v[(doy+i)%v.length];return s;}
+  function art(id,col,i){var v=ILLO[id];if(!v)return '';return '<svg viewBox="0 0 400 280" aria-hidden="true" preserveAspectRatio="xMidYMid meet">'+v[(doy+(i||0))%v.length](col)+'</svg>';}
+  var HEX={politics:'#1E4FD6',football:'#0E8A55',art:'#E2463F',film:'#D99300'};
+  document.getElementById('cv-art').innerHTML=art('cover',HEX[(D.sections[0]||{}).id]||'#E2463F');
+
   var FIGLAB={stats:'Numbers',bars:'Chart',timeline:'Timeline'};
   function fig(v){
     if(!v||!v.type)return null;
-    var f=el('figure',{class:'fig'},[el('div',{class:'fl',text:FIGLAB[v.type]||'Figure'}),v.title?el('div',{class:'ft',text:v.title}):null]);
+    var f=el('figure',{class:'fig'},[el('div',{class:'fl lab',text:FIGLAB[v.type]||'Figure'}),v.title?el('div',{class:'ft',text:v.title}):null]);
     if(v.type==='stats'){var g=el('div',{class:'stats'});(v.items||[]).forEach(function(x){g.appendChild(el('div',null,[el('div',{class:'sv '+(x.dir||''),text:x.value}),el('div',{class:'sl',text:x.label})]))});f.appendChild(g);}
     else if(v.type==='bars'){var mx=0;(v.items||[]).forEach(function(x){mx=Math.max(mx,Math.abs(+x.value)||0)});var b=el('div',{class:'bars'});
-      (v.items||[]).forEach(function(x,i){var w=mx?Math.abs(+x.value)/mx*100:0;var fill=el('span',{class:'fill',style:'width:calc((100% - 5.5em) * '+(w/100).toFixed(3)+')'});
-        b.appendChild(el('div',{class:'bar'+(x.hi?' hi':'')},[el('span',{class:'bl',text:x.label}),el('span',{class:'track'},[fill,el('span',{class:'bv',text:(x.display||String(x.value))+(v.unit&&!x.display?v.unit:'')})])]))});f.appendChild(b);}
+      (v.items||[]).forEach(function(x){var w=mx?Math.abs(+x.value)/mx:0;
+        b.appendChild(el('div',{class:'bar'+(x.hi?' hi':'')},[el('span',{class:'bl',text:x.label}),el('span',{class:'track'},[el('span',{class:'fill',style:'width:calc((100% - 5em) * '+w.toFixed(3)+')'}),el('span',{class:'bv',text:(x.display||String(x.value))+(v.unit&&!x.display?v.unit:'')})])]))});f.appendChild(b);}
     else if(v.type==='timeline'){var u=el('ol',{class:'tl'});(v.items||[]).forEach(function(x){u.appendChild(el('li',{class:x.hi?'hi':''},[el('span',{class:'td',text:x.date}),el('span',{class:'tx',text:x.text})]))});f.appendChild(u);}
     else return null;
     if(v.note)f.appendChild(el('div',{class:'fn',text:v.note}));
     return f;
   }
-  function titleNode(tag,cls,it){var t=el(tag,{class:cls},[it.title]);if(it.fav)t.appendChild(el('span',{class:'tag fav',text:'★好み'}));if(it.barca)t.appendChild(el('span',{class:'tag barca',text:'BARÇA'}));return t;}
-  function srcs(it){var s=el('div',{class:'srcs'},[el('span',{text:'出典'})]);(it.src||[]).forEach(function(x){s.appendChild(el('a',{href:x[1],target:'_blank',rel:'noopener',text:x[0]}))});return s;}
-
+  function title(tag,it){var t=el(tag,null,[it.title]);if(it.fav)t.appendChild(el('span',{class:'tag fav',text:'★ FAVORITE'}));if(it.barca)t.appendChild(el('span',{class:'tag barca',text:'BARÇA'}));return t;}
+  function srcs(it){if(!it.src||!it.src.length)return null;var s=el('div',{class:'srcs'},[el('span',{text:'SOURCE'})]);it.src.forEach(function(x){s.appendChild(el('a',{href:x[1],target:'_blank',rel:'noopener',text:x[0]}))});return s;}
   function debate(it){
     var v=it.debate;if(!v||!v.views||v.views.length<2)return null;
-    var g=el('div',{class:'vg'});
-    v.views.slice(0,2).forEach(function(x,i){g.appendChild(el('div',{class:'vc v'+i},[el('div',{class:'vs',text:x.side}),el('p',{class:'vp',text:x.point}),x.who?el('div',{class:'vwho',text:x.who}):null,x.src?el('a',{class:'va',href:x.src[1],target:'_blank',rel:'noopener',text:x.src[0]}):null]))});
-    return el('div',{class:'vw'},[el('div',{class:'vl',text:'Two Views'}),v.q?el('div',{class:'vq',text:v.q}):null,g]);
+    var box=el('div',{class:'vw'},[el('div',{class:'lab',style:'color:var(--c)',text:'Two Views'}),v.q?el('div',{class:'vq',text:v.q}):null]);
+    v.views.slice(0,2).forEach(function(x,i){box.appendChild(el('div',{class:'vc v'+i},[el('div',{class:'vs',text:x.side}),el('p',{class:'vp',text:x.point}),x.who?el('div',{class:'vwho',text:x.who}):null,x.src?el('a',{class:'va',href:x.src[1],target:'_blank',rel:'noopener',text:x.src[0]}):null]))});
+    return box;
   }
 
-  var nav=document.getElementById('nav'),main=document.getElementById('main'),favN=0;
+  var nav=document.getElementById('nav'),main=document.getElementById('main'),toc=document.getElementById('toc'),favN=0,no=0;
   D.sections.forEach(function(s,si){
-    var m=META[s.id]||{c:'var(--ink)',en:''};
+    var m=META[s.id]||{c:'var(--ink)',t:'var(--tint)',en:s.name};
     if(!s.items||!s.items.length)return;
-    var link=el('a',{href:'#'+s.id,style:'--c:'+m.c},[el('span',{class:'sw'}),s.name]);nav.appendChild(link);
-    var lead=s.items[0],rest=s.items.slice(1);
-    s.items.forEach(function(it){if(it.fav)favN++});
-    var ch=el('section',{class:'ch',id:s.id,style:'--c:'+m.c});
-    ch.appendChild(el('div',{class:'opener'},[el('div',{class:'in'},[el('div',{class:'otop'},[el('div',{class:'en',text:m.en}),illo(s.id,si)]),el('h2',{text:s.name}),el('div',{class:'meta',text:s.items.length+'本のニュース'})])]));
-    var leadBox=el('article',{class:'lead','data-fav':lead.fav?'1':'0','data-k':s.id+'-0'},[el('div',{class:'in'},[lead.group?el('div',{class:'grp',text:lead.group,style:'margin-top:0'}):null,titleNode('h3','',lead),el('p',{text:lead.body}),fig(lead.viz),debate(lead),srcs(lead),fig(s.viz)])]);
-    ch.appendChild(leadBox);
-    if(rest.length){
-      var inner=el('div',{class:'in'}),last=null;
-      rest.forEach(function(it,ri){
-        var g=it.group||'';
-        if(g!==last&&g){inner.appendChild(el('div',{class:'grp',text:g}));}
-        last=g;
-        var sm=el('summary',null,[titleNode('span','t',it),el('span',{class:'pm','aria-hidden':'true'})]);
-        inner.appendChild(el('details',{class:'item','data-fav':it.fav?'1':'0','data-k':s.id+'-'+(ri+1)},[sm,el('div',{class:'b'},[el('p',{text:it.body}),fig(it.viz),debate(it),srcs(it)])]));
-      });
-      ch.appendChild(el('div',{class:'idx'},[inner]));
-    }
+    no++;
+    toc.appendChild(el('li',{style:'--c:'+m.c},[el('a',{href:'#'+s.id},[el('span',{class:'no',text:pad(no)}),el('span',{class:'nm'},[el('small',{text:m.en}),s.name]),el('span',{class:'ct',text:s.items.length+' STORIES'})])]));
+    nav.appendChild(el('a',{href:'#'+s.id,style:'--c:'+m.c,text:m.en}));
+    var ch=el('section',{class:'ch',id:s.id,style:'--c:'+m.c+';--t:'+m.t});
+    var op=el('div',{class:'op in'},[el('div',{class:'no',text:'No.'+pad(no)}),el('h2',{text:m.en}),el('div',{class:'jp',text:s.name+'　'+s.items.length+'本'})]);
+    var ill=el('div',{class:'ill'});ill.innerHTML=art(s.id,HEX[s.id]||'#141414',si);op.appendChild(ill);
+    ch.appendChild(op);
+    var last=null;
+    s.items.forEach(function(it,i){
+      if(it.fav)favN++;
+      var g=it.group||'';
+      var a=el('article',{class:'art in'+(i===0?' lead':''),'data-fav':it.fav?'1':'0','data-k':s.id+'-'+i},[
+        el('div',{class:'kick'},[el('span',{class:'n',text:pad(no)+'—'+pad(i+1)}),g&&g!==last?el('span',{class:'g',text:g}):null]),
+        title('h3',it),el('p',{text:it.body}),fig(it.viz),debate(it),srcs(it),i===0?fig(s.viz):null,el('div',{class:'rule'})]);
+      last=g;
+      ch.appendChild(a);
+    });
     main.appendChild(ch);
   });
 
   if(favN){
-    var fb=el('button',{type:'button','aria-pressed':'false'},['★好み '+favN]);nav.appendChild(fb);
+    var fb=document.getElementById('favbtn');fb.hidden=false;fb.textContent='★ 好みの記事だけ表示（'+favN+'）';
     fb.addEventListener('click',function(){
       var on=fb.getAttribute('aria-pressed')!=='true';fb.setAttribute('aria-pressed',String(on));
-      document.querySelectorAll('.ch').forEach(function(ch){
-        var shown=0;
-        ch.querySelectorAll('[data-fav]').forEach(function(x){var h=on&&x.dataset.fav!=='1';x.hidden=h;if(!h){shown++;if(on&&x.tagName==='DETAILS')x.open=true;}});
-        ch.querySelectorAll('.grp').forEach(function(g){g.hidden=on;});
-        ch.hidden=on&&!shown;
-      });
-      window.scrollTo({top:document.querySelector('.nav').offsetTop,behavior:'smooth'});
+      document.querySelectorAll('.ch').forEach(function(ch){var shown=0;
+        ch.querySelectorAll('[data-fav]').forEach(function(x){var h=on&&x.dataset.fav!=='1';x.hidden=h;if(!h)shown++;});
+        ch.hidden=on&&!shown;});
     });
   }
-
   var links=[].slice.call(nav.querySelectorAll('a')),prog=document.getElementById('prog');
   function onScroll(){
-    var y=window.scrollY+80,cur=null;
+    var y=window.scrollY+90,cur=null;
     document.querySelectorAll('.ch').forEach(function(ch){if(!ch.hidden&&ch.offsetTop<=y)cur=ch.id;});
-    links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+cur)});
+    links.forEach(function(a){var on=a.getAttribute('href')==='#'+cur;if(on&&!a.classList.contains('on'))a.scrollIntoView({inline:'center',block:'nearest'});a.classList.toggle('on',on);});
     var h=document.documentElement.scrollHeight-window.innerHeight;prog.style.width=(h>0?Math.min(100,window.scrollY/h*100):0)+'%';
   }
   window.addEventListener('scroll',onScroll,{passive:true});onScroll();
-
-  var inst=document.getElementById('inst'),KEY='brief-install-hidden';
-  try{if(localStorage.getItem(KEY)==='1')inst.hidden=true;}catch(e){}
-  document.getElementById('inst-close').addEventListener('click',function(){inst.hidden=true;try{localStorage.setItem(KEY,'1');}catch(e){}});
-  document.getElementById('inst-open').addEventListener('click',function(){inst.hidden=false;try{localStorage.removeItem(KEY);}catch(e){}window.scrollTo({top:inst.offsetTop-10,behavior:'smooth'});});
 })();
 </script>
 <script>
 (function(){
   var D=JSON.parse(document.getElementById('news-data').textContent);
-  var CH=[{"sec": "", "secName": "Morning Brief", "title": "今日のヘッドライン", "start": 0.0}, {"sec": "politics", "secName": "政治・経済", "title": "クアッド首脳会合、2年ぶりにマニラで開催　海洋監視と重要鉱物で合意", "start": 43.62}, {"sec": "politics", "secName": "政治・経済", "title": "高市首相、初の訪中でAPEC深圳へ　日中首脳会談は見通せず", "start": 84.92}, {"sec": "politics", "secName": "政治・経済", "title": "19日に初の米中ロ首脳会談　「新ヤルタ」への警戒も", "start": 115.57}, {"sec": "politics", "secName": "政治・経済", "title": "米連銀総裁「春までに複数回の利上げ」　ダウ849ドル安、日経平均も続落", "start": 145.67}, {"sec": "politics", "secName": "政治・経済", "title": "米軍、ホルムズ海峡のケシム島でイランのミサイル拠点を攻撃", "start": 181.23}, {"sec": "politics", "secName": "政治・経済", "title": "エヌビディア、フアン氏退任後初の決算で予想超え　次の四半期は1300億ドル見通し", "start": 212.9}, {"sec": "politics", "secName": "政治・経済", "title": "Anthropic、公開価格は仮条件の上限以上か　申込は6〜7倍", "start": 245.06}, {"sec": "politics", "secName": "政治・経済", "title": "OpenAI、新モデル「GPT-6.2 Astra／Sol」　価格を約2割下げて対抗", "start": 275.79}, {"sec": "football", "secName": "海外サッカー", "title": "ハーランドが96分にPKで決勝点、ノルウェーが逆転でネーションズリーグ8強", "start": 303.77}, {"sec": "football", "secName": "海外サッカー", "title": "バルサ：デ・ヨングはビジャレアル戦に出場見込み、クバルシは様子見", "start": 325.4}, {"sec": "football", "secName": "海外サッカー", "title": "10人のポルトガル、ウェールズに3-2で勝って首位通過", "start": 335.92}, {"sec": "football", "secName": "海外サッカー", "title": "マンUはポチェッティーノ体制へ、最下位パレスはフランクを招へい", "start": 348.14}, {"sec": "football", "secName": "海外サッカー", "title": "アーセナル、スビメンディが代表戦で負傷　ニューカッスル戦は微妙", "start": 366.42}, {"sec": "art", "secName": "アート", "title": "ポーラ美術館がゴンザレス＝トレス《パーフェクト・ラヴァーズ》を収蔵、12月4日から公開", "start": 382.22}, {"sec": "art", "secName": "アート", "title": "国立美術館の所蔵作品展が1000円に、専門家が値上げの使い道に懸念", "start": 412.78}, {"sec": "art", "secName": "アート", "title": "大阪府の20世紀美術コレクションと子どもの作品を並べる展示、20日開幕", "start": 430.93}, {"sec": "art", "secName": "アート", "title": "アンドリュー・クランストン、京都・両足院でアジア初の個展（22日まで）", "start": 449.29}, {"sec": "art", "secName": "アート", "title": "サザビーズNYの2セールで計3億7870万ドル、草間彌生が自身の最高額を更新", "start": 469.49}, {"sec": "art", "secName": "アート", "title": "18日競売のゴッホ（予想約1.8億ドル）に、直前で返還請求", "start": 485.21}, {"sec": "art", "secName": "アート", "title": "安藤忠雄と「もの派」の展覧会、2027年春にヴェネチアで", "start": 503.15}, {"sec": "film", "secName": "映画", "title": "パナヒ監督に禁錮5年超の新判決、カンヌ映画祭が「司法による迫害」と非難", "start": 526.97}, {"sec": "film", "secName": "映画", "title": "ヨーロッパ映画賞の候補発表、パヴリコフスキ『Fatherland』が最多11部門", "start": 549.33}, {"sec": "film", "secName": "映画", "title": "賞レースが山場に：IDFA、金馬奨、ゴッサム賞が続く", "start": 577.63}, {"sec": "film", "secName": "映画", "title": "東京フィルメックスが20日開幕、原田マハの初監督作がオープニング", "start": 586.63}, {"sec": "film", "secName": "映画", "title": "戦争と報道の記録映画、11月28日に日本公開が重なる", "start": 601.07}, {"sec": "film", "secName": "映画", "title": "新鋭・岩崎裕介のデビュー作『チルド』、12月17日からNetflixで配信", "start": 624.53}, {"sec": "film", "secName": "映画", "title": "エニェディ『静かな友人』12月4日公開、トニー・レオンが来日へ", "start": 639.07}, {"sec": "film", "secName": "映画", "title": "アダム・ドライバー主演、ジェームズ・グレイ『Paper Tiger』が米限定公開で好発進", "start": 659.09}, {"sec": "film", "secName": "映画", "title": "カンヌ「ある視点」脚本賞のデビュー作『ピリオン』、12月4日公開", "start": 678.15}, {"sec": "film", "secName": "映画", "title": "ベルリン銀熊賞のアルゼンチン映画『アニカの伝言』、27日公開", "start": 696.73}, {"sec": "", "secName": "Morning Brief", "title": "おわり", "start": 711.29}], DUR=716.73;
+  var CH=[{"sec": "", "secName": "Morning Brief", "title": "今日のヘッドライン", "start": 0.0}, {"sec": "politics", "secName": "政治・経済", "title": "クアッド首脳会合、2年ぶりにマニラで開催　海洋監視と重要鉱物で合意", "start": 51.89}, {"sec": "politics", "secName": "政治・経済", "title": "高市首相、初の訪中でAPEC深圳へ　日中首脳会談は見通せず", "start": 89.25}, {"sec": "politics", "secName": "政治・経済", "title": "19日に初の米中ロ首脳会談　「新ヤルタ」への警戒も", "start": 114.13}, {"sec": "politics", "secName": "政治・経済", "title": "米連銀総裁「春までに複数回の利上げ」　ダウ849ドル安、日経平均も続落", "start": 142.06}, {"sec": "politics", "secName": "政治・経済", "title": "米軍、ホルムズ海峡のケシム島でイランのミサイル拠点を攻撃", "start": 173.64}, {"sec": "politics", "secName": "政治・経済", "title": "エヌビディア、フアン氏退任後初の決算で予想超え　次の四半期は1300億ドル見通し", "start": 199.88}, {"sec": "politics", "secName": "政治・経済", "title": "Anthropic、公開価格は仮条件の上限以上か　申込は6〜7倍", "start": 229.27}, {"sec": "politics", "secName": "政治・経済", "title": "OpenAI、新モデル「GPT-6.2 Astra／Sol」　価格を約2割下げて対抗", "start": 261.45}, {"sec": "football", "secName": "海外サッカー", "title": "ハーランドが96分にPKで決勝点、ノルウェーが逆転でネーションズリーグ8強", "start": 293.48}, {"sec": "football", "secName": "海外サッカー", "title": "バルサ：デ・ヨングはビジャレアル戦に出場見込み、クバルシは様子見", "start": 313.3}, {"sec": "football", "secName": "海外サッカー", "title": "10人のポルトガル、ウェールズに3-2で勝って首位通過", "start": 321.94}, {"sec": "football", "secName": "海外サッカー", "title": "マンUはポチェッティーノ体制へ、最下位パレスはフランクを招へい", "start": 332.9}, {"sec": "football", "secName": "海外サッカー", "title": "アーセナル、スビメンディが代表戦で負傷　ニューカッスル戦は微妙", "start": 350.02}, {"sec": "art", "secName": "アート", "title": "ポーラ美術館がゴンザレス＝トレス《パーフェクト・ラヴァーズ》を収蔵、12月4日から公開", "start": 363.85}, {"sec": "art", "secName": "アート", "title": "国立美術館の所蔵作品展が1000円に、専門家が値上げの使い道に懸念", "start": 388.43}, {"sec": "art", "secName": "アート", "title": "大阪府の20世紀美術コレクションと子どもの作品を並べる展示、20日開幕", "start": 405.93}, {"sec": "art", "secName": "アート", "title": "アンドリュー・クランストン、京都・両足院でアジア初の個展（22日まで）", "start": 418.51}, {"sec": "art", "secName": "アート", "title": "サザビーズNYの2セールで計3億7870万ドル、草間彌生が自身の最高額を更新", "start": 435.23}, {"sec": "art", "secName": "アート", "title": "18日競売のゴッホ（予想約1.8億ドル）に、直前で返還請求", "start": 447.59}, {"sec": "art", "secName": "アート", "title": "安藤忠雄と「もの派」の展覧会、2027年春にヴェネチアで", "start": 467.65}, {"sec": "film", "secName": "映画", "title": "パナヒ監督に禁錮5年超の新判決、カンヌ映画祭が「司法による迫害」と非難", "start": 493.04}, {"sec": "film", "secName": "映画", "title": "ヨーロッパ映画賞の候補発表、パヴリコフスキ『Fatherland』が最多11部門", "start": 512.18}, {"sec": "film", "secName": "映画", "title": "賞レースが山場に：IDFA、金馬奨、ゴッサム賞が続く", "start": 535.22}, {"sec": "film", "secName": "映画", "title": "東京フィルメックスが20日開幕、原田マハの初監督作がオープニング", "start": 542.7}, {"sec": "film", "secName": "映画", "title": "戦争と報道の記録映画、11月28日に日本公開が重なる", "start": 553.8}, {"sec": "film", "secName": "映画", "title": "新鋭・岩崎裕介のデビュー作『チルド』、12月17日からNetflixで配信", "start": 572.06}, {"sec": "film", "secName": "映画", "title": "エニェディ『静かな友人』12月4日公開、トニー・レオンが来日へ", "start": 586.37}, {"sec": "film", "secName": "映画", "title": "アダム・ドライバー主演、ジェームズ・グレイ『Paper Tiger』が米限定公開で好発進", "start": 600.05}, {"sec": "film", "secName": "映画", "title": "カンヌ「ある視点」脚本賞のデビュー作『ピリオン』、12月4日公開", "start": 621.89}, {"sec": "film", "secName": "映画", "title": "ベルリン銀熊賞のアルゼンチン映画『アニカの伝言』、27日公開", "start": 639.39}, {"sec": "", "secName": "Morning Brief", "title": "おわり", "start": 654.06}], DUR=659.95;
   var COL={politics:'var(--pol)',football:'var(--foot)',art:'var(--art)',film:'var(--film)'};
   var keyOf={};D.sections.forEach(function(s){(s.items||[]).forEach(function(it,i){keyOf[s.id+'|'+it.title]=s.id+'-'+i;});});
   CH.forEach(function(c){c.key=keyOf[c.sec+'|'+c.title]||null;});
@@ -444,5 +444,5 @@ body.listening .foot .in{padding-bottom:190px}
       ms.setActionHandler('seekto',function(e){au.currentTime=e.seekTime;});}catch(e){}}
 })();
 </script>
-
-</body></html>
+</body>
+</html>

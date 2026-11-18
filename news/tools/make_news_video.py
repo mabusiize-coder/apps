@@ -145,15 +145,19 @@ def jtalk_audio(tracks):
 GEMINI_MODELS = [m for m in os.environ.get("GEMINI_TTS_MODELS",
                  "gemini-2.5-flash-preview-tts,gemini-3.1-flash-tts-preview").split(",") if m]
 GEMINI_VOICE = os.environ.get("GEMINI_TTS_VOICE", "Kore")
+# 大見出し（ジャンル）ごとに男女交互で声を変える。GEMINI_TTS_VOICES="politics=Charon,..." で上書き可
+VOICES = {"": GEMINI_VOICE, "politics": "Charon", "football": "Leda", "art": "Iapetus", "film": "Aoede"}
+VOICES.update(dict(kv.split("=", 1) for kv in os.environ.get("GEMINI_TTS_VOICES", "").split(",") if "=" in kv))
+def voice_for(sec): return VOICES.get(sec or "", GEMINI_VOICE)
 CHUNK_CHARS = 650      # 1回の依頼の上限。長いと後半で声が崩れるので短く（約1.5分）
 STYLE = ("朝のニュース番組のアナウンサーとして、明るく落ち着いた声で、テンポよく読み上げてください。"
          "本文は一字一句そのまま読み、付け足しや省略はしないでください。段落の切れ目では少し間をあけてください。\n\n")
 
-def _gemini_once(text):
+def _gemini_once(text, voice=GEMINI_VOICE):
     import base64, urllib.request, urllib.error, time
     body = json.dumps({"contents": [{"parts": [{"text": STYLE + text}]}],
                        "generationConfig": {"responseModalities": ["AUDIO"], "speechConfig": {
-                           "voiceConfig": {"prebuiltVoiceConfig": {"voiceName": GEMINI_VOICE}}}}}).encode()
+                           "voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voice}}}}}).encode()
     last = None
     for model in GEMINI_MODELS:
         for attempt in range(3):
@@ -200,7 +204,8 @@ def gemini_audio(tracks):
     chunks, cur, n = [], [], 0
     for i, t in enumerate(tracks):
         L = len(t["text"])
-        if cur and n + L > CHUNK_CHARS: chunks.append(cur); cur, n = [], 0
+        if cur and (n + L > CHUNK_CHARS or voice_for(t["sec"]) != voice_for(tracks[cur[0]]["sec"])):
+            chunks.append(cur); cur, n = [], 0
         cur.append(i); n += L
     if cur: chunks.append(cur)
     pcm, pos, timing = [], 0.0, [None] * len(tracks)
@@ -213,7 +218,7 @@ def gemini_audio(tracks):
         nchar = sum(len(clean(s)) for _, s in sents)
         x = None
         for attempt in range(2):
-            y, sr = _gemini_once(text)
+            y, sr = _gemini_once(text, voice_for(tracks[ids[0]]["sec"]))
             if _looks_ok(y, sr, nchar):
                 x = y; break
             print(f"chunk {ids[0]}-{ids[-1]}: silent/short audio, retry", file=sys.stderr)
@@ -246,7 +251,7 @@ def gemini_audio(tracks):
         pcm.append(np.zeros(int(sr * 0.6), np.float32)); pos += 0.6
     for i in range(len(tracks)):
         timing[i][1] = timing[i + 1][0] if i + 1 < len(tracks) else pos
-    return pcm, 24000, pos, [tuple(t) for t in timing], "gemini:" + GEMINI_VOICE
+    return pcm, 24000, pos, [tuple(t) for t in timing], "gemini:" + "/".join(dict.fromkeys(voice_for(t["sec"]) for t in tracks))
 
 def main(data_path, out_dir):
     d = json.load(open(data_path))
