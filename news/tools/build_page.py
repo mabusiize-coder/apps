@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """朝のニュース（読む）と音声（聞く）を1ページにまとめる。
 
-usage: python3 build_page.py magazine.html video.json data.json OUT.html
+usage: python3 build_page.py magazine.html video.json data.json OUT.html [feature.json]
   magazine.html : ページの雛形（tools/magazine.html。旧来の朝のニュースHTMLも可）
   video.json : make_news_video.py が出力した章と時刻
   data.json  : 当日の朝のニュースのJSON（news-data を差し替える）
@@ -9,9 +9,15 @@ usage: python3 build_page.py magazine.html video.json data.json OUT.html
 import json, re, sys
 
 src, vj, dj, out = sys.argv[1:5]
+feature_path = sys.argv[5] if len(sys.argv) > 5 else None
 h = open(src, encoding="utf-8").read()
 V = json.load(open(vj, encoding="utf-8"))
 D = json.load(open(dj, encoding="utf-8"))
+if feature_path:
+    try:
+        D["feature"] = json.load(open(feature_path, encoding="utf-8"))
+    except Exception as e:
+        print("feature skipped:", e, file=sys.stderr)
 
 def esc(s):
     return s.replace("</", "<\\/")
