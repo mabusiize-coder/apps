@@ -322,7 +322,7 @@ body.listening #tmbox,body.listening #selask{bottom:calc(var(--plh,150px) + 12px
 <footer class="foot"><div class="in">
   <div class="lg">THE MORNING<br>BRIEF</div>
   直近24時間（日本時間）のニュースを、一次ソースと信頼できる報道機関からまとめています。各記事の出典から原文を確認できます。<br>
-  <span id="updated"></span> <span style="opacity:.55">v3</span>
+  <span id="updated"></span> <span style="opacity:.55">v4</span>
 </div></footer>
 
 <div id="tmbox" role="dialog" aria-label="用語の解説" hidden><button type="button" class="x" aria-label="閉じる">×</button><div class="k">KEYWORD</div><div class="w"></div><div class="d"></div><a class="go" target="_blank" rel="noopener">Claudeにもっと聞く →</a></div>
@@ -456,8 +456,14 @@ body.listening #tmbox,body.listening #selask{bottom:calc(var(--plh,150px) + 12px
    ]
   };
 
-  function art(id,col,i){var v=ILLO[id];if(!v)return '';return '<svg viewBox="0 0 400 280" aria-hidden="true" preserveAspectRatio="xMidYMid slice">'+v[(doy+(i||0))%v.length](col)+'</svg>';}
-  document.getElementById('cv-art').innerHTML=art('cover',IC);
+  /* ジャンルの扉の絵は月替わり（表紙だけ毎日変わる） */
+  function art(id,col,i){var v=ILLO[id];if(!v)return '';return '<svg viewBox="0 0 400 280" aria-hidden="true" preserveAspectRatio="xMidYMid slice">'+v[(d.getFullYear()*12+d.getMonth()+(i||0))%v.length](col)+'</svg>';}
+  /* 表紙：その日のニュースから描いた1枚（D.cover.svg）があればそれを、なければ既定の絵を出す */
+  (function(){var cv=document.getElementById('cv-art'),c=D.cover;
+    if(c&&c.svg&&!/<script|<foreignObject|<image|<a[\s>]|href|\son\w+\s*=|url\(|javascript:/i.test(c.svg)){
+      cv.innerHTML='<svg viewBox="0 0 400 280" role="img" preserveAspectRatio="xMidYMid slice">'+String(c.svg).split('{C}').join(IC)+'</svg>';
+      if(c.motif){cv.firstChild.setAttribute('aria-label',c.motif);var cap=document.querySelector('.cv-cap');if(cap)cap.textContent='illustration / '+c.motif;}
+    }else cv.innerHTML=art('cover',IC);})();
 
   var FIGLAB={stats:'NUMBERS',bars:'CHART',timeline:'TIMELINE'};
   function fig(v){

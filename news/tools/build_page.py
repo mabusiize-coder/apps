@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """朝のニュース（読む）と音声（聞く）を1ページにまとめる。
 
-usage: python3 build_page.py magazine.html video.json data.json OUT.html [feature1.json feature2.json ...]
+usage: python3 build_page.py magazine.html video.json data.json OUT.html [feature1.json feature2.json ...] [cover.json]
   magazine.html : ページの雛形（tools/magazine.html。旧来の朝のニュースHTMLも可）
   video.json : make_news_video.py が出力した章と時刻
   data.json  : 当日の朝のニュースのJSON（news-data を差し替える）
@@ -16,7 +16,15 @@ D = json.load(open(dj, encoding="utf-8"))
 feats = []
 for fp in feature_paths:
     try:
-        feats.append(json.load(open(fp, encoding="utf-8")))
+        o = json.load(open(fp, encoding="utf-8"))
+        if isinstance(o, dict) and "svg" in o and "topic" not in o:
+            # 表紙のイラスト（cover.json）。危ない記述があれば使わず、既定の絵に戻す
+            if re.search(r"<script|<foreignObject|<image|<a[\s>]|href|\son\w+\s*=|url\(|javascript:", o["svg"], re.I):
+                print("cover skipped: unsafe svg", file=sys.stderr)
+            else:
+                D["cover"] = {"svg": o["svg"], "motif": str(o.get("motif") or "")[:40]}
+            continue
+        feats.append(o)
     except Exception as e:
         print("feature skipped:", fp, e, file=sys.stderr)
 if feats:
