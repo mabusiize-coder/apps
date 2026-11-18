@@ -2,6 +2,12 @@
 
 朝のニュースのページに毎朝入る「特集」。深く・面白く・正確に。読むのに3〜5分。
 
+## 先に：表紙のイラストも毎朝1枚描く（2026-11-19〜）
+特集を書く前に、同じフォルダの `COVER.md` を読み、その指示どおりに今日の表紙のイラストを描いて、作業フォルダに `cover.json` として保存する（10分を目安に。見本は cover_example.json）。
+ページを作るとき（build_page.py）は、特集のファイルに続けて **cover.json も引数の最後に並べる**。
+例：`python3 build_page.py magazine.html out/video.json data.json index.html feature_ai.json feature_film.json feature_fashion.json cover.json`
+うまく描けなかった日は cover.json を作らず、引数にも入れない（既定の絵が出る）。最終メッセージに「表紙＝（motif）」を1行足す。
+
 ## 毎日3本
 毎朝 `ai`・`film`・`fashion` の3本を作る。ファイルは feature_ai.json / feature_film.json / feature_fashion.json。
 - 過去の題材（feature_log.json のタイトル）と同じものは選ばない。映画は毎日別の作品、ファッションは毎日別の切り口（アウター、靴、小物、雨の日、休日、きれいめ、など）。
