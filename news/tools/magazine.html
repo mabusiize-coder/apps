@@ -263,6 +263,12 @@ p,.vp,.tx{overflow-wrap:anywhere}
 .lk.look .ph.tall{aspect-ratio:4/5;max-height:520px}
 .lk.look b{font-size:16px}
 .lk .cap{position:absolute;left:8px;top:8px;background:var(--ink);color:#fff;font:800 10.5px/1 var(--f-en);letter-spacing:.12em;padding:5px 7px}
+.lk .tier{display:inline-block;background:var(--ink);color:#fff;font:800 10.5px/1 var(--f-en);letter-spacing:.12em;padding:4px 6px 3px;margin-bottom:6px}
+.lk .tier small{font:700 10px/1 var(--f-jp);letter-spacing:.04em;margin-left:6px}
+.lk.t-high .tier{background:var(--ink)}
+.lk.t-mid .tier{background:var(--ic);color:var(--ink)}
+.lk.t-fast .tier{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.ftr .its .pt{font-weight:900;font-size:clamp(18px,5vw,21px);line-height:1.6;margin:0 0 4px}
 .ftr .its .cr{font-size:11px;line-height:1.7;margin-top:10px;color:var(--sub,#555)}
 
 /* footer */
@@ -617,7 +623,7 @@ body.listening #tmbox,body.listening #selask{bottom:calc(var(--plh,150px) + 12px
       if(F.quote&&F.quote.text&&i===0)w.appendChild(el('blockquote',{class:'qt'},[el('p',{text:F.quote.text}),F.quote.who?el('cite',{text:'— '+F.quote.who}):null]));
     });
     var LOOKS=[].concat(F.looks||F.look||[]).filter(function(x){return x&&/^https?:\/\//.test(x.url||'');});
-    if(LOOKS.length||(F.items&&F.items.length)){var its=el('div',{class:'its'});
+    if(LOOKS.length||(F.items&&F.items.length)||(F.picks&&F.picks.length)){var its=el('div',{class:'its'});
       function dom(u){try{return new URL(u).hostname.replace(/^www\./,'');}catch(e){return '';}}
       function ph(src,alt,label,tall){var p=el('span',{class:'ph'+(tall?' tall':'')},[el('span',{class:'ni',text:label||''})]);
         if(src&&/^https:\/\//.test(src)){var im=el('img',{src:src,alt:alt||'',loading:'lazy',decoding:'async',referrerpolicy:'no-referrer'});
@@ -637,7 +643,18 @@ body.listening #tmbox,body.listening #selask{bottom:calc(var(--plh,150px) + 12px
             x.note?el('span',{class:'nt',text:x.note}):null,
             ok?el('span',{class:'ft'},[el('span',{class:'dm',text:x.site||dom(x.url)}),el('span',{class:'go2',text:'開く ↗'})]):null])];
           its.appendChild(ok?el('a',{class:'lk it',href:x.url,target:'_blank',rel:'noopener'},kids):el('div',{class:'lk it'},kids));});}
-      if([].concat(LOOKS,F.items||[]).some(function(x){return x.img;}))its.appendChild(el('p',{class:'cr',text:'写真は各リンク先のページのものを表示しています（© 各サイト）。タップで元のページが開きます。'}));
+      var PK=(F.picks||[]).filter(function(x){return x&&x.name;});
+      if(PK.length){var TN={high:['HIGH','ハイブランド'],mid:['MIDDLE','ミドル'],fast:['FAST','ファスト']};
+        its.appendChild(el('div',{class:'hd',style:'margin-top:32px'},[el('span',{text:'3 PRICE RANGES'}),el('i')]));
+        if(F.picksTitle)its.appendChild(el('p',{class:'pt',text:F.picksTitle}));
+        PK.forEach(function(x){var ok=x.url&&/^https?:\/\//.test(x.url);var t=TN[x.tier]||['PICK',''];
+          var kids=[ph(x.img,x.name,x.brand),el('span',{class:'tx'},[
+            el('span',{class:'tier'},[t[0],el('small',{text:t[1]})]),
+            el('span',{class:'br',text:x.brand||''}),el('b',{text:x.name||''}),x.price?el('span',{class:'pr',text:x.price}):null,
+            x.note?el('span',{class:'nt',text:x.note}):null,
+            ok?el('span',{class:'ft'},[el('span',{class:'dm',text:x.site||dom(x.url)}),el('span',{class:'go2',text:'開く ↗'})]):null])];
+          its.appendChild(ok?el('a',{class:'lk it t-'+(x.tier||''),href:x.url,target:'_blank',rel:'noopener'},kids):el('div',{class:'lk it t-'+(x.tier||'')},kids));});}
+      if([].concat(LOOKS,F.items||[],PK).some(function(x){return x.img;}))its.appendChild(el('p',{class:'cr',text:'写真は各リンク先のページのものを表示しています（© 各サイト）。タップで元のページが開きます。'}));
       w.appendChild(its);}
     var sr=srcs(F);if(sr)w.appendChild(sr);
     w.appendChild(el('div',{class:'folio'},[el('span',{text:pad(fi*2+2,3)}),el('span',{text:'特集　'+(F.label||EN)}),el('span',{text:pad(fi*2+3,3)})]));

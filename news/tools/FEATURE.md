@@ -22,6 +22,7 @@
   - **リンクカード（2026-11-19〜）**：ページでは items と look が「写真つきのリンクカード」になる。写真はリンク先ページの **og:image（SNSで共有されたときに出る代表画像）のURLをそのまま参照**するだけで、画像をダウンロードしたりリポジトリに保存したりはしない。
   - **look（必須に近い）**：コーデの出発点にした雑誌の記事・特集ページ（UOMO / BRUTUS / POPEYE のWeb記事、ブランドのLOOKBOOKなど）を1〜2件。コーデの雰囲気が写真で伝わるページを選ぶ。Instagram・WEAR などSNSのページは look にしない（写真が出ないうえ転載に近くなる）。
   - **写真URLの取り方**：items と look のURLを1つずつ WebFetch で開き、「このページの og:image（無ければ twitter:image）と og:title、og:site_name のmetaタグの値をURLのまま正確に答えて」と頼む。返ってきた https の画像URLを img に入れる。見つからない・テキストしか返らないページは img を空にする（カードはブランド名の文字で表示される）。推測でURLを作らない。1件1分以内、全部で5分を目安に。
+  - **3つの価格帯（picks、2026-11-19〜 翔太さん希望）**：その日のテーマに合うアイテム（例：雨の日ならアウター、靴の日なら靴）を1種類決め、同じ種類で「ハイブランド（例：PRADA、Margiela、Lemaire など）」「ミドル（例：DAIWA PIER39、FreshService、Graphpaper、Studio Nicholson など）」「ファスト（例：GU、UNIQLO、ZARA など）」から1点ずつ、計3点おすすめする。tier は high / mid / fast。picksTitle に「雨の日のアウター、3つの価格帯で」のような一言。note には、その価格帯を選ぶ理由（何にお金を払うか、どこで割り切るか）を40字前後で。価格と販売中であることは商品ページで確かめる（確かめられない価格は書かない。古い表示しか見つからないときは note に「価格は公式で要確認」）。img は items と同じく og:image が取れたときだけ。毎日ブランドを変える（fashion の記録に "picks": ["PRADA","DAIWA PIER39","UNIQLO"] のようにブランド名も残し、前の日と同じブランドを続けない）。
   - 商品ページが取れないブランド（UNIQLO・BEAMSなどテキストしか返らないサイト）は、同じ商品が載っている別の公式ページ（ブランド直営のオンラインストアやZOZOTOWNの商品ページなど）で og:image が取れれば、そちらを url にしてよい。
 
 ## ルール
@@ -55,6 +56,8 @@
   "blocks": [{"h": "小見出し", "body": "240〜380字。2〜3段落に分ける（区切りは \n）"}],
   "quote": {"text": "印象的な一言（60字以内）", "who": "誰の言葉か"},
   "items": [{"brand": "", "name": "", "price": "", "note": "", "url": "https://…", "linkText": "公式ページを見る", "img": "https://…"}],
+  "picksTitle": "雨の日のアウター、3つの価格帯で",
+  "picks": [{"tier": "high | mid | fast", "brand": "", "name": "", "price": "", "note": "", "url": "https://…", "img": "https://…（og:image）"}],
   "look": [{"url": "https://…（雑誌の記事）", "img": "https://…（og:image）", "site": "UOMO", "title": "og:title（サイト名の部分は除く）", "note": "この記事をどう使ったか一言（40字以内）"}],
   "terms": [{"w": "本文に出てくる言葉", "d": "40〜90字の解説"}],
   "src": [["サイト名", "https://…"]]
@@ -62,7 +65,7 @@
 ```
 - terms（用語タップ解説）：読者がつまずきそうな固有名詞・専門用語を3〜6個。ページ上でその言葉をタップすると解説が出る。w は lead・points・blocks の本文に出てくる表記そのまま（2文字以上）。d は「それは何か」を1〜2文で、確かめた事実だけを書く。本文中ですでに説明した言葉や、誰でも知っている言葉は入れない。
 - facts は3〜5行、blocks は4〜5個。最後の block は「割り引いて読む点」や「こんな人におすすめ」などの締め。
-- items は fashion のとき必須、ほかは省略可。look は fashion のとき1〜2件（配列。1件ならオブジェクトでも可）。items の img・look の img は og:image が確かめられたときだけ。quote は無ければ省略。
+- items は fashion のとき必須、ほかは省略可。picks は fashion のとき3件（high・mid・fast を1件ずつ）。look は fashion のとき1〜2件（配列。1件ならオブジェクトでも可）。items の img・look の img は og:image が確かめられたときだけ。quote は無ければ省略。
 
 ## 記録
-作ったら1本ごとに `feature_log.json` の配列の末尾に `{"date": "YYYY-MM-DD", "topic": "…", "title": "…"}` を追加する。
+作ったら1本ごとに `feature_log.json` の配列の末尾に `{"date": "YYYY-MM-DD", "topic": "…", "title": "…"}` を追加する。 fashion は "picks"（3つの価格帯のブランド名）も入れる。
