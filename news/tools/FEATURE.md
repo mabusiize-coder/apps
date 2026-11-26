@@ -34,6 +34,7 @@
   2. 見つかったIDを `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=ID&format=json` で WebFetch し、title と author_name（チャンネル名）を確かめる。作品名が title に入っていなければ使わない。
   3. チャンネルは 配給会社・製作会社・スタジオの公式（例：映画会社ビターズ・エンド、ワーナー ブラザース ジャパン、Netflix Japan、A24）を最優先。見つからなければ、映画メディアや映画館の公式チャンネル（MOVIE WALKER PRESS、シネマトゥデイ、映画.com、イオンシネマなど）が載せた予告編でよい。個人の転載・切り抜き・ファンメイドは使わない。
   4. 推測で動画IDやURLを作らない。確かめられなかった日は videos を省く（カードは出ないだけ）。
+- **映画ニュースにも付ける**：特集を書き終えたら、data.json の映画セクション（id が film）の各項目で、特定の作品を扱っているものに同じ手順で予告編を探し、その項目に `"videos": [...]`（1件）を足して data.json を保存し直してから build_page.py を動かす。1項目3分、全部で10分まで。見つからない項目はそのまま。ほかのジャンルの項目には付けない。
 - 形式：`"videos": [{"url": "https://www.youtube.com/watch?v=ID", "kind": "本予告", "title": "映画『〇〇』本予告", "channel": "oEmbed の author_name そのまま"}]`
   - kind はカード左上の小さなラベル（本予告／予告編／特報／ティザー／公式映像 など、10字以内）。title は動画の中身が分かる短い名前（oEmbed の title から公開日などの宣伝文を除いたもの、40字以内）。
 
