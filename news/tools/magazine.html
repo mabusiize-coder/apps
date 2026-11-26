@@ -270,6 +270,20 @@ p,.vp,.tx{overflow-wrap:anywhere}
 .lk.t-fast .tier{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
 .ftr .its .pt{font-weight:900;font-size:clamp(18px,5vw,21px);line-height:1.6;margin:0 0 4px}
 .ftr .its .cr{font-size:11px;line-height:1.7;margin-top:10px;color:var(--sub,#555)}
+/* 公式の予告編・映像（videos） */
+.vids{margin:28px 0 0}
+.art .vids{margin:18px 0 0}
+.vids .hd{display:flex;align-items:center;gap:10px;font:800 12px/1 var(--f-en);letter-spacing:.14em;margin-bottom:2px}
+.vids .hd i{flex:1;height:1px;background:var(--ink)}
+.lk.vid .ph{aspect-ratio:16/9;border-bottom:1.5px solid var(--ink)}
+.lk.vid .pb{position:absolute;left:50%;top:50%;width:58px;height:58px;margin:-29px 0 0 -29px;border-radius:50%;background:var(--ink);display:grid;place-items:center;box-shadow:0 0 0 3px #fff}
+.lk.vid .pb svg{width:22px;height:22px;margin-left:3px;color:#fff}
+.lk.vid b{font-size:15px}
+.lk.vid.sm{display:grid;grid-template-columns:132px minmax(0,1fr)}
+.lk.vid.sm .ph{border-bottom:0;border-right:1.5px solid var(--ink);align-self:stretch;aspect-ratio:auto;min-height:74px}
+.lk.vid.sm .pb{width:34px;height:34px;margin:-17px 0 0 -17px;box-shadow:0 0 0 2px #fff}
+.lk.vid.sm .pb svg{width:13px;height:13px;margin-left:2px}
+.lk.vid.sm b{font-size:13.5px}
 
 /* footer */
 .foot{margin-top:96px;background:var(--ic);border-top:2px solid var(--ink);padding:26px 0 48px;font-size:12px;line-height:1.9}
@@ -501,6 +515,21 @@ body.listening #tmbox,body.listening #selask{bottom:calc(var(--plh,150px) + 12px
     return f;
   }
   function tags(t,it){if(it.fav)t.appendChild(el('span',{class:'tag fav',text:'★ 好み'}));if(it.barca)t.appendChild(el('span',{class:'tag barca',text:'BARÇA'}));return t;}
+  function ytId(u){var m=String(u||'').match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/|live\/)|youtu\.be\/)([\w-]{11})/);return m?m[1]:null;}
+  function vids(list,small){
+    var V=[].concat(list||[]).filter(function(x){return x&&/^https:\/\//.test(x.url||'');});if(!V.length)return null;
+    var box=el('div',{class:'vids'},[el('div',{class:'hd'},[el('span',{text:'WATCH'+(V.length>1?' / '+V.length:'')}),el('i')])]);
+    V.forEach(function(x){var id=ytId(x.url),src=x.img||(id?'https://i.ytimg.com/vi/'+id+'/hqdefault.jpg':'');
+      var host='';try{host=new URL(x.url).hostname.replace(/^www\./,'');}catch(e){}
+      var p=el('span',{class:'ph'},[el('span',{class:'ni',text:x.kind||'TRAILER'})]);
+      if(src&&/^https:\/\//.test(src)){var im=el('img',{src:src,alt:x.title||'',loading:'lazy',decoding:'async',referrerpolicy:'no-referrer'});
+        im.addEventListener('error',function(){im.remove();p.classList.remove('has');});p.classList.add('has');p.insertBefore(im,p.firstChild);}
+      var pb=el('span',{class:'pb'});pb.innerHTML='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>';p.appendChild(pb);
+      if(!small)p.appendChild(el('span',{class:'cap',text:x.kind||'公式映像'}));
+      box.appendChild(el('a',{class:'lk vid'+(small?' sm':''),href:x.url,target:'_blank',rel:'noopener'},[p,el('span',{class:'tx'},[
+        el('b',{text:x.title||'公式映像を見る'}),
+        el('span',{class:'ft'},[el('span',{class:'dm',text:x.channel||host}),el('span',{class:'go2',text:(id?'YouTube':'開く')+' ↗'})])])]));});
+    return box;}
   function srcs(it){if(!it.src||!it.src.length)return null;var s=el('div',{class:'srcs'},[el('b',{text:'SOURCE'})]);it.src.forEach(function(x){s.appendChild(el('a',{href:x[1],target:'_blank',rel:'noopener',text:x[0]}))});if(it.title)s.appendChild(el('a',{class:'askc',href:askArticle(it),target:'_blank',rel:'noopener',text:'Claudeに聞く'}));return s;}
   function debate(it){
     var v=it.debate;if(!v||!v.views||v.views.length<2)return null;
@@ -511,7 +540,7 @@ body.listening #tmbox,body.listening #selask{bottom:calc(var(--plh,150px) + 12px
   function body(it){var p=el('p',{text:it.body});p.setAttribute('data-k1',(it.title||'').replace(/^[^㐀-鿿]*/,'').charAt(0)||'・');return p;}
   function meta(it,extra){var m=el('div',{class:'meta'},extra||[]);if(it.group)m.appendChild(el('span',{class:'grp',text:it.group}));return m.children.length?m:null;}
   function article(s,it,i,head){
-    return el('article',{class:'art'+(i===0?' lead':''),'data-fav':it.fav?'1':'0','data-k':s.id+'-'+i,id:s.id+'-'+i},head.concat([body(it),fig(it.viz),debate(it),srcs(it),i===0?fig(s.viz):null]).filter(Boolean));
+    return el('article',{class:'art'+(i===0?' lead':''),'data-fav':it.fav?'1':'0','data-k':s.id+'-'+i,id:s.id+'-'+i},head.concat([body(it),fig(it.viz),debate(it),vids(it.videos,true),srcs(it),i===0?fig(s.viz):null]).filter(Boolean));
   }
   function sechead(s,m,lede){return el('div',{class:'sechead'},[el('div',{class:'lede2',text:lede}),el('div',{class:'t'},[el('span',{text:s.name}),el('span',{text:'で読む'})])]);}
 
@@ -570,7 +599,7 @@ body.listening #tmbox,body.listening #selask{bottom:calc(var(--plh,150px) + 12px
     s.items.forEach(function(it,i){
       var a=el('article',{class:'art'+(i===0?' lead':''),'data-fav':it.fav?'1':'0','data-k':s.id+'-'+i,id:s.id+'-'+i},[
         el('div',{class:'th'},[el('div',{class:'pic',html:art(s.id,IC,si+i)}),el('div',null,[tags(el('h3',{text:it.title}),it),meta(it,[el('span',{class:'chip ic',text:pad(i+1)})])])]),
-        body(it),fig(it.viz),debate(it),srcs(it),i===0?fig(s.viz):null].filter(Boolean));
+        body(it),fig(it.viz),debate(it),vids(it.videos,true),srcs(it),i===0?fig(s.viz):null].filter(Boolean));
       grid.appendChild(a);
     });
     opn.appendChild(grid);w.appendChild(opn);
@@ -622,6 +651,7 @@ body.listening #tmbox,body.listening #selask{bottom:calc(var(--plh,150px) + 12px
       w.appendChild(el('div',{class:'blk'},[el('div',{class:'n'},[el('span',{text:'PART '+pad(i+1)}),el('i')]),b.h?el('h3',null,[el('span',{text:b.h})]):null].concat(String(b.body||'').split(/\n+/).filter(Boolean).map(function(t){return el('p',{text:t});}))));
       if(F.quote&&F.quote.text&&i===0)w.appendChild(el('blockquote',{class:'qt'},[el('p',{text:F.quote.text}),F.quote.who?el('cite',{text:'— '+F.quote.who}):null]));
     });
+    var fv=vids(F.videos);if(fv)w.appendChild(fv);
     var LOOKS=[].concat(F.looks||F.look||[]).filter(function(x){return x&&/^https?:\/\//.test(x.url||'');});
     if(LOOKS.length||(F.items&&F.items.length)||(F.picks&&F.picks.length)){var its=el('div',{class:'its'});
       function dom(u){try{return new URL(u).hostname.replace(/^www\./,'');}catch(e){return '';}}
