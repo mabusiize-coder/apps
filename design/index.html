@@ -1,0 +1,449 @@
+<!doctype html><html><head><meta name="apple-mobile-web-app-capable" content="yes"><link rel="apple-touch-icon" href="art/brief.png"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>デザインの教え</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a newspaper "visual special" — dark masthead band, then one full-bleed chapter per genre: big Mincho opener, a lead story set large, the rest as a tappable index */
+:root{
+  --paper:#F5F6F8; --sheet:#FFFFFF; --ink:#111418; --sub:#4E5864; --faint:#8A94A0; --rule:#DADFE5;
+  --night:#0C1016; --night-ink:#F2F4F7; --night-sub:#9AA6B4; --night-rule:#2A323D;
+  --pol:#2D4F95; --foot:#127A55; --art:#AE2E69; --film:#9C6406;
+  --up:#C8372D; --down:#2763AD; --fav:#C9461C; --barca:#A50044; --onacc:#FFFFFF; --barc:#C9D0D9;
+  --f-mincho:"Shippori Mincho B1","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
+  --f-body:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0F1318; --sheet:#161B22; --ink:#E8ECF0; --sub:#A7B1BC; --faint:#6F7A86; --rule:#28303A;
+  --night:#06080B; --night-rule:#222A34;
+  --pol:#8EAEEB; --foot:#5ACB98; --art:#EC86B8; --film:#E9B45A;
+  --up:#F27F72; --down:#7FB0EC; --fav:#F2915F; --barca:#E85A90; --onacc:#0C1016; --barc:#3A4451; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0F1318; --sheet:#161B22; --ink:#E8ECF0; --sub:#A7B1BC; --faint:#6F7A86; --rule:#28303A;
+  --night:#06080B; --night-rule:#222A34;
+  --pol:#8EAEEB; --foot:#5ACB98; --art:#EC86B8; --film:#E9B45A;
+  --up:#F27F72; --down:#7FB0EC; --fav:#F2915F; --barca:#E85A90; --onacc:#0C1016; --barc:#3A4451; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.8;-webkit-text-size-adjust:100%;word-break:auto-phrase}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:20;background:var(--night)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--fav);outline-offset:3px;border-radius:4px}
+.in{max-width:680px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+
+/* masthead */
+.mast{background:var(--night);color:var(--night-ink)}
+.mast .in{padding-block:28px 0}
+.mrow{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;color:var(--night-sub);text-transform:uppercase}
+.bigdate{font-family:var(--f-mincho);font-weight:800;font-size:clamp(76px,24vw,128px);line-height:.9;letter-spacing:-.03em;margin-top:18px;font-variant-numeric:tabular-nums}
+.bigdate .dot{color:var(--fav)}
+.dow{font-family:var(--f-mincho);font-weight:600;font-size:18px;margin-top:10px;color:var(--night-sub)}
+.lede{font-family:var(--f-mincho);font-weight:800;font-size:clamp(23px,6.2vw,30px);line-height:1.55;margin:26px 0 0;letter-spacing:.01em}
+.mk{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:30px;border-top:1px solid var(--night-rule)}
+.mk>div{padding:14px 10px 18px 0;min-width:0}
+.mk>div+div{padding-left:12px;border-left:1px solid var(--night-rule)}
+.mk .l{font-size:11px;color:var(--night-sub);letter-spacing:.06em}
+.mk .v{font-family:var(--f-mono);font-size:17px;font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap;line-height:1.5}
+.mk .c{font-family:var(--f-mono);font-size:12px;font-variant-numeric:tabular-nums}
+.mk .up{color:#FF8A7E} .mk .down{color:#8DB9F2} .mk .flat{color:var(--night-sub)}
+@media (max-width:460px){.mk{grid-template-columns:repeat(2,minmax(0,1fr))}.mk>div:nth-child(3){padding-left:0;border-left:0}.mk>div:nth-child(n+3){border-top:1px solid var(--night-rule)}}
+
+/* sticky chapter nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--night);border-bottom:1px solid var(--night-rule)}
+.nav .in{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-block:0}
+.nav .in::-webkit-scrollbar{display:none}
+.nav a,.nav button{flex:none;display:flex;align-items:center;gap:6px;color:var(--night-sub);text-decoration:none;font:500 13px/1 var(--f-body);padding:14px 10px;border:0;background:none;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+.nav a.on{color:var(--night-ink);border-bottom-color:var(--c)}
+.nav a .sw{width:7px;height:7px;border-radius:50%;background:var(--c)}
+.nav button[aria-pressed="true"]{color:var(--onacc);background:var(--fav);border-radius:999px;padding:7px 12px;margin-block:7px}
+.prog{position:absolute;left:0;bottom:-1px;height:2px;background:var(--night-ink);opacity:.5;width:0}
+
+/* chapters */
+.ch{scroll-margin-top:calc(env(safe-area-inset-top,0px) + 46px)}
+.opener{border-top:6px solid var(--c);background:var(--sheet)}
+.opener .in{padding-block:36px 8px}
+.en{font-family:var(--f-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--c)}
+.opener h2{font-family:var(--f-mincho);font-weight:800;font-size:clamp(40px,12vw,60px);line-height:1.15;margin:6px 0 0;letter-spacing:.02em}
+.opener .meta{font-size:13px;color:var(--sub);margin-top:6px}
+
+.lead{background:var(--sheet)}
+.lead .in{padding-block:18px 34px}
+.lead h3{font-family:var(--f-mincho);font-weight:800;font-size:clamp(23px,6vw,28px);line-height:1.5;margin:0}
+.lead p{font-size:16.5px;line-height:1.95;margin:14px 0 0;color:var(--ink);max-width:60ch}
+
+.idx{background:var(--paper)}
+.idx .in{padding-block:8px 44px}
+.grp{font-family:var(--f-body);font-weight:700;font-size:12px;letter-spacing:.14em;color:var(--c);margin:26px 0 4px;display:flex;align-items:center;gap:10px}
+.grp::after{content:"";flex:1;height:1px;background:var(--rule)}
+.item{border-bottom:1px solid var(--rule)}
+.item summary{list-style:none;cursor:pointer;display:flex;gap:14px;align-items:flex-start;padding-block:16px}
+.item summary::-webkit-details-marker{display:none}
+.item .t{flex:1;min-width:0;font-weight:700;font-size:16.5px;line-height:1.6}
+.pm{flex:none;width:22px;height:22px;margin-top:2px;border-radius:50%;border:1px solid var(--rule);position:relative}
+.pm::before,.pm::after{content:"";position:absolute;left:50%;top:50%;width:9px;height:1.5px;background:var(--sub);transform:translate(-50%,-50%)}
+.pm::after{transform:translate(-50%,-50%) rotate(90deg);transition:transform .2s}
+.item[open] .pm::after{transform:translate(-50%,-50%) rotate(0deg)}
+.item .b{padding-bottom:18px}
+.item .b p{margin:0;font-size:15.5px;line-height:1.9;color:var(--ink);max-width:60ch}
+
+.tag{display:inline-block;font:500 10px/1 var(--f-mono);letter-spacing:.06em;padding:4px 6px 3px;border-radius:3px;margin-left:8px;vertical-align:3px;color:var(--onacc);white-space:nowrap}
+.tag.fav{background:var(--fav)} .tag.barca{background:var(--barca)}
+.srcs{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:12px;font-size:12.5px}
+.srcs a{color:var(--c);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px}
+.srcs a::after{content:" ↗";color:var(--faint)}
+.srcs span{color:var(--faint);font-family:var(--f-mono);font-size:10px;letter-spacing:.12em}
+
+.foot{background:var(--night);color:var(--night-sub);font-size:12px;line-height:1.8}
+.foot .in{padding-block:32px 40px}
+.foot b{color:var(--night-ink);font-family:var(--f-mincho);font-size:16px;display:block;margin-bottom:6px}
+
+/* illustrations & figures */
+.mast{position:relative;overflow:hidden}
+.sun{position:absolute;right:-60px;top:-40px;width:300px;height:300px;color:var(--fav);opacity:.9;pointer-events:none}
+.mast .in{position:relative}
+.otop{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.illo{width:clamp(92px,26vw,132px);height:auto;color:var(--c);display:block;flex:none}
+.fig{margin:22px 0 0;padding:18px 16px 14px;background:var(--paper);border-radius:10px}
+.idx .fig{background:var(--sheet)}
+.fig .fl{font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;color:var(--c);text-transform:uppercase}
+.fig .ft{font-weight:700;font-size:14.5px;line-height:1.5;margin-top:2px}
+.fig .fn{font-size:11.5px;color:var(--faint);margin-top:10px;line-height:1.6}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:14px;margin-top:12px}
+.stats .sv{font-family:var(--f-mincho);font-weight:800;font-size:clamp(30px,9vw,40px);line-height:1.1;font-variant-numeric:tabular-nums}
+.stats .sv.up{color:var(--up)} .stats .sv.down{color:var(--down)}
+.stats .sl{font-size:12.5px;color:var(--sub);line-height:1.5;margin-top:4px}
+.bars{display:grid;gap:9px;margin-top:12px}
+.bar{display:grid;grid-template-columns:minmax(0,7.5em) minmax(0,1fr);gap:10px;align-items:center;font-size:12.5px}
+.bar .bl{color:var(--sub);line-height:1.35;overflow-wrap:anywhere}
+.bar .track{display:flex;align-items:center;gap:8px;min-width:0}
+.bar .fill{height:14px;border-radius:0 3px 3px 0;background:var(--barc);flex:none;min-width:2px}
+.bar.hi .fill{background:var(--c)} .bar.hi .bl{color:var(--ink);font-weight:700}
+.bar .bv{font-family:var(--f-mono);font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tl{list-style:none;margin:14px 0 0;padding:0;position:relative}
+.tl::before{content:"";position:absolute;left:5px;top:8px;bottom:8px;width:1.5px;background:var(--rule)}
+.tl li{position:relative;padding-left:26px;display:grid;grid-template-columns:4.2em minmax(0,1fr);gap:10px;padding-block:6px;font-size:14px;line-height:1.55}
+.tl li::before{content:"";position:absolute;left:0;top:12px;width:12px;height:12px;border-radius:50%;background:var(--sheet);border:2px solid var(--c);box-sizing:border-box}
+.tl li.hi::before{background:var(--c)}
+.tl .td{font-family:var(--f-mono);font-size:12.5px;color:var(--c);font-weight:500;padding-top:1px}
+.tl li.hi .tx{font-weight:700}
+/* debate: two opposing views */
+:root{--v0:#A8512A;--v1:#2C6A87}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--v0:#EE9B72;--v1:#7DBCDB}}
+:root[data-theme="dark"]{--v0:#EE9B72;--v1:#7DBCDB}
+.vw{margin:22px 0 0;border-top:1px solid var(--rule);padding-top:14px}
+.vl{font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;color:var(--c);text-transform:uppercase}
+.vq{font-weight:700;font-size:14.5px;line-height:1.5;margin-top:2px}
+.vg{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-top:10px}
+.vc{background:var(--paper);border-radius:10px;padding:14px 14px 12px;border-top:3px solid var(--va);min-width:0}
+.idx .vc{background:var(--sheet)}
+.vc.v0{--va:var(--v0)} .vc.v1{--va:var(--v1)}
+.vs{font-weight:700;font-size:13px;color:var(--va);letter-spacing:.04em}
+.vc p.vp{margin:6px 0 0;font-size:14.5px;line-height:1.8;color:var(--ink)}
+.vwho{font-size:12px;color:var(--sub);margin-top:8px;line-height:1.5}
+.va{display:inline-block;font-size:12px;color:var(--va);text-decoration:none;border-bottom:1px solid currentColor;margin-top:6px}
+.va::after{content:" ↗";color:var(--faint)}
+@media (prefers-reduced-motion:reduce){.pm::after{transition:none}}
+/* home-screen install guide */
+.inst{background:var(--night);color:var(--night-ink);border-top:1px solid var(--night-rule)}
+.inst .in{padding-block:16px 18px;display:grid;gap:10px}
+.inst .ih{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.inst b{font-family:var(--f-mincho);font-size:16px}
+.inst .x{flex:none;font:500 12px/1 var(--f-body);color:var(--night-sub);background:none;border:1px solid var(--night-rule);border-radius:999px;padding:7px 12px;cursor:pointer}
+.inst ol{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:13.5px;line-height:1.6;color:var(--night-sub)}
+.inst ol li{display:grid;grid-template-columns:5.5em minmax(0,1fr);gap:8px}
+.inst ol li span:first-child{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;color:var(--fav);padding-top:2px}
+.inst .k{color:var(--night-ink);font-weight:700}
+.inst .nt{font-size:12px;color:var(--night-sub);line-height:1.6}
+.again{background:none;border:0;color:var(--night-sub);font:inherit;text-decoration:underline;cursor:pointer;padding:0;margin-top:6px}
+
+/* listen: read-aloud player */
+.lsn{background:var(--night);border-top:1px solid var(--night-rule)}
+.lsn .in{padding-block:14px 16px;display:flex;align-items:center;gap:14px}
+.lsn .lt{flex:1;min-width:0;color:var(--night-sub);font-size:13px;line-height:1.5}
+.lsn .lt b{display:block;color:var(--night-ink);font-family:var(--f-mincho);font-size:17px}
+.lsn .go{flex:none;display:flex;align-items:center;gap:8px;background:var(--fav);color:var(--onacc);border:0;border-radius:999px;padding:11px 18px;font:700 14px/1 var(--f-body);cursor:pointer}
+.lsn .go svg{width:14px;height:14px}
+.player{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--night);color:var(--night-ink);border-top:1px solid var(--night-rule);padding-bottom:env(safe-area-inset-bottom,0px)}
+.player .in{padding-block:10px 12px;display:grid;gap:8px}
+.pl-now{display:flex;gap:10px;align-items:baseline;min-width:0}
+.pl-sec{flex:none;font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--pc,var(--night-sub))}
+.pl-ttl{flex:1;min-width:0;font-size:13.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-pos{flex:none;font-family:var(--f-mono);font-size:11px;color:var(--night-sub);font-variant-numeric:tabular-nums}
+.pl-bar{height:3px;background:var(--night-rule);border-radius:2px;overflow:hidden}
+.pl-bar i{display:block;height:100%;width:0;background:var(--fav);transition:width .3s}
+.pl-ctl{display:flex;align-items:center;gap:8px}
+.pl-ctl button{display:grid;place-items:center;background:none;border:1px solid var(--night-rule);color:var(--night-ink);border-radius:999px;width:42px;height:42px;cursor:pointer;flex:none}
+.pl-ctl button svg{width:16px;height:16px}
+.pl-ctl .pp{width:52px;height:52px;background:var(--fav);border-color:var(--fav);color:var(--onacc)}
+.pl-ctl .pp svg{width:20px;height:20px}
+.pl-ctl .rate{width:auto;padding:0 12px;font:500 12px/1 var(--f-mono);height:34px}
+.pl-ctl .sp{flex:1}
+.pl-ctl .x{width:auto;height:34px;padding:0 12px;font:500 12px/1 var(--f-body);color:var(--night-sub)}
+.pl-note{font-size:11.5px;color:var(--night-sub);line-height:1.5}
+body.listening .foot .in{padding-bottom:190px}
+.speaking{box-shadow:inset 4px 0 0 var(--c)}
+@media (prefers-reduced-motion:reduce){.pl-bar i{transition:none}}
+
+/* desktop: wider sheet, larger type, two-column masthead and story index */
+@media (min-width:768px){
+  body{font-size:17px}
+  .in{max-width:880px;padding-left:max(40px,env(safe-area-inset-left,0px));padding-right:max(40px,env(safe-area-inset-right,0px))}
+  .lead h3{font-size:32px}
+  .lead p{font-size:18px;max-width:68ch}
+  .item .t{font-size:17.5px}
+  .item .b p{font-size:16.5px;max-width:none}
+  .vc p.vp{font-size:15.5px}
+  .srcs{font-size:13.5px}
+  .nav a,.nav button{font-size:14.5px;padding:16px 14px}
+}
+@media (min-width:1100px){
+  body{font-size:18px}
+  .in{max-width:1180px;padding-left:max(56px,env(safe-area-inset-left,0px));padding-right:max(56px,env(safe-area-inset-right,0px))}
+  .mast .in{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr);column-gap:72px;padding-block:40px 0}
+  .mrow,.mk{grid-column:1/-1}
+  .bigdate{grid-column:1;grid-row:2;font-size:168px;margin-top:22px}
+  .dow{grid-column:1;grid-row:3;font-size:22px}
+  .lede{grid-column:2;grid-row:2/span 2;align-self:end;font-size:34px;line-height:1.6;margin:0 0 6px}
+  .mk{margin-top:40px}
+  .mk>div{padding:18px 16px 22px 0}
+  .mk>div+div{padding-left:20px}
+  .mk .l{font-size:13px}
+  .mk .v{font-size:24px}
+  .mk .c{font-size:14px}
+  .sun{width:440px;height:440px;right:-230px;top:-150px;opacity:.5}
+  .dow{align-self:end;margin-bottom:8px}
+  .lede{max-width:22em}
+  .inst .in,.lsn .in{padding-block:18px 20px}
+  .lsn .lt b{font-size:19px}
+  .opener .in{padding-block:52px 10px}
+  .opener h2{font-size:76px}
+  .opener .meta{font-size:14px}
+  .illo{width:156px}
+  .lead .in{padding-block:22px 48px}
+  .lead h3{font-size:38px;line-height:1.45;max-width:30em}
+  .lead p{font-size:19px;line-height:2}
+  .fig{max-width:760px;padding:22px 22px 18px}
+  .fig .ft{font-size:16px}
+  .stats .sv{font-size:44px}
+  .stats .sl{font-size:13.5px}
+  .bar{font-size:14px;grid-template-columns:minmax(0,10em) minmax(0,1fr)}
+  .bar .bv{font-size:13.5px}
+  .tl li{font-size:15.5px;grid-template-columns:5em minmax(0,1fr)}
+  .vq{font-size:16.5px}
+  .vs{font-size:14px}
+  .vc{padding:18px 20px 16px}
+  .vc p.vp{font-size:16px}
+  .vwho,.va{font-size:13px}
+  .idx .in{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:56px;align-items:start;padding-block:16px 56px}
+  .grp{grid-column:1/-1;font-size:13px;margin:34px 0 6px}
+  .item summary{padding-block:20px}
+  .item .t{font-size:18.5px}
+  .item .b p{font-size:17px;line-height:1.95}
+  .item .vg{grid-template-columns:1fr}
+  .foot .in{padding-block:40px 52px;font-size:13px}
+  .player .in{max-width:880px}
+}
+</style>
+
+<header class="mast">
+  <svg class="sun" viewBox="0 0 300 300" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="150" cy="150" r="46" fill="currentColor" stroke="none" opacity=".9"/><circle cx="150" cy="150" r="70" opacity=".45"/><circle cx="150" cy="150" r="96" opacity=".28"/><circle cx="150" cy="150" r="124" opacity=".16"/><circle cx="150" cy="150" r="148" opacity=".08"/></g></svg>
+  <div class="in">
+    <div class="mrow"><span>Design Lessons</span><span id="year"></span></div>
+    <div class="bigdate" id="date"></div>
+    <div class="dow" id="dow"></div>
+    <p class="lede" id="headline"></p>
+    <div class="mk" id="markets"></div>
+  </div>
+</header>
+<section class="inst" id="inst" aria-label="ホーム画面に追加する方法"><div class="in">
+  <div class="ih"><b>ホーム画面に置いて、アプリのように開く</b><button type="button" class="x" id="inst-close">閉じる</button></div>
+  <ol>
+    <li><span>iPhone</span><span>このページをSafariで開き、下の<span class="k">共有ボタン</span>から<span class="k">「ホーム画面に追加」</span>を選びます。</span></li>
+    <li><span>Android</span><span>Chromeで開き、右上の<span class="k">︙</span>から<span class="k">「ホーム画面に追加」</span>を選びます。</span></li>
+  </ol>
+  <div class="nt">ホーム画面から開くと、アプリのように全画面で使えます。</div>
+</div></section>
+<section class="lsn" id="lsn" aria-label="音声で聞く"><div class="in"><div class="lt"><b>聞いて覚える</b><span>約9分の音声版。画面を消しても、ほかのアプリを開いても再生が続きます</span><span id="lsn-meta" hidden></span></div><button type="button" class="go" id="lsn-go"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg><span>聞く</span></button></div></section>
+<div class="player" id="player" hidden><div class="in">
+  <div class="pl-now"><span class="pl-sec" id="pl-sec"></span><span class="pl-ttl" id="pl-ttl"></span><span class="pl-pos" id="pl-pos"></span></div>
+  <div class="pl-bar"><i id="pl-bar"></i></div>
+  <div class="pl-ctl">
+    <button type="button" id="pl-prev" aria-label="前の項目"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2.5h2v11H3zM14 2.5v11L6 8z" fill="currentColor"/></svg></button>
+    <button type="button" class="pp" id="pl-pp" aria-label="一時停止"></button>
+    <button type="button" id="pl-next" aria-label="次の項目"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11 2.5h2v11h-2zM2 2.5v11L10 8z" fill="currentColor"/></svg></button>
+    <button type="button" class="rate" id="pl-rate" aria-label="読み上げの速さ">1.0×</button>
+    <span class="sp"></span>
+    <button type="button" class="x" id="pl-stop">終了</button>
+  </div>
+  <div class="pl-note" id="pl-note">画面を消しても続きます。<a href="video.html" style="color:inherit">テロップ画面で見る</a></div>
+</div></div>
+<nav class="nav" aria-label="ジャンル"><div class="in" id="nav"></div><div class="prog" id="prog"></div></nav>
+<main id="main"></main>
+<footer class="foot"><div class="in"><b>デザインの教え</b>基礎から実践まで、現場で差がつく考え方を5つの章にまとめました。数値はすべて目安です。最後は自分の目で確かめてください。<br><span id="updated"></span><br><button type="button" class="again" id="inst-open">ホーム画面に追加する方法</button></div></footer>
+
+<script type="application/json" id="news-data">{"date": "2026-11-27", "weekday": "金", "headline": "うまいデザインは、センスより「決めごと」でできている。差がつくのは、何を足すかより、何を削るかだ。", "markets": [], "sections": [{"id": "mind", "name": "考え方", "items": [{"title": "デザインは飾りではない。「伝わる順番」を決める仕事だ", "body": "見る人は、最初の数秒で読むかどうかを決める。だから最初にやることは、色や書体を選ぶことではない。一番伝えたいことを、ひとつに決めることだ。全部を目立たせると、何も目立たなくなる。作る前に「誰に、何を伝えて、どうしてほしいか」を一行で書いてみる。書けないなら、まだ作り始める段階ではない。この一行が、あとで迷ったときの判断の物差しになる。素人は足し算で考える。プロは、この一行に関係ないものを削る。", "terms": [{"w": "物差し", "d": "ここでは、案をくらべて選ぶときの判断の基準のこと。"}]}, {"title": "素人との差は「揃っているか」で決まる", "body": "安っぽく見えるデザインの多くは、センスの問題ではない。ちょっとしたずれの問題だ。左端の位置が数ピクセル違う。余白が場所によってばらばら。似たような文字サイズが何種類もある。プロは、使う数を先に減らす。書体は2つまで。文字サイズは3〜4段階。色はベースとメインとアクセントの3つ。そして迷ったら揃える。揃えないなら、思いきって大きく崩す。中途半端なずれが、いちばん素人っぽく見える。"}, {"title": "「なんとなく」を禁止する", "body": "プロのデザインには、すべての要素に理由がある。なぜこの位置か。なぜこの大きさか。なぜこの色か。聞かれたら一言で答えられる。理由が言えない要素は、たいてい要らない要素だ。練習のうちは、自分の作品の要素ひとつずつに理由をメモしてみるといい。面倒だが、これを続けると「なんとなく置く」癖が消えていく。"}]}, {"id": "type", "name": "文字", "viz": {"type": "bars", "title": "1.25倍ずつ大きくする文字サイズの例（本文16pxから）", "unit": "px", "items": [{"label": "本文", "value": 16}, {"label": "小見出し", "value": 20}, {"label": "見出し", "value": 25}, {"label": "大見出し", "value": 31, "display": "31.25"}, {"label": "タイトル", "value": 39, "display": "39.06", "hi": true}], "note": "16に1.25を順にかけた値。比率は1.2〜1.5あたりから、内容に合わせて選ぶ"}, "items": [{"title": "大きさの差は、思いきってつける", "body": "見出しと本文の大きさの差を、ジャンプ率という。ジャンプ率が大きいと、元気で目を引く印象になる。小さいと、落ち着いた上品な印象になる。素人がやりがちなのは、その中間のぼんやりした差だ。見出しが本文より少しだけ大きい。これでは、どちらが大事か伝わらない。決め方のこつは、比率を一つ決めることだ。たとえば1.25倍と決めたら、本文16pxから、20、25、31と順にかけていく。感覚で選ぶより、ずっと揃って見える。", "terms": [{"w": "ジャンプ率", "d": "紙面の中で、いちばん大きい文字と本文の文字の大きさの比率。大きいほど動きのある印象になる。"}]}, {"title": "読みやすさは、行間と1行の長さで決まる", "body": "日本語の本文は、行間を文字サイズの1.5〜1.8倍くらいにすると読みやすい。詰まっていると窮屈で、空きすぎると行を追いにくい。逆に見出しは、行間を詰めたほうが引き締まる。1行の長さも大事だ。本文なら、1行20〜40字くらいが目安になる。長すぎると、次の行の頭を目が探してしまう。文章が読まれないと感じたら、まず中身より、この2つを疑ってみる。"}, {"title": "書体は「意味」で選び、太さで階層をつくる", "body": "明朝体は、落ち着きや物語、品のよさを感じさせる。ゴシック体は、はっきりして現代的に見える。どちらがきれいかではなく、伝えたい空気に合うかで選ぶ。そして、ひとつの画面で書体を何種類も使わない。階層は、書体を変えるより、同じ書体の太さと大きさで作るほうが整う。目立たせたい言葉だけ太くする。全部を太くすると、太字の意味がなくなる。"}]}, {"id": "layout", "name": "余白と配置", "items": [{"title": "余白は「空き」ではない。いちばん大事な素材だ", "body": "素人は、空いている場所を埋めたくなる。プロは、余白を先に設計する。関係が近いものは近くに置き、違うものは離す。これを近接という。たったこれだけで、説明がなくても内容のまとまりが伝わる。高級なブランドの広告に余白が多いのは、偶然ではない。余白は、余裕と自信に見える。詰め込むと、安売りのチラシに見える。迷ったら、余白を今の1.5倍にしてみるといい。", "terms": [{"w": "近接", "d": "関係のある要素どうしを近づけ、関係のない要素を離して、まとまりを見せる配置の原則。"}]}, {"title": "間隔は8の倍数で決め、揃える線を減らす", "body": "余白や間隔を、その場の感覚で決めない。8、16、24、32、48のように、基準の数の倍数だけを使う。Webやアプリのデザインでは8の倍数がよく使われる。数を決めておくと、全体に自然なリズムが出る。もうひとつは、揃える線の数を減らすことだ。左端が3か所でばらばらに始まると、それだけで散らかって見える。要素の端を、なるべく少ない本数の線に乗せる。グリッドとは、つまりこの線のことだ。", "terms": [{"w": "グリッド", "d": "画面を一定の列や間隔で区切った見えない線の枠組み。要素の位置や幅を揃える基準になる。"}]}, {"title": "視線の流れを先に決める", "body": "人の目は、大きいもの、色の強いもの、人の顔から先に見る。顔があれば、その目線の先にも目が行く。横書きの紙面なら、左上から右下へ流れるのが自然だ。だから、最初に見てほしいものを一番大きく、一番強くする。2番目、3番目と、強さの順番をはっきりつける。YouTubeのサムネイルなら、顔と一番太い文字を主役にして、ほかは思いきって弱くする。小さく表示されるサムネでは、主役は2つまでと考えるといい。"}]}, {"id": "color", "name": "色", "viz": {"type": "stats", "title": "配色の割合の目安", "items": [{"value": "70%", "label": "ベースカラー（背景など）"}, {"value": "25%", "label": "メインカラー（印象を決める色）"}, {"value": "5%", "label": "アクセントカラー（目を引かせたい所）"}], "note": "よく使われる目安。きっちり守るより「量の差をつける」考え方として使う"}, "items": [{"title": "色は種類より「量」で決まる", "body": "配色がうまくいかない原因は、たいてい色の選び方ではない。量の配分だ。よく使われる目安に、ベース70、メイン25、アクセント5という割合がある。アクセントは、少ないからこそ効く。目立たせたい色を広く使うと、かえって何も目立たなくなる。色に自信がないうちは、ほぼ白黒で作り、1色だけ差し色を入れてみる。それだけで、ぐっとプロっぽく見える。"}, {"title": "白黒にして、それでも伝わるか確かめる", "body": "色を付けたら、一度グレースケールにして見てみる。色がなくても、どこが一番大事か分かるか。分からないなら、明るさの差が足りていない。色の違いだけで区別していると、明るさの近い色どうしは見分けにくい。色覚の個人差がある人にも伝わりにくい。大事なのは色相より、明るさのコントラストだ。文字と背景の明るさの差は、特にしっかりつける。", "terms": [{"w": "グレースケール", "d": "色を取り除き、明るさだけを白から黒までの灰色の濃淡で表した状態。"}, {"w": "色相", "d": "赤・青・黄のような、色みの違いのこと。明るさや鮮やかさとは別の要素。"}]}]}, {"id": "practice", "name": "上達と仕事", "viz": {"type": "timeline", "title": "30日の練習プランの例", "items": [{"date": "1〜7日", "text": "好きなデザインを模写し、余白・文字サイズ・色の数値を測る"}, {"date": "8〜14日", "text": "写真なし、文字だけでポスターを作る"}, {"date": "15〜21日", "text": "色を3色までに絞って同じものを作り直す"}, {"date": "22〜30日", "text": "サムネを毎日1枚。前の日の自分のものと並べて見直す", "hi": true}], "note": "例として組んだ練習の順番"}, "items": [{"title": "上手い人の作品を模写して、「数値」を盗む", "body": "最短で上達する方法は、模写だ。眺めるだけでは身につかない。好きなデザインを3つ選び、そっくり同じものを作ってみる。そのとき、見た目ではなく数値を測る。余白は何ピクセルか。見出しは本文の何倍か。色のコードは何か。スポイトと定規で全部調べる。すると、うまく見える理由が数字で見えてくる。サムネイル、ポスター、Webサイト。自分の仕事に近いものから始めるといい。"}, {"title": "見直しの技術を持つ", "body": "作っている最中の自分の目は、あてにならない。だからプロは、見直しの手順を持っている。画面を小さくして、スマホくらいの大きさで見る。目を細めて、ぼんやりとした形だけで見る。白黒にする。一晩置いてから見る。最後に、一番伝えたいことを声に出して言い、それが一目で伝わるか確かめる。このどれかで引っかかったら、そこが直す場所だ。"}, {"title": "売れるデザイナーは「理由」と「目的」で話す", "body": "仕事として差がつくのは、作る力より伝える力だ。案を出すときは、なぜこうしたかを一言で添える。修正の依頼が来たら、言われた通りに直すだけでなく、その裏にある目的を聞く。「もっと目立たせて」の本当の意味は、たいてい「クリックしてほしい」だったりする。依頼する人が見ているのは、見た目より結果だ。再生数、問い合わせ、売上。デザインをその数字につなげて話せる人に、仕事は集まる。"}]}]}</script>
+<script>
+(function(){
+  var D=JSON.parse(document.getElementById('news-data').textContent);
+  var META={mind:{c:'var(--pol)',en:'Mindset'},type:{c:'var(--film)',en:'Typography'},layout:{c:'var(--foot)',en:'Layout & Space'},color:{c:'var(--art)',en:'Color'},practice:{c:'var(--fav)',en:'Practice & Work'}};
+  function el(t,a,kids){var e=document.createElement(t);if(a)for(var k in a){if(k==='text')e.textContent=a[k];else e.setAttribute(k,a[k]);}(kids||[]).forEach(function(x){if(x)e.appendChild(typeof x==='string'?document.createTextNode(x):x)});return e;}
+  var d=new Date(D.date+'T00:00:00');
+  var dt=document.getElementById('date');
+  dt.appendChild(document.createTextNode(String(d.getMonth()+1)));dt.appendChild(el('span',{class:'dot',text:'.'}));dt.appendChild(document.createTextNode(String(d.getDate()).padStart(2,'0')));
+  document.getElementById('year').textContent=String(d.getFullYear());
+  document.getElementById('dow').textContent='デザインの教え　基礎から実践まで';
+  document.getElementById('headline').textContent=D.headline;
+  document.getElementById('updated').textContent='作成 '+D.date.replace(/-/g,'.');
+  var mk=document.getElementById('markets');
+  (D.markets||[]).slice(0,4).forEach(function(m){mk.appendChild(el('div',null,[el('div',{class:'l',text:m.label}),el('div',{class:'v',text:m.value}),el('div',{class:'c '+m.dir,text:(m.dir==='up'?'▲ ':m.dir==='down'?'▼ ':'')+m.change})]))});
+  if(!mk.children.length)mk.hidden=true;
+
+
+  var NS='http://www.w3.org/2000/svg';
+  var ILLO={
+   politics:['<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 112h134" opacity=".35"/><path d="M14 92l22-18 20 10 24-34 22 14 30-38"/><circle cx="132" cy="26" r="5" fill="currentColor"/><g opacity=".55"><path d="M30 112V96M52 112V88M74 112V70M96 112V80M118 112V58"/></g></g>','<g fill="none" stroke="currentColor" stroke-width="2"><circle cx="75" cy="64" r="48"/><ellipse cx="75" cy="64" rx="20" ry="48" opacity=".6"/><path d="M27 64h96M33 40h84M33 88h84" opacity=".45"/><path d="M75 16v96" opacity=".6"/><circle cx="116" cy="34" r="6" fill="currentColor" stroke="none"/></g>'],
+   football:['<g fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="14" width="138" height="96" rx="2"/><path d="M75 14v96"/><circle cx="75" cy="62" r="17"/><circle cx="75" cy="62" r="2.5" fill="currentColor"/><path d="M6 38h24v48H6M144 38h-24v48h24" opacity=".7"/><path d="M6 50h9v24H6M144 50h-9v24h9" opacity=".5"/></g><circle cx="104" cy="44" r="7" fill="currentColor"/><path d="M40 84q30-50 64-40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 5" opacity=".7"/>','<g fill="none" stroke="currentColor" stroke-width="2"><circle cx="75" cy="62" r="46"/><path d="M75 40l20 14-8 24H63l-8-24z" fill="currentColor" fill-opacity=".85"/><path d="M75 40V16M95 54l22-8M87 78l14 20M63 78L49 98M55 54l-22-8" opacity=".6"/></g>'],
+   art:['<circle cx="58" cy="58" r="40" fill="currentColor" opacity=".85"/><rect x="66" y="40" width="70" height="70" fill="none" stroke="currentColor" stroke-width="2"/><path d="M14 112L44 70l30 42z" fill="currentColor" opacity=".35"/>','<g fill="none" stroke="currentColor" stroke-width="2"><rect x="10" y="14" width="78" height="96"/><rect x="20" y="24" width="58" height="76" opacity=".45"/></g><circle cx="49" cy="58" r="16" fill="currentColor" opacity=".8"/><path d="M100 110V58q20-30 40 0v52" fill="currentColor" opacity=".3"/><path d="M96 110h52" stroke="currentColor" stroke-width="2"/>'],
+   film:['<g fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="22" width="134" height="80" rx="3"/><path d="M8 38h134M8 86h134" opacity=".6"/><rect x="40" y="44" width="70" height="36" fill="currentColor" fill-opacity=".85" stroke="none"/></g><g fill="currentColor" opacity=".7"><rect x="16" y="27" width="8" height="6" rx="1"/><rect x="36" y="27" width="8" height="6" rx="1"/><rect x="56" y="27" width="8" height="6" rx="1"/><rect x="76" y="27" width="8" height="6" rx="1"/><rect x="96" y="27" width="8" height="6" rx="1"/><rect x="116" y="27" width="8" height="6" rx="1"/><rect x="16" y="91" width="8" height="6" rx="1"/><rect x="36" y="91" width="8" height="6" rx="1"/><rect x="56" y="91" width="8" height="6" rx="1"/><rect x="76" y="91" width="8" height="6" rx="1"/><rect x="96" y="91" width="8" height="6" rx="1"/><rect x="116" y="91" width="8" height="6" rx="1"/></g>','<g fill="none" stroke="currentColor" stroke-width="2"><circle cx="46" cy="40" r="24"/><circle cx="104" cy="40" r="24"/><circle cx="46" cy="40" r="5" fill="currentColor"/><circle cx="104" cy="40" r="5" fill="currentColor"/><rect x="22" y="70" width="92" height="44" rx="4" fill="currentColor" fill-opacity=".85"/><path d="M114 82l26-12v44l-26-12"/></g>']
+  };
+  ILLO.mind=ILLO.politics;ILLO.type=ILLO.film;ILLO.layout=ILLO.football;ILLO.color=ILLO.art;ILLO.practice=ILLO.politics;
+  var doy=Math.floor((d-new Date(d.getFullYear(),0,0))/864e5);
+  function illo(id,i){var v=ILLO[id];if(!v)return null;var s=document.createElementNS(NS,'svg');s.setAttribute('viewBox','0 0 150 124');s.setAttribute('class','illo');s.setAttribute('aria-hidden','true');s.innerHTML=v[(doy+i)%v.length];return s;}
+  var FIGLAB={stats:'Numbers',bars:'Chart',timeline:'Timeline'};
+  function fig(v){
+    if(!v||!v.type)return null;
+    var f=el('figure',{class:'fig'},[el('div',{class:'fl',text:FIGLAB[v.type]||'Figure'}),v.title?el('div',{class:'ft',text:v.title}):null]);
+    if(v.type==='stats'){var g=el('div',{class:'stats'});(v.items||[]).forEach(function(x){g.appendChild(el('div',null,[el('div',{class:'sv '+(x.dir||''),text:x.value}),el('div',{class:'sl',text:x.label})]))});f.appendChild(g);}
+    else if(v.type==='bars'){var mx=0;(v.items||[]).forEach(function(x){mx=Math.max(mx,Math.abs(+x.value)||0)});var b=el('div',{class:'bars'});
+      (v.items||[]).forEach(function(x,i){var w=mx?Math.abs(+x.value)/mx*100:0;var fill=el('span',{class:'fill',style:'width:calc((100% - 5.5em) * '+(w/100).toFixed(3)+')'});
+        b.appendChild(el('div',{class:'bar'+(x.hi?' hi':'')},[el('span',{class:'bl',text:x.label}),el('span',{class:'track'},[fill,el('span',{class:'bv',text:(x.display||String(x.value))+(v.unit&&!x.display?v.unit:'')})])]))});f.appendChild(b);}
+    else if(v.type==='timeline'){var u=el('ol',{class:'tl'});(v.items||[]).forEach(function(x){u.appendChild(el('li',{class:x.hi?'hi':''},[el('span',{class:'td',text:x.date}),el('span',{class:'tx',text:x.text})]))});f.appendChild(u);}
+    else return null;
+    if(v.note)f.appendChild(el('div',{class:'fn',text:v.note}));
+    return f;
+  }
+  function titleNode(tag,cls,it){var t=el(tag,{class:cls},[it.title]);if(it.fav)t.appendChild(el('span',{class:'tag fav',text:'★好み'}));if(it.barca)t.appendChild(el('span',{class:'tag barca',text:'BARÇA'}));return t;}
+  function srcs(it){if(!it.src||!it.src.length)return null;var s=el('div',{class:'srcs'},[el('span',{text:'出典'})]);(it.src||[]).forEach(function(x){s.appendChild(el('a',{href:x[1],target:'_blank',rel:'noopener',text:x[0]}))});return s;}
+
+  function debate(it){
+    var v=it.debate;if(!v||!v.views||v.views.length<2)return null;
+    var g=el('div',{class:'vg'});
+    v.views.slice(0,2).forEach(function(x,i){g.appendChild(el('div',{class:'vc v'+i},[el('div',{class:'vs',text:x.side}),el('p',{class:'vp',text:x.point}),x.who?el('div',{class:'vwho',text:x.who}):null,x.src?el('a',{class:'va',href:x.src[1],target:'_blank',rel:'noopener',text:x.src[0]}):null]))});
+    return el('div',{class:'vw'},[el('div',{class:'vl',text:'Two Views'}),v.q?el('div',{class:'vq',text:v.q}):null,g]);
+  }
+
+  var nav=document.getElementById('nav'),main=document.getElementById('main'),favN=0;
+  D.sections.forEach(function(s,si){
+    var m=META[s.id]||{c:'var(--ink)',en:''};
+    if(!s.items||!s.items.length)return;
+    var link=el('a',{href:'#'+s.id,style:'--c:'+m.c},[el('span',{class:'sw'}),s.name]);nav.appendChild(link);
+    var lead=s.items[0],rest=s.items.slice(1);
+    s.items.forEach(function(it){if(it.fav)favN++});
+    var ch=el('section',{class:'ch',id:s.id,style:'--c:'+m.c});
+    ch.appendChild(el('div',{class:'opener'},[el('div',{class:'in'},[el('div',{class:'otop'},[el('div',{class:'en',text:m.en}),illo(s.id,si)]),el('h2',{text:s.name}),el('div',{class:'meta',text:s.items.length+'つの教え'})])]));
+    var leadBox=el('article',{class:'lead','data-fav':lead.fav?'1':'0','data-k':s.id+'-0'},[el('div',{class:'in'},[lead.group?el('div',{class:'grp',text:lead.group,style:'margin-top:0'}):null,titleNode('h3','',lead),el('p',{text:lead.body}),fig(lead.viz),debate(lead),srcs(lead),fig(s.viz)])]);
+    ch.appendChild(leadBox);
+    if(rest.length){
+      var inner=el('div',{class:'in'}),last=null;
+      rest.forEach(function(it,ri){
+        var g=it.group||'';
+        if(g!==last&&g){inner.appendChild(el('div',{class:'grp',text:g}));}
+        last=g;
+        var sm=el('summary',null,[titleNode('span','t',it),el('span',{class:'pm','aria-hidden':'true'})]);
+        inner.appendChild(el('details',{class:'item','data-fav':it.fav?'1':'0','data-k':s.id+'-'+(ri+1)},[sm,el('div',{class:'b'},[el('p',{text:it.body}),fig(it.viz),debate(it),srcs(it)])]));
+      });
+      ch.appendChild(el('div',{class:'idx'},[inner]));
+    }
+    main.appendChild(ch);
+  });
+
+  if(favN){
+    var fb=el('button',{type:'button','aria-pressed':'false'},['★好み '+favN]);nav.appendChild(fb);
+    fb.addEventListener('click',function(){
+      var on=fb.getAttribute('aria-pressed')!=='true';fb.setAttribute('aria-pressed',String(on));
+      document.querySelectorAll('.ch').forEach(function(ch){
+        var shown=0;
+        ch.querySelectorAll('[data-fav]').forEach(function(x){var h=on&&x.dataset.fav!=='1';x.hidden=h;if(!h){shown++;if(on&&x.tagName==='DETAILS')x.open=true;}});
+        ch.querySelectorAll('.grp').forEach(function(g){g.hidden=on;});
+        ch.hidden=on&&!shown;
+      });
+      window.scrollTo({top:document.querySelector('.nav').offsetTop,behavior:'smooth'});
+    });
+  }
+
+  var links=[].slice.call(nav.querySelectorAll('a')),prog=document.getElementById('prog');
+  function onScroll(){
+    var y=window.scrollY+80,cur=null;
+    document.querySelectorAll('.ch').forEach(function(ch){if(!ch.hidden&&ch.offsetTop<=y)cur=ch.id;});
+    links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+cur)});
+    var h=document.documentElement.scrollHeight-window.innerHeight;prog.style.width=(h>0?Math.min(100,window.scrollY/h*100):0)+'%';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  var inst=document.getElementById('inst'),KEY='design-install-hidden';
+  try{if(localStorage.getItem(KEY)==='1')inst.hidden=true;}catch(e){}
+  document.getElementById('inst-close').addEventListener('click',function(){inst.hidden=true;try{localStorage.setItem(KEY,'1');}catch(e){}});
+  document.getElementById('inst-open').addEventListener('click',function(){inst.hidden=false;try{localStorage.removeItem(KEY);}catch(e){}window.scrollTo({top:inst.offsetTop-10,behavior:'smooth'});});
+})();
+</script>
+<script>
+(function(){
+  var D=JSON.parse(document.getElementById('news-data').textContent);
+  var CH=[{"sec": "", "secName": "デザインの教え", "title": "はじめに", "start": 0.0}, {"sec": "mind", "secName": "考え方", "title": "デザインは飾りではない。「伝わる順番」を決める仕事だ", "start": 14.46}, {"sec": "mind", "secName": "考え方", "title": "素人との差は「揃っているか」で決まる", "start": 56.89}, {"sec": "mind", "secName": "考え方", "title": "「なんとなく」を禁止する", "start": 95.44}, {"sec": "type", "secName": "文字", "title": "大きさの差は、思いきってつける", "start": 123.17}, {"sec": "type", "secName": "文字", "title": "読みやすさは、行間と1行の長さで決まる", "start": 166.21}, {"sec": "type", "secName": "文字", "title": "書体は「意味」で選び、太さで階層をつくる", "start": 201.53}, {"sec": "layout", "secName": "余白と配置", "title": "余白は「空き」ではない。いちばん大事な素材だ", "start": 235.84}, {"sec": "layout", "secName": "余白と配置", "title": "間隔は8の倍数で決め、揃える線を減らす", "start": 274.77}, {"sec": "layout", "secName": "余白と配置", "title": "視線の流れを先に決める", "start": 315.91}, {"sec": "color", "secName": "色", "title": "色は種類より「量」で決まる", "start": 354.54}, {"sec": "color", "secName": "色", "title": "白黒にして、それでも伝わるか確かめる", "start": 388.33}, {"sec": "practice", "secName": "上達と仕事", "title": "上手い人の作品を模写して、「数値」を盗む", "start": 420.9}, {"sec": "practice", "secName": "上達と仕事", "title": "見直しの技術を持つ", "start": 461.11}, {"sec": "practice", "secName": "上達と仕事", "title": "売れるデザイナーは「理由」と「目的」で話す", "start": 492.63}, {"sec": "", "secName": "デザインの教え", "title": "おわり", "start": 528.38}], DUR=535.49;
+  var COL={mind:'var(--pol)',type:'var(--film)',layout:'var(--foot)',color:'var(--art)',practice:'var(--fav)'};
+  var keyOf={};D.sections.forEach(function(s){(s.items||[]).forEach(function(it,i){keyOf[s.id+'|'+it.title]=s.id+'-'+i;});});
+  CH.forEach(function(c){c.key=keyOf[c.sec+'|'+c.title]||null;});
+  var au=new Audio();au.preload='metadata';au.src='audio.mp3?'+D.date;
+  var player=document.getElementById('player'),pp=document.getElementById('pl-pp'),bar=document.getElementById('pl-bar');
+  var I_PLAY='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>';
+  var I_PAUSE='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 2.5h3v11h-3zM9.5 2.5h3v11h-3z" fill="currentColor"/></svg>';
+  var RATES=[1.0,1.2,1.4,0.9],rateI=0,PK='design-pos-'+D.date;
+  try{var r=+localStorage.getItem('design-arate');if(RATES.indexOf(r)>=0)rateI=RATES.indexOf(r);}catch(e){}
+  var meta=document.getElementById('lsn-meta');
+  function idx(t){var i=0;for(var k=0;k<CH.length;k++)if(CH[k].start<=t+0.05)i=k;return i;}
+  var ti=-1,lastEl=null;
+  function show(scroll){var n=idx(au.currentTime);
+    bar.style.width=((au.currentTime/(au.duration||DUR))*100)+'%';
+    if(n===ti&&!scroll)return;ti=n;var c=CH[n];
+    document.getElementById('pl-sec').textContent=c.secName||'Design Lessons';
+    player.style.setProperty('--pc',COL[c.sec]||'var(--night-sub)');
+    document.getElementById('pl-ttl').textContent=c.title;
+    document.getElementById('pl-pos').textContent=(n+1)+' / '+CH.length;
+    if(lastEl)lastEl.classList.remove('speaking');lastEl=null;
+    var e=c.key&&document.querySelector('[data-k="'+c.key+'"]');
+    if(e){if(e.tagName==='DETAILS')e.open=true;e.classList.add('speaking');lastEl=e;
+      if(scroll&&!document.hidden){window.scrollTo({top:e.getBoundingClientRect().top+window.scrollY-60,behavior:'smooth'});}}
+    if('mediaSession' in navigator){try{navigator.mediaSession.metadata=new MediaMetadata({title:c.title,artist:(c.secName||'デザインの教え'),album:'デザインの教え',
+      artwork:[{src:'art/'+(c.sec||'brief')+'.png',sizes:'512x512',type:'image/png'}]});}catch(e){}}
+  }
+  function setPP(){var p=!au.paused;pp.innerHTML=p?I_PAUSE:I_PLAY;pp.setAttribute('aria-label',p?'一時停止':'再生');}
+  function open(){player.hidden=false;document.body.classList.add('listening');}
+  function play(){open();au.playbackRate=RATES[rateI];var p=au.play();if(p&&p.catch)p.catch(function(err){meta.hidden=false;meta.textContent='再生できませんでした（'+(err&&err.name||'')+'）。もう一度押してください';});}
+  function go(n){n=Math.max(0,Math.min(CH.length-1,n));au.currentTime=CH[n].start+0.01;show(true);}
+  au.addEventListener('play',setPP);au.addEventListener('pause',setPP);
+  au.addEventListener('timeupdate',function(){show(false);if(Math.floor(au.currentTime)%5===0){try{localStorage.setItem(PK,au.currentTime);}catch(e){}}});
+  au.addEventListener('ended',function(){try{localStorage.removeItem(PK);}catch(e){}setPP();});
+  au.addEventListener('error',function(){meta.hidden=false;meta.textContent='音声を読み込めませんでした（code '+(au.error&&au.error.code)+'）';});
+  document.getElementById('lsn-go').addEventListener('click',function(){
+    var s=0;try{s=+localStorage.getItem(PK)||0;}catch(e){}
+    if(au.currentTime<1&&s>5)au.currentTime=Math.max(0,s-3);
+    play();show(true);
+  });
+  pp.addEventListener('click',function(){au.paused?play():au.pause();});
+  document.getElementById('pl-prev').addEventListener('click',function(){var n=idx(au.currentTime);go(au.currentTime-CH[n].start>3?n:n-1);});
+  document.getElementById('pl-next').addEventListener('click',function(){go(idx(au.currentTime)+1);});
+  document.getElementById('pl-stop').addEventListener('click',function(){au.pause();player.hidden=true;document.body.classList.remove('listening');if(lastEl)lastEl.classList.remove('speaking');});
+  var rb=document.getElementById('pl-rate');
+  function setRate(){rb.textContent=RATES[rateI].toFixed(1)+'×';au.playbackRate=RATES[rateI];}
+  setRate();
+  rb.addEventListener('click',function(){rateI=(rateI+1)%RATES.length;setRate();try{localStorage.setItem('design-arate',RATES[rateI])}catch(e){}});
+  if('mediaSession' in navigator){var ms=navigator.mediaSession;
+    try{ms.setActionHandler('play',play);ms.setActionHandler('pause',function(){au.pause();});
+      ms.setActionHandler('previoustrack',function(){document.getElementById('pl-prev').click();});
+      ms.setActionHandler('nexttrack',function(){document.getElementById('pl-next').click();});
+      ms.setActionHandler('seekto',function(e){au.currentTime=e.seekTime;});}catch(e){}}
+})();
+</script>
+
+</body></html>

@@ -1,0 +1,346 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="apple-touch-icon" href="art/brief.png"><style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style></head><body>
+<title>デザインの教え 音声版</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a one-screen lecture player (copied from news/tools). Genre-colored stage, big Mincho telop, caption strip, transport at the bottom. Deliberately single dark theme (it is a video). */
+:root{
+  --night:#0C1016; --deep:#06080B; --ink:#F2F4F7; --sub:#9AA6B4; --rule:#2A323D; --chip:#161C24;
+  --sun:#C9461C; --c:#C9461C;
+  --pol:#5B7FD0; --foot:#2FA877; --art:#D2508D; --film:#D39A33; --barca:#E85A90;
+  --v0:#EE9B72; --v1:#7DBCDB;
+  --f-mincho:"Shippori Mincho B1","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
+  --f-body:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--deep);color:var(--ink);font-family:var(--f-body);-webkit-text-size-adjust:100%;word-break:auto-phrase;overflow:hidden}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--sun);outline-offset:3px;border-radius:6px}
+
+.app{height:100%;display:grid;grid-template-rows:auto minmax(0,1fr) auto;max-width:560px;margin:0 auto;background:var(--night);position:relative;overflow:hidden}
+
+/* top: date + chapter progress */
+.top{padding-block:12px 10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:9px;position:relative;z-index:2}
+.trow{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;color:var(--sub);text-transform:uppercase}
+.segs{display:flex;gap:3px;height:3px}
+.segs i{flex:1 1 0;background:var(--rule);border-radius:2px;overflow:hidden;position:relative;cursor:pointer}
+.segs i b{position:absolute;inset:0 auto 0 0;width:0;background:var(--ink)}
+.segs i.done b{width:100%;background:var(--sub)}
+
+/* stage */
+.stage{position:relative;min-height:0;display:grid;grid-template-rows:minmax(0,1fr) auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:4px 0}
+.glow{position:absolute;inset:-20% -30% auto auto;width:120%;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--c) 38%,transparent),transparent 70%);pointer-events:none;transition:background .8s}
+.vis{position:relative;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.illo{width:min(72%,300px);height:auto;color:var(--c);animation:kb 18s ease-in-out infinite alternate}
+@keyframes kb{from{transform:scale(1) translate(0,0)}to{transform:scale(1.12) translate(-3%,2%)}}
+.photo{position:absolute;inset:0;background-size:cover;background-position:center;border-radius:12px;animation:kb 20s ease-in-out infinite alternate;opacity:.9}
+.telop{position:relative;display:grid;gap:8px;padding-block:6px 14px}
+.eb{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-family:var(--f-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--c)}
+.eb .sw{width:9px;height:9px;border-radius:50%;background:var(--c)}
+.tag{font:500 10px/1 var(--f-mono);letter-spacing:.06em;padding:4px 6px 3px;border-radius:3px;color:var(--night);text-transform:none}
+.tag.fav{background:var(--sun);color:#fff}.tag.barca{background:var(--barca);color:#fff}
+.ttl{font-family:var(--f-mincho);font-weight:800;font-size:clamp(23px,6.6vw,31px);line-height:1.45;margin:0;text-wrap:balance}
+.in .ttl,.in .eb{animation:rise .6s cubic-bezier(.2,.7,.2,1) both}
+.in .eb{animation-delay:.05s}
+@keyframes rise{from{opacity:.001;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* figures */
+.fig{width:100%;align-self:center;background:color-mix(in srgb,var(--chip) 88%,transparent);border:1px solid var(--rule);border-radius:12px;padding:16px 16px 12px;position:relative}
+.fl{font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;color:var(--c);text-transform:uppercase}
+.ft{font-weight:700;font-size:15px;line-height:1.5;margin-top:2px}
+.fn{font-size:11px;color:var(--sub);margin-top:10px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:14px;margin-top:12px}
+.sv{font-family:var(--f-mincho);font-weight:800;font-size:clamp(30px,9vw,42px);line-height:1.1;font-variant-numeric:tabular-nums}
+.sv.up{color:#FF8A7E}.sv.down{color:#8DB9F2}
+.sl{font-size:12.5px;color:var(--sub);line-height:1.5;margin-top:4px}
+.bars{display:grid;gap:9px;margin-top:12px}
+.bar{display:grid;grid-template-columns:minmax(0,7.5em) minmax(0,1fr);gap:10px;align-items:center;font-size:12.5px}
+.bar .bl{color:var(--sub);line-height:1.35}
+.bar .tr{display:flex;align-items:center;gap:8px;min-width:0}
+.bar .fi{height:14px;border-radius:0 3px 3px 0;background:#3A4451;flex:none;min-width:2px;transform-origin:left;animation:grow .9s cubic-bezier(.2,.7,.2,1) both}
+.bar.hi .fi{background:var(--c)}.bar.hi .bl{color:var(--ink);font-weight:700}
+.bar .bv{font-family:var(--f-mono);font-size:12px;white-space:nowrap}
+@keyframes grow{from{transform:scaleX(0)}to{transform:none}}
+.tl{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:4px}
+.tl li{display:grid;grid-template-columns:4.2em minmax(0,1fr);gap:10px;font-size:14px;line-height:1.5}
+.tl .td{font-family:var(--f-mono);font-size:12.5px;color:var(--c)}
+.tl li.hi .tx{font-weight:700}
+.mk{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:12px;overflow:hidden;width:100%;align-self:center}
+.mk>div{background:var(--night);padding:12px 14px}
+.mk .l{font-size:11px;color:var(--sub)}
+.mk .v{font-family:var(--f-mono);font-size:20px;font-weight:500;font-variant-numeric:tabular-nums}
+.mk .ch{font-family:var(--f-mono);font-size:11.5px;color:var(--sub)}
+.mk .up{color:#FF8A7E}.mk .down{color:#8DB9F2}
+.big{font-family:var(--f-mincho);font-weight:800;font-size:clamp(84px,26vw,132px);line-height:.9;letter-spacing:-.03em}
+.big .dot{color:var(--sun)}
+.hero{display:grid;gap:18px;width:100%;align-self:center}
+/* debate */
+.dv{display:grid;gap:10px;width:100%;align-self:center}
+.dq{font-weight:700;font-size:14.5px;line-height:1.5}
+.vc{border-radius:12px;padding:12px 14px;border:1px solid var(--rule);border-top:3px solid var(--va);background:var(--chip);opacity:.55;transition:opacity .4s,transform .4s}
+.vc.on{opacity:1;transform:scale(1.015)}
+.vc.v0{--va:var(--v0)}.vc.v1{--va:var(--v1)}
+.vs{font-weight:700;font-size:13px;color:var(--va)}
+.vw{font-size:12px;color:var(--sub);margin-top:4px;line-height:1.5}
+
+/* caption */
+.cap{min-height:5.6em;display:flex;align-items:flex-end;padding-block:0 12px}
+.cap p{margin:0;background:rgba(0,0,0,.55);border-left:3px solid var(--c);padding:9px 12px;border-radius:4px;font-size:15.5px;line-height:1.7;font-weight:500;width:100%}
+
+/* transport */
+.ctl{padding-block:10px 14px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));border-top:1px solid var(--rule);background:var(--deep);display:grid;gap:10px}
+.time{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:11px;color:var(--sub);font-variant-numeric:tabular-nums}
+.scrub{-webkit-appearance:none;appearance:none;width:100%;height:20px;background:transparent;margin:0}
+.scrub::-webkit-slider-runnable-track{height:3px;background:linear-gradient(to right,var(--sun) var(--p,0%),var(--rule) var(--p,0%));border-radius:2px}
+.scrub::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--ink);margin-top:-5.5px}
+.scrub::-moz-range-track{height:3px;background:var(--rule)}.scrub::-moz-range-progress{height:3px;background:var(--sun)}
+.btns{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.btns button{display:grid;place-items:center;background:none;border:1px solid var(--rule);border-radius:999px;width:44px;height:44px;cursor:pointer;flex:none}
+.btns svg{width:17px;height:17px}
+.btns .pp{width:60px;height:60px;background:var(--sun);border-color:var(--sun);color:#fff}
+.btns .pp svg{width:22px;height:22px}
+.btns .txt{width:auto;min-width:44px;padding:0 12px;font:500 12px/1 var(--f-mono)}
+
+/* start cover */
+.cover{position:absolute;inset:0;z-index:5;background:var(--night);display:grid;align-content:center;gap:18px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px));overflow:hidden}
+.cover .sunbg{position:absolute;right:-90px;top:-70px;width:340px;height:340px;color:var(--sun);opacity:.85}
+.cover .lab{font-family:var(--f-mono);font-size:11px;letter-spacing:.2em;color:var(--sub);text-transform:uppercase;position:relative}
+.cover .head{font-family:var(--f-mincho);font-weight:800;font-size:clamp(19px,5.4vw,24px);line-height:1.6;position:relative}
+.cover .go{justify-self:start;display:flex;align-items:center;gap:10px;background:var(--sun);color:#fff;border:0;border-radius:999px;padding:15px 24px;font:700 16px/1 var(--f-body);cursor:pointer;position:relative}
+.cover .go svg{width:16px;height:16px}
+.cover .meta{font-size:12.5px;color:var(--sub);line-height:1.7;position:relative}
+
+/* chapter list */
+.sheet{position:absolute;inset:0;z-index:6;background:rgba(6,8,11,.97);display:grid;grid-template-rows:auto minmax(0,1fr)}
+.sheet .sh{display:flex;justify-content:space-between;align-items:center;padding-block:14px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));border-bottom:1px solid var(--rule);font-weight:700}
+.sheet .sh button{background:none;border:1px solid var(--rule);border-radius:999px;padding:7px 14px;cursor:pointer;font-size:12px}
+.sheet ol{list-style:none;margin:0;padding:6px 0 30px;overflow-y:auto}
+.sheet li button{width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:3.6em minmax(0,1fr);gap:10px;padding-block:12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));cursor:pointer}
+.sheet .st{font-family:var(--f-mono);font-size:11.5px;color:var(--c);padding-top:3px;font-variant-numeric:tabular-nums}
+.sheet .sn{font-size:14.5px;line-height:1.5}
+.sheet .sg{display:block;font-size:11px;color:var(--c);letter-spacing:.1em}
+.sheet li.cur .sn{font-weight:700}
+.sheet li.cur button{background:var(--chip)}
+
+@media (prefers-reduced-motion:reduce){.illo,.photo,.in .ttl,.in .eb,.bar .fi{animation:none}.vc{transition:none}}
+@media (min-height:760px){.ttl{font-size:clamp(25px,7vw,34px)}.cap p{font-size:16.5px}}
+</style>
+
+<div class="app" id="app">
+  <header class="top">
+    <div class="trow"><span id="t-date">Design Lessons</span><span id="t-pos"></span></div>
+    <div class="segs" id="segs"></div>
+  </header>
+  <main class="stage" id="stage">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="vis" id="vis"></div>
+    <div>
+      <div class="telop" id="telop"></div>
+      <div class="cap" aria-live="off"><p id="cap"></p></div>
+    </div>
+  </main>
+  <footer class="ctl">
+    <input class="scrub" id="scrub" type="range" min="0" max="1000" value="0" aria-label="再生位置">
+    <div class="time"><span id="cur">0:00</span><span id="dur">0:00</span></div>
+    <div class="btns">
+      <button type="button" class="txt" id="b-list" aria-label="項目の一覧">一覧</button>
+      <button type="button" id="b-prev" aria-label="前の教え"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2.5h2v11H3zM14 2.5v11L6 8z" fill="currentColor"/></svg></button>
+      <button type="button" class="pp" id="b-pp" aria-label="再生"></button>
+      <button type="button" id="b-next" aria-label="次の教え"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11 2.5h2v11h-2zM2 2.5v11L10 8z" fill="currentColor"/></svg></button>
+      <button type="button" class="txt" id="b-rate" aria-label="再生の速さ">1.0×</button>
+    </div>
+  </footer>
+
+  <section class="cover" id="cover">
+    <svg class="sunbg" viewBox="0 0 300 300" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="150" cy="150" r="46" fill="currentColor" stroke="none"/><circle cx="150" cy="150" r="70" opacity=".45"/><circle cx="150" cy="150" r="96" opacity=".28"/><circle cx="150" cy="150" r="124" opacity=".16"/></g></svg>
+    <div class="lab" id="c-lab">Design Lessons</div>
+    <div class="big" id="c-date"></div>
+    <div class="head" id="c-head"></div>
+    <button type="button" class="go" id="c-go"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg><span id="c-go-t">再生する</span></button>
+    <div class="meta" id="c-meta"></div>
+  </section>
+
+  <section class="sheet" id="sheet" hidden>
+    <div class="sh"><span>教えの一覧</span><button type="button" id="s-close">閉じる</button></div>
+    <ol id="s-list"></ol>
+  </section>
+</div>
+<audio id="au" preload="auto" playsinline></audio>
+
+<script type="application/json" id="video-data">{"date": "2026-11-27", "weekday": "金", "headline": "うまいデザインは、センスより「決めごと」でできている。差がつくのは、何を足すかより、何を削るかだ。", "markets": [], "duration": 535.49, "chapters": [{"sec": "", "secName": "デザインの教え", "title": "はじめに", "group": null, "fav": null, "barca": null, "img": null, "viz": null, "debate": null, "start": 0.0, "end": 14.46, "sents": [{"t": 0.0, "x": "デザインの教えです。"}, {"t": 1.68, "x": "基礎から実践まで、5つの章で話します。"}, {"t": 5.53, "x": "うまいデザインは、センスより「決めごと」でできている。"}, {"t": 9.26, "x": "差がつくのは、何を足すかより、何を削るかだ。"}], "srcName": null, "srcUrl": null}, {"sec": "mind", "secName": "考え方", "title": "デザインは飾りではない。「伝わる順番」を決める仕事だ", "group": null, "fav": false, "barca": false, "img": null, "viz": null, "debate": null, "start": 14.46, "end": 56.89, "sents": [{"t": 14.46, "x": "考え方の章です。"}, {"t": 16.44, "x": "デザインは飾りではない。"}, {"t": 18.44, "x": "「伝わる順番」を決める仕事だ。"}, {"t": 20.94, "x": "見る人は、最初の数秒で読むかどうかを決める。"}, {"t": 24.85, "x": "だから最初にやることは、色や書体を選ぶことではない。"}, {"t": 29.16, "x": "一番伝えたいことを、ひとつに決めることだ。"}, {"t": 32.86, "x": "全部を目立たせると、何も目立たなくなる。"}, {"t": 36.36, "x": "作る前に「誰に、何を伝えて、どうしてほしいか」を一行で書いてみる。"}, {"t": 41.77, "x": "書けないなら、まだ作り始める段階ではない。"}, {"t": 45.49, "x": "この一行が、あとで迷ったときの判断の物差しになる。"}, {"t": 49.93, "x": "素人は足し算で考える。"}, {"t": 52.38, "x": "プロは、この一行に関係ないものを削る。"}], "srcName": null, "srcUrl": null}, {"sec": "mind", "secName": "考え方", "title": "素人との差は「揃っているか」で決まる", "group": null, "fav": false, "barca": false, "img": null, "viz": null, "debate": null, "start": 56.89, "end": 95.44, "sents": [{"t": 56.89, "x": "素人との差は「揃っているか」で決まる。"}, {"t": 59.88, "x": "安っぽく見えるデザインの多くは、センスの問題ではない。"}, {"t": 64.25, "x": "ちょっとしたずれの問題だ。"}, {"t": 66.44, "x": "左端の位置が数ピクセル違う。"}, {"t": 69.36, "x": "余白が場所によってばらばら。"}, {"t": 71.74, "x": "似たような文字サイズが何種類もある。"}, {"t": 74.67, "x": "プロは、使う数を先に減らす。"}, {"t": 77.72, "x": "書体は2つまで。"}, {"t": 79.63, "x": "文字サイズは3〜4段階。"}, {"t": 82.2, "x": "色はベースとメインとアクセントの3つ。"}, {"t": 85.08, "x": "そして迷ったら揃える。"}, {"t": 87.18, "x": "揃えないなら、思いきって大きく崩す。"}, {"t": 90.61, "x": "中途半端なずれが、いちばん素人っぽく見える。"}], "srcName": null, "srcUrl": null}, {"sec": "mind", "secName": "考え方", "title": "「なんとなく」を禁止する", "group": null, "fav": false, "barca": false, "img": null, "viz": null, "debate": null, "start": 95.44, "end": 123.17, "sents": [{"t": 95.44, "x": "「なんとなく」を禁止する。"}, {"t": 97.36, "x": "プロのデザインには、すべての要素に理由がある。"}, {"t": 101.09, "x": "なぜこの位置か。"}, {"t": 102.74, "x": "なぜこの大きさか。"}, {"t": 104.66, "x": "なぜこの色か。"}, {"t": 106.33, "x": "聞かれたら一言で答えられる。"}, {"t": 108.83, "x": "理由が言えない要素は、たいてい要らない要素だ。"}, {"t": 112.5, "x": "練習のうちは、自分の作品の要素ひとつずつに理由をメモしてみるといい。"}, {"t": 117.86, "x": "面倒だが、これを続けると「なんとなく置く」癖が消えていく。"}], "srcName": null, "srcUrl": null}, {"sec": "type", "secName": "文字", "title": "大きさの差は、思いきってつける", "group": null, "fav": false, "barca": false, "img": null, "viz": {"type": "bars", "title": "1.25倍ずつ大きくする文字サイズの例（本文16pxから）", "unit": "px", "items": [{"label": "本文", "value": 16}, {"label": "小見出し", "value": 20}, {"label": "見出し", "value": 25}, {"label": "大見出し", "value": 31, "display": "31.25"}, {"label": "タイトル", "value": 39, "display": "39.06", "hi": true}], "note": "16に1.25を順にかけた値。比率は1.2〜1.5あたりから、内容に合わせて選ぶ"}, "debate": null, "start": 123.17, "end": 166.21, "sents": [{"t": 123.17, "x": "文字の章です。"}, {"t": 124.72, "x": "大きさの差は、思いきってつける。"}, {"t": 127.69, "x": "見出しと本文の大きさの差を、ジャンプ率という。"}, {"t": 131.47, "x": "ジャンプ率が大きいと、元気で目を引く印象になる。"}, {"t": 135.47, "x": "小さいと、落ち着いた上品な印象になる。"}, {"t": 139.01, "x": "素人がやりがちなのは、その中間のぼんやりした差だ。"}, {"t": 143.37, "x": "見出しが本文より少しだけ大きい。"}, {"t": 146.34, "x": "これでは、どちらが大事か伝わらない。"}, {"t": 149.54, "x": "決め方のこつは、比率を一つ決めることだ。"}, {"t": 153.28, "x": "たとえば1.25倍と決めたら、本文16pxから、20、25、31と順にかけていく。"}, {"t": 161.86, "x": "感覚で選ぶより、ずっと揃って見える。"}], "srcName": null, "srcUrl": null}, {"sec": "type", "secName": "文字", "title": "読みやすさは、行間と1行の長さで決まる", "group": null, "fav": false, "barca": false, "img": null, "viz": null, "debate": null, "start": 166.21, "end": 201.53, "sents": [{"t": 166.21, "x": "読みやすさは、行間と1行の長さで決まる。"}, {"t": 170.08, "x": "日本語の本文は、行間を文字サイズの1.5〜1.8倍くらいにすると読みやすい。"}, {"t": 176.39, "x": "詰まっていると窮屈で、空きすぎると行を追いにくい。"}, {"t": 180.45, "x": "逆に見出しは、行間を詰めたほうが引き締まる。"}, {"t": 184.34, "x": "1行の長さも大事だ。"}, {"t": 186.53, "x": "本文なら、1行20〜40字くらいが目安になる。"}, {"t": 190.96, "x": "長すぎると、次の行の頭を目が探してしまう。"}, {"t": 195.08, "x": "文章が読まれないと感じたら、まず中身より、この2つを疑ってみる。"}], "srcName": null, "srcUrl": null}, {"sec": "type", "secName": "文字", "title": "書体は「意味」で選び、太さで階層をつくる", "group": null, "fav": false, "barca": false, "img": null, "viz": null, "debate": null, "start": 201.53, "end": 235.84, "sents": [{"t": 201.53, "x": "書体は「意味」で選び、太さで階層をつくる。"}, {"t": 205.31, "x": "明朝体は、落ち着きや物語、品のよさを感じさせる。"}, {"t": 210.41, "x": "ゴシック体は、はっきりして現代的に見える。"}, {"t": 214.1, "x": "どちらがきれいかではなく、伝えたい空気に合うかで選ぶ。"}, {"t": 218.3, "x": "そして、ひとつの画面で書体を何種類も使わない。"}, {"t": 222.57, "x": "階層は、書体を変えるより、同じ書体の太さと大きさで作るほうが整う。"}, {"t": 228.79, "x": "目立たせたい言葉だけ太くする。"}, {"t": 231.38, "x": "全部を太くすると、太字の意味がなくなる。"}], "srcName": null, "srcUrl": null}, {"sec": "layout", "secName": "余白と配置", "title": "余白は「空き」ではない。いちばん大事な素材だ", "group": null, "fav": false, "barca": false, "img": null, "viz": null, "debate": null, "start": 235.84, "end": 274.77, "sents": [{"t": 235.84, "x": "余白と配置の章です。"}, {"t": 237.96, "x": "余白は「空き」ではない。"}, {"t": 239.84, "x": "いちばん大事な素材だ。"}, {"t": 241.91, "x": "素人は、空いている場所を埋めたくなる。"}, {"t": 245.26, "x": "プロは、余白を先に設計する。"}, {"t": 248.31, "x": "関係が近いものは近くに置き、違うものは離す。"}, {"t": 252.64, "x": "これを近接という。"}, {"t": 254.44, "x": "たったこれだけで、説明がなくても内容のまとまりが伝わる。"}, {"t": 259.17, "x": "高級なブランドの広告に余白が多いのは、偶然ではない。"}, {"t": 263.78, "x": "余白は、余裕と自信に見える。"}, {"t": 266.68, "x": "詰め込むと、安売りのチラシに見える。"}, {"t": 269.89, "x": "迷ったら、余白を今の1.5倍にしてみるといい。"}], "srcName": null, "srcUrl": null}, {"sec": "layout", "secName": "余白と配置", "title": "間隔は8の倍数で決め、揃える線を減らす", "group": null, "fav": false, "barca": false, "img": null, "viz": null, "debate": null, "start": 274.77, "end": 315.91, "sents": [{"t": 274.77, "x": "間隔は8の倍数で決め、揃える線を減らす。"}, {"t": 279.07, "x": "余白や間隔を、その場の感覚で決めない。"}, {"t": 282.99, "x": "8、16、24、32、48のように、基準の数の倍数だけを使う。"}, {"t": 290.69, "x": "Webやアプリのデザインでは8の倍数がよく使われる。"}, {"t": 294.61, "x": "数を決めておくと、全体に自然なリズムが出る。"}, {"t": 298.53, "x": "もうひとつは、揃える線の数を減らすことだ。"}, {"t": 302.33, "x": "左端が3か所でばらばらに始まると、それだけで散らかって見える。"}, {"t": 307.55, "x": "要素の端を、なるべく少ない本数の線に乗せる。"}, {"t": 311.77, "x": "グリッドとは、つまりこの線のことだ。"}], "srcName": null, "srcUrl": null}, {"sec": "layout", "secName": "余白と配置", "title": "視線の流れを先に決める", "group": null, "fav": false, "barca": false, "img": null, "viz": null, "debate": null, "start": 315.91, "end": 354.54, "sents": [{"t": 315.91, "x": "視線の流れを先に決める。"}, {"t": 318.31, "x": "人の目は、大きいもの、色の強いもの、人の顔から先に見る。"}, {"t": 323.85, "x": "顔があれば、その目線の先にも目が行く。"}, {"t": 327.48, "x": "横書きの紙面なら、左上から右下へ流れるのが自然だ。"}, {"t": 332.16, "x": "だから、最初に見てほしいものを一番大きく、一番強くする。"}, {"t": 337.41, "x": "2番目、3番目と、強さの順番をはっきりつける。"}, {"t": 342.08, "x": "YouTubeのサムネイルなら、顔と一番太い文字を主役にして、ほかは思いきって弱くする。"}, {"t": 348.68, "x": "小さく表示されるサムネでは、主役は2つまでと考えるといい。"}], "srcName": null, "srcUrl": null}, {"sec": "color", "secName": "色", "title": "色は種類より「量」で決まる", "group": null, "fav": false, "barca": false, "img": null, "viz": {"type": "stats", "title": "配色の割合の目安", "items": [{"value": "70%", "label": "ベースカラー（背景など）"}, {"value": "25%", "label": "メインカラー（印象を決める色）"}, {"value": "5%", "label": "アクセントカラー（目を引かせたい所）"}], "note": "よく使われる目安。きっちり守るより「量の差をつける」考え方として使う"}, "debate": null, "start": 354.54, "end": 388.33, "sents": [{"t": 354.54, "x": "色の章です。"}, {"t": 356.04, "x": "色は種類より「量」で決まる。"}, {"t": 358.27, "x": "配色がうまくいかない原因は、たいてい色の選び方ではない。"}, {"t": 362.9, "x": "量の配分だ。"}, {"t": 364.51, "x": "よく使われる目安に、ベース70、メイン25、アクセント5という割合がある。"}, {"t": 371.02, "x": "アクセントは、少ないからこそ効く。"}, {"t": 374.05, "x": "目立たせたい色を広く使うと、かえって何も目立たなくなる。"}, {"t": 378.56, "x": "色に自信がないうちは、ほぼ白黒で作り、1色だけ差し色を入れてみる。"}, {"t": 384.44, "x": "それだけで、ぐっとプロっぽく見える。"}], "srcName": null, "srcUrl": null}, {"sec": "color", "secName": "色", "title": "白黒にして、それでも伝わるか確かめる", "group": null, "fav": false, "barca": false, "img": null, "viz": null, "debate": null, "start": 388.33, "end": 420.9, "sents": [{"t": 388.33, "x": "白黒にして、それでも伝わるか確かめる。"}, {"t": 392.06, "x": "色を付けたら、一度グレースケールにして見てみる。"}, {"t": 395.96, "x": "色がなくても、どこが一番大事か分かるか。"}, {"t": 399.66, "x": "分からないなら、明るさの差が足りていない。"}, {"t": 403.09, "x": "色の違いだけで区別していると、明るさの近い色どうしは見分けにくい。"}, {"t": 408.44, "x": "色覚の個人差がある人にも伝わりにくい。"}, {"t": 411.95, "x": "大事なのは色相より、明るさのコントラストだ。"}, {"t": 415.84, "x": "文字と背景の明るさの差は、特にしっかりつける。"}], "srcName": null, "srcUrl": null}, {"sec": "practice", "secName": "上達と仕事", "title": "上手い人の作品を模写して、「数値」を盗む", "group": null, "fav": false, "barca": false, "img": null, "viz": {"type": "timeline", "title": "30日の練習プランの例", "items": [{"date": "1〜7日", "text": "好きなデザインを模写し、余白・文字サイズ・色の数値を測る"}, {"date": "8〜14日", "text": "写真なし、文字だけでポスターを作る"}, {"date": "15〜21日", "text": "色を3色までに絞って同じものを作り直す"}, {"date": "22〜30日", "text": "サムネを毎日1枚。前の日の自分のものと並べて見直す", "hi": true}], "note": "例として組んだ練習の順番"}, "debate": null, "start": 420.9, "end": 461.11, "sents": [{"t": 420.9, "x": "上達と仕事の章です。"}, {"t": 423.09, "x": "上手い人の作品を模写して、「数値」を盗む。"}, {"t": 426.86, "x": "最短で上達する方法は、模写だ。"}, {"t": 430.39, "x": "眺めるだけでは身につかない。"}, {"t": 432.81, "x": "好きなデザインを3つ選び、そっくり同じものを作ってみる。"}, {"t": 437.34, "x": "そのとき、見た目ではなく数値を測る。"}, {"t": 440.78, "x": "余白は何ピクセルか。"}, {"t": 442.93, "x": "見出しは本文の何倍か。"}, {"t": 445.28, "x": "色のコードは何か。"}, {"t": 447.25, "x": "スポイトと定規で全部調べる。"}, {"t": 449.83, "x": "すると、うまく見える理由が数字で見えてくる。"}, {"t": 453.61, "x": "サムネイル、ポスター、Webサイト。"}, {"t": 456.95, "x": "自分の仕事に近いものから始めるといい。"}], "srcName": null, "srcUrl": null}, {"sec": "practice", "secName": "上達と仕事", "title": "見直しの技術を持つ", "group": null, "fav": false, "barca": false, "img": null, "viz": null, "debate": null, "start": 461.11, "end": 492.63, "sents": [{"t": 461.11, "x": "見直しの技術を持つ。"}, {"t": 463.16, "x": "作っている最中の自分の目は、あてにならない。"}, {"t": 467.0, "x": "だからプロは、見直しの手順を持っている。"}, {"t": 470.36, "x": "画面を小さくして、スマホくらいの大きさで見る。"}, {"t": 474.28, "x": "目を細めて、ぼんやりとした形だけで見る。"}, {"t": 477.94, "x": "白黒にする。"}, {"t": 479.54, "x": "一晩置いてから見る。"}, {"t": 481.39, "x": "最後に、一番伝えたいことを声に出して言い、それが一目で伝わるか確かめる。"}, {"t": 487.8, "x": "このどれかで引っかかったら、そこが直す場所だ。"}], "srcName": null, "srcUrl": null}, {"sec": "practice", "secName": "上達と仕事", "title": "売れるデザイナーは「理由」と「目的」で話す", "group": null, "fav": false, "barca": false, "img": null, "viz": null, "debate": null, "start": 492.63, "end": 528.38, "sents": [{"t": 492.63, "x": "売れるデザイナーは「理由」と「目的」で話す。"}, {"t": 495.8, "x": "仕事として差がつくのは、作る力より伝える力だ。"}, {"t": 500.41, "x": "案を出すときは、なぜこうしたかを一言で添える。"}, {"t": 504.23, "x": "修正の依頼が来たら、言われた通りに直すだけでなく、その裏にある目的を聞く。"}, {"t": 510.56, "x": "「もっと目立たせて」の本当の意味は、たいてい「クリックしてほしい」だったりする。"}, {"t": 515.7, "x": "依頼する人が見ているのは、見た目より結果だ。"}, {"t": 519.45, "x": "再生数、問い合わせ、売上。"}, {"t": 522.8, "x": "デザインをその数字につなげて話せる人に、仕事は集まる。"}], "srcName": null, "srcUrl": null}, {"sec": "", "secName": "デザインの教え", "title": "おわり", "group": null, "fav": null, "barca": null, "img": null, "viz": null, "debate": null, "start": 528.38, "end": 535.49, "sents": [{"t": 528.38, "x": "以上、デザインの教えでした。"}, {"t": 530.93, "x": "今日から、ひとつだけでも試してみてください。"}], "srcName": null, "srcUrl": null}]}</script>
+<script>
+(function(){
+  var V=JSON.parse(document.getElementById('video-data').textContent), CH=V.chapters;
+  var COL={'':'var(--sun)',mind:'var(--pol)',type:'var(--film)',layout:'var(--foot)',color:'var(--art)',practice:'var(--sun)'};
+  var EN={'':'Design Lessons',mind:'Mindset',type:'Typography',layout:'Layout & Space',color:'Color',practice:'Practice & Work'};
+  var ILLO={
+   politics:['<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 112h134" opacity=".35"/><path d="M14 92l22-18 20 10 24-34 22 14 30-38"/><circle cx="132" cy="26" r="5" fill="currentColor"/><g opacity=".55"><path d="M30 112V96M52 112V88M74 112V70M96 112V80M118 112V58"/></g></g>','<g fill="none" stroke="currentColor" stroke-width="2"><circle cx="75" cy="64" r="48"/><ellipse cx="75" cy="64" rx="20" ry="48" opacity=".6"/><path d="M27 64h96M33 40h84M33 88h84" opacity=".45"/><path d="M75 16v96" opacity=".6"/><circle cx="116" cy="34" r="6" fill="currentColor" stroke="none"/></g>'],
+   football:['<g fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="14" width="138" height="96" rx="2"/><path d="M75 14v96"/><circle cx="75" cy="62" r="17"/><circle cx="75" cy="62" r="2.5" fill="currentColor"/><path d="M6 38h24v48H6M144 38h-24v48h24" opacity=".7"/><path d="M6 50h9v24H6M144 50h-9v24h9" opacity=".5"/></g><circle cx="104" cy="44" r="7" fill="currentColor"/><path d="M40 84q30-50 64-40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 5" opacity=".7"/>','<g fill="none" stroke="currentColor" stroke-width="2"><circle cx="75" cy="62" r="46"/><path d="M75 40l20 14-8 24H63l-8-24z" fill="currentColor" fill-opacity=".85"/><path d="M75 40V16M95 54l22-8M87 78l14 20M63 78L49 98M55 54l-22-8" opacity=".6"/></g>'],
+   art:['<circle cx="58" cy="58" r="40" fill="currentColor" opacity=".85"/><rect x="66" y="40" width="70" height="70" fill="none" stroke="currentColor" stroke-width="2"/><path d="M14 112L44 70l30 42z" fill="currentColor" opacity=".35"/>','<g fill="none" stroke="currentColor" stroke-width="2"><rect x="10" y="14" width="78" height="96"/><rect x="20" y="24" width="58" height="76" opacity=".45"/></g><circle cx="49" cy="58" r="16" fill="currentColor" opacity=".8"/><path d="M100 110V58q20-30 40 0v52" fill="currentColor" opacity=".3"/><path d="M96 110h52" stroke="currentColor" stroke-width="2"/>'],
+   film:['<g fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="22" width="134" height="80" rx="3"/><path d="M8 38h134M8 86h134" opacity=".6"/><rect x="40" y="44" width="70" height="36" fill="currentColor" fill-opacity=".85" stroke="none"/></g><g fill="currentColor" opacity=".7"><rect x="16" y="27" width="8" height="6" rx="1"/><rect x="36" y="27" width="8" height="6" rx="1"/><rect x="56" y="27" width="8" height="6" rx="1"/><rect x="76" y="27" width="8" height="6" rx="1"/><rect x="96" y="27" width="8" height="6" rx="1"/><rect x="116" y="27" width="8" height="6" rx="1"/><rect x="16" y="91" width="8" height="6" rx="1"/><rect x="36" y="91" width="8" height="6" rx="1"/><rect x="56" y="91" width="8" height="6" rx="1"/><rect x="76" y="91" width="8" height="6" rx="1"/><rect x="96" y="91" width="8" height="6" rx="1"/><rect x="116" y="91" width="8" height="6" rx="1"/></g>','<g fill="none" stroke="currentColor" stroke-width="2"><circle cx="46" cy="40" r="24"/><circle cx="104" cy="40" r="24"/><circle cx="46" cy="40" r="5" fill="currentColor"/><circle cx="104" cy="40" r="5" fill="currentColor"/><rect x="22" y="70" width="92" height="44" rx="4" fill="currentColor" fill-opacity=".85"/><path d="M114 82l26-12v44l-26-12"/></g>']
+  };
+  ILLO.mind=ILLO.politics;ILLO.type=ILLO.film;ILLO.layout=ILLO.football;ILLO.color=ILLO.art;ILLO.practice=ILLO.politics;
+  function el(t,a,kids){var e=document.createElement(t);if(a)for(var k in a){if(k==='text')e.textContent=a[k];else if(k==='html')e.innerHTML=a[k];else e.setAttribute(k,a[k]);}(kids||[]).forEach(function(x){if(x)e.appendChild(typeof x==='string'?document.createTextNode(x):x)});return e;}
+  function fmt(s){s=Math.max(0,Math.floor(s||0));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+  var au=document.getElementById('au'), app=document.getElementById('app');
+  var d=new Date(V.date+'T00:00:00'), MD=(d.getMonth()+1)+'.'+String(d.getDate()).padStart(2,'0');
+  var KEY='nv-pos-'+V.date;
+  var goBtn=document.getElementById('c-go'),goT=document.getElementById('c-go-t'),ready=false;
+  function setReady(){ready=true;goBtn.disabled=false;goBtn.style.opacity='';goT.textContent=goLabel;}
+  goBtn.disabled=true;goBtn.style.opacity='.6';
+  var tried=[];
+  function fail(){var c=document.getElementById('cap');c.textContent='音声を読み込めませんでした（'+tried.join('→')+(au.error?' / code '+au.error.code:'')+'）。ページを開き直してください。';}
+  function asData(b){return new Promise(function(res,rej){var fr=new FileReader();fr.onload=function(){res(String(fr.result).replace(/^data:[^;,]*/,'data:audio/mpeg'))};fr.onerror=rej;fr.readAsDataURL(b);});}
+  var blobP=fetch('audio.mp3').then(function(r){if(!r.ok)throw new Error('http '+r.status);return r.blob();});
+  // 順に試す：ファイル直接 → data URI → blob
+  var CANDS=[['file',function(){return 'audio.mp3';}],['data',function(){return blobP.then(asData);}],['blob',function(){return blobP.then(function(b){return URL.createObjectURL(new Blob([b],{type:'audio/mpeg'}))});}]],ci=0;
+  function tryNext(){
+    if(ci>=CANDS.length){fail();return;}
+    var c=CANDS[ci++];tried.push(c[0]);
+    Promise.resolve().then(c[1]).then(function(u){au.src=u;au.load();setReady();}).catch(function(e){tried[tried.length-1]+='×';tryNext();});
+  }
+  au.addEventListener('error',function(){if(!au.getAttribute('src'))return;tried[tried.length-1]+='×';var wasPlaying=playWanted;tryNext();});
+  var playWanted=false;
+  au.addEventListener('loadeddata',function(){if(playWanted&&au.paused){var r=au.play();if(r&&r.catch)r.catch(function(){});}});
+  tryNext();
+
+  // cover
+  document.getElementById('c-date').innerHTML=(d.getMonth()+1)+'<span class="dot">.</span>'+String(d.getDate()).padStart(2,'0');
+  document.getElementById('c-lab').textContent='Design Lessons · 基礎から実践まで';
+  document.getElementById('c-head').textContent=V.headline;
+  document.getElementById('c-meta').textContent=(CH.length-2)+'つの教え・約'+Math.round(V.duration/60)+'分。画面を消しても、ほかのアプリを開いても音声は続きます。';
+  document.getElementById('t-date').textContent='Design Lessons';
+  document.getElementById('dur').textContent=fmt(V.duration);
+  var saved=0;try{saved=+localStorage.getItem(KEY)||0;}catch(e){}
+  var goLabel=(saved>20&&saved<V.duration-10)?'続きから再生（'+fmt(saved)+'）':'再生する';
+  if(!ready)goT.textContent='読み込み中…';
+
+  // segments + list
+  var segs=document.getElementById('segs'),list=document.getElementById('s-list');
+  CH.forEach(function(c,i){
+    var s=el('i',{title:c.title,style:'flex-grow:'+Math.max(1,(c.end-c.start)).toFixed(1)},[el('b')]);
+    s.addEventListener('click',function(){seekTo(c.start+0.01);});segs.appendChild(s);
+    var b=el('button',{type:'button',style:'--c:'+(COL[c.sec]||'var(--sun)')},[el('span',{class:'st',text:fmt(c.start)}),el('span',{class:'sn'},[(i===0||CH[i-1].secName!==c.secName)?el('span',{class:'sg',text:c.secName}):null,c.title])]);
+    b.addEventListener('click',function(){seekTo(c.start+0.01);closeSheet();if(au.paused)play();});
+    list.appendChild(el('li',null,[b]));
+  });
+
+  // figures
+  function fig(v){
+    if(!v||!v.type)return null;var lab={stats:'Numbers',bars:'Chart',timeline:'Timeline'}[v.type];if(!lab)return null;
+    var f=el('figure',{class:'fig',style:'margin:0'},[el('div',{class:'fl',text:lab}),v.title?el('div',{class:'ft',text:v.title}):null]);
+    if(v.type==='stats'){var g=el('div',{class:'stats'});(v.items||[]).forEach(function(x){g.appendChild(el('div',null,[el('div',{class:'sv '+(x.dir||''),text:x.value}),el('div',{class:'sl',text:x.label})]))});f.appendChild(g);}
+    if(v.type==='bars'){var mx=0;v.items.forEach(function(x){mx=Math.max(mx,Math.abs(+x.value)||0)});var b=el('div',{class:'bars'});
+      v.items.forEach(function(x,i){var w=mx?Math.abs(+x.value)/mx:0;b.appendChild(el('div',{class:'bar'+(x.hi?' hi':'')},[el('span',{class:'bl',text:x.label}),el('span',{class:'tr'},[el('span',{class:'fi',style:'width:calc((100% - 5.5em) * '+w.toFixed(3)+');animation-delay:'+(i*.08)+'s'}),el('span',{class:'bv',text:x.display||(x.value+(v.unit||''))})])]))});f.appendChild(b);}
+    if(v.type==='timeline'){var u=el('ol',{class:'tl'});v.items.forEach(function(x){u.appendChild(el('li',{class:x.hi?'hi':''},[el('span',{class:'td',text:x.date}),el('span',{class:'tx',text:x.text})]))});f.appendChild(u);}
+    if(v.note)f.appendChild(el('div',{class:'fn',text:v.note}));
+    return f;
+  }
+  function illo(c,i){var v=ILLO[c.sec];if(!v)return null;var s=document.createElementNS('http://www.w3.org/2000/svg','svg');s.setAttribute('viewBox','0 0 150 124');s.setAttribute('class','illo');s.setAttribute('aria-hidden','true');s.innerHTML=v[i%v.length];return s;}
+  function markets(){var m=el('div',{class:'mk'});(V.markets||[]).slice(0,4).forEach(function(x){m.appendChild(el('div',null,[el('div',{class:'l',text:x.label}),el('div',{class:'v',text:x.value}),el('div',{class:'ch '+x.dir,text:(x.dir==='up'?'▲ ':x.dir==='down'?'▼ ':'')+x.change})]))});return m;}
+  // which sentence starts the debate, and each side
+  CH.forEach(function(c){c.dbAt=-1;c.sideAt=[];if(!c.debate)return;
+    c.sents.forEach(function(s,k){if(c.dbAt<0&&/^論点です/.test(s.x))c.dbAt=k;});
+    if(c.dbAt>=0)c.debate.views.slice(0,2).forEach(function(v){var k=c.sents.findIndex(function(s,j){return j>c.dbAt&&s.x.indexOf(v.side)===0});c.sideAt.push(k);});});
+
+  var curC=-1,curS=-1,mode='';
+  var vis=document.getElementById('vis'),telop=document.getElementById('telop'),cap=document.getElementById('cap'),stage=document.getElementById('stage');
+  function visual(c,i,k){
+    var m=(c.debate&&c.dbAt>=0&&k>=c.dbAt)?'debate':'main';
+    if(m===mode&&i===curC)return;mode=m;vis.innerHTML='';
+    if(m==='debate'){var dv=el('div',{class:'dv'},[el('div',{class:'fl',text:'Two Views'}),el('div',{class:'dq',text:c.debate.q||''})]);
+      c.debate.views.slice(0,2).forEach(function(v,j){dv.appendChild(el('div',{class:'vc v'+j,'data-j':j},[el('div',{class:'vs',text:v.side}),el('div',{class:'vw',text:v.who||''})]))});vis.appendChild(dv);return;}
+    if(i===0){vis.appendChild(el('div',{class:'hero'},[el('div',{class:'big',html:(d.getMonth()+1)+'<span class="dot">.</span>'+String(d.getDate()).padStart(2,'0')}),markets()]));return;}
+    if(c.img){vis.appendChild(el('div',{class:'photo',style:'background-image:url('+c.img+')'}));}
+    var f=fig(c.viz);if(f){vis.appendChild(f);return;}
+    if(!c.img){var il=illo(c,i);if(il)vis.appendChild(il);}
+  }
+  function fit(){var f=vis.firstElementChild;if(!f||f.tagName==='svg'||f.classList.contains('photo'))return;f.style.transform='';f.style.transformOrigin='center';
+    var h=vis.clientHeight,fh=f.scrollHeight;if(fh>h&&h>0){var s=Math.max(.55,h/fh);f.style.transform='scale('+s.toFixed(3)+')';}}
+  window.addEventListener('resize',fit);
+  function render(i,k){
+    var c=CH[i];if(!c)return;
+    if(i!==curC){
+      app.style.setProperty('--c',COL[c.sec]||'var(--sun)');
+      telop.innerHTML='';
+      var eb=el('div',{class:'eb'},[el('span',{class:'sw'}),EN[c.sec]||'',c.group?' · '+c.group:'']);
+      if(c.fav)eb.appendChild(el('span',{class:'tag fav',text:'★好み'}));if(c.barca)eb.appendChild(el('span',{class:'tag barca',text:'BARÇA'}));
+      telop.appendChild(eb);telop.appendChild(el('h1',{class:'ttl',text:i===0?V.headline.split('。')[0]+'。':c.title}));
+      stage.classList.remove('in');void stage.offsetWidth;stage.classList.add('in');
+      document.getElementById('t-pos').textContent=(i+1)+' / '+CH.length;
+      [].forEach.call(segs.children,function(s,j){s.classList.toggle('done',j<i);if(j!==i)s.firstChild.style.width='';});
+      [].forEach.call(list.children,function(li,j){li.classList.toggle('cur',j===i)});
+      meta(i);
+    }
+    var pm=mode,pc=curC;visual(c,i,k);if(mode!==pm||i!==pc)fit();
+    if(mode==='debate'){vis.querySelectorAll('.vc').forEach(function(v){var j=+v.dataset.j;var a=c.sideAt[j],b=j===0?c.sideAt[1]:9999;v.classList.toggle('on',a>=0&&k>=a&&(b<0||k<b));});}
+    curC=i;
+    if(k!==curS){curS=k;cap.textContent=k>=0?c.sents[k].x:'';}
+  }
+  function locate(t){var i=0;while(i<CH.length-1&&t>=CH[i+1].start)i++;var c=CH[i],k=-1;for(var j=0;j<c.sents.length;j++){if(t>=c.sents[j].t-0.05)k=j;else break;}return [i,k];}
+  var scrub=document.getElementById('scrub'),curEl=document.getElementById('cur'),dragging=false,lastSave=0;
+  function tick(){
+    var t=au.currentTime||0,p=locate(t);render(p[0],p[1]);
+    var c=CH[p[0]];segs.children[p[0]].firstChild.style.width=Math.min(100,(t-c.start)/(c.end-c.start)*100)+'%';
+    if(!dragging){scrub.value=Math.round(t/V.duration*1000);}
+    scrub.style.setProperty('--p',(t/V.duration*100)+'%');curEl.textContent=fmt(t);
+    if(Math.abs(t-lastSave)>5){lastSave=t;try{localStorage.setItem(KEY,String(t))}catch(e){}}
+    posState();
+  }
+  au.addEventListener('timeupdate',tick);au.addEventListener('seeked',tick);
+  au.addEventListener('ended',function(){setPP();try{localStorage.removeItem(KEY)}catch(e){}});
+  au.addEventListener('play',setPP);au.addEventListener('pause',setPP);
+  document.addEventListener('visibilitychange',function(){if(!document.hidden){curC=-1;mode='';tick();}});
+  function seekTo(t){t=Math.max(0,Math.min(V.duration-0.2,t));au.currentTime=t;tick();}
+  scrub.addEventListener('input',function(){dragging=true;var t=scrub.value/1000*V.duration;curEl.textContent=fmt(t);var p=locate(t);render(p[0],p[1]);scrub.style.setProperty('--p',(t/V.duration*100)+'%');});
+  scrub.addEventListener('change',function(){dragging=false;seekTo(scrub.value/1000*V.duration);});
+
+  var I_PLAY='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>',I_PAUSE='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 2.5h3v11h-3zM9.5 2.5h3v11h-3z" fill="currentColor"/></svg>';
+  var pp=document.getElementById('b-pp');
+  function setPP(){pp.innerHTML=au.paused?I_PLAY:I_PAUSE;pp.setAttribute('aria-label',au.paused?'再生':'一時停止');}
+  function play(){playWanted=true;var r=au.play();if(r&&r.catch)r.catch(function(){});}
+  function cur(){return locate(au.currentTime||0)[0];}
+  function next(){var i=cur();if(i<CH.length-1)seekTo(CH[i+1].start+0.01);}
+  function prev(){var i=cur();seekTo((au.currentTime-CH[i].start>3||i===0)?CH[i].start+0.01:CH[i-1].start+0.01);}
+  pp.addEventListener('click',function(){au.paused?play():au.pause();});
+  document.getElementById('b-next').addEventListener('click',next);
+  document.getElementById('b-prev').addEventListener('click',prev);
+  var RATES=[1,1.2,1.4,1.6,0.9],ri=0;try{var r=+localStorage.getItem('nv-rate');if(RATES.indexOf(r)>=0)ri=RATES.indexOf(r);}catch(e){}
+  var rb=document.getElementById('b-rate');
+  function setRate(){au.playbackRate=au.defaultPlaybackRate=RATES[ri];try{au.preservesPitch=true;au.webkitPreservesPitch=true;}catch(e){}rb.textContent=RATES[ri].toFixed(1)+'×';}
+  setRate();au.addEventListener('loadedmetadata',setRate);
+  rb.addEventListener('click',function(){ri=(ri+1)%RATES.length;setRate();try{localStorage.setItem('nv-rate',RATES[ri])}catch(e){}});
+  var sheet=document.getElementById('sheet');
+  function closeSheet(){sheet.hidden=true;}
+  document.getElementById('b-list').addEventListener('click',function(){sheet.hidden=false;var c=list.querySelector('.cur');if(c)c.scrollIntoView({block:'center'});});
+  document.getElementById('s-close').addEventListener('click',closeSheet);
+  document.getElementById('c-go').addEventListener('click',function(){
+    document.getElementById('cover').hidden=true;
+    if(saved>20&&saved<V.duration-10)au.currentTime=saved;
+    play();tick();
+  });
+
+  // lock screen / control center
+  var MS=navigator.mediaSession,ART={'':'art/brief.png',mind:'art/mind.png',type:'art/type.png',layout:'art/layout.png',color:'art/color.png',practice:'art/practice.png'};
+  function abs(p){try{return new URL(p,location.href).href}catch(e){return p}}
+  function meta(i){if(!MS||!window.MediaMetadata)return;var c=CH[i];
+    try{MS.metadata=new MediaMetadata({title:i===0?'はじめに':c.title,artist:c.secName+(c.group?'・'+c.group:''),album:'デザインの教え',artwork:[{src:abs(ART[c.sec]||ART['']),sizes:'512x512',type:'image/png'}]});}catch(e){}}
+  var lastPS=0;
+  function posState(){if(!MS||!MS.setPositionState)return;var n=Date.now();if(n-lastPS<4000)return;lastPS=n;try{MS.setPositionState({duration:V.duration,playbackRate:au.playbackRate||1,position:Math.min(V.duration,au.currentTime||0)});}catch(e){}}
+  if(MS){[['play',play],['pause',function(){au.pause()}],['nexttrack',next],['previoustrack',prev],
+     ['seekforward',function(e){seekTo(au.currentTime+((e&&e.seekOffset)||15))}],['seekbackward',function(e){seekTo(au.currentTime-((e&&e.seekOffset)||15))}],
+     ['seekto',function(e){if(e&&e.seekTime!=null)seekTo(e.seekTime)}]].forEach(function(h){try{MS.setActionHandler(h[0],h[1])}catch(e){}});}
+
+  setPP();
+  var p0=locate(saved>20?saved:0);render(p0[0],-1);cap.textContent='';
+  document.addEventListener('keydown',function(e){if(e.target.tagName==='INPUT')return;if(e.code==='Space'){e.preventDefault();au.paused?play():au.pause();}if(e.key==='ArrowRight')next();if(e.key==='ArrowLeft')prev();});
+})();
+</script>
+
+</body></html>
