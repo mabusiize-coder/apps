@@ -159,16 +159,21 @@ def _gemini_once(text, voice=GEMINI_VOICE):
     body = json.dumps({"contents": [{"parts": [{"text": STYLE + text}]}],
                        "generationConfig": {"responseModalities": ["AUDIO"], "speechConfig": {
                            "voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voice}}}}}).encode()
-    last = None
+    last = None; errs = []
     for model in GEMINI_MODELS:
-        for attempt in range(3):
+        if last: errs.append(last); last = None
+        for attempt in range(4):
             req = urllib.request.Request(
                 f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
                 data=body, headers={"Content-Type": "application/json",
                                     "x-goog-api-key": os.environ["GEMINI_API_KEY"]})
             try:
                 r = json.load(urllib.request.urlopen(req, timeout=300))
-                part = r["candidates"][0]["content"]["parts"][0]["inlineData"]
+                c = r.get("candidates") or [{}]
+                if "content" not in c[0]:
+                    last = f"{model} no content (finishReason={c[0].get('finishReason')})"
+                    time.sleep(3); continue
+                part = c[0]["content"]["parts"][0]["inlineData"]
                 return np.frombuffer(base64.b64decode(part["data"]), np.int16).astype(np.float32), 24000
             except urllib.error.HTTPError as e:
                 last = f"{model} {e.code} {e.read()[:300]!r}"
@@ -177,7 +182,8 @@ def _gemini_once(text, voice=GEMINI_VOICE):
                 break
             except Exception as e:
                 last = f"{model} {e}"; time.sleep(5)
-    raise RuntimeError(last)
+    errs.append(last)
+    raise RuntimeError(" | ".join(map(str, errs)))
 
 def _looks_ok(x, sr, nchar):
     """無音だらけ・極端に短い/長い音声を弾く（日本語はおよそ5〜7文字/秒）"""
@@ -185,7 +191,10 @@ def _looks_ok(x, sr, nchar):
     if n < 50: return False
     rms = np.sqrt((x[:n * f].reshape(n, f) ** 2).mean(1))
     dur = len(x) / sr
-    return (rms < 150).mean() < 0.5 and 3.8 <= nchar / dur <= 10
+    sil, rate = (rms < 150).mean(), nchar / dur
+    ok = sil < 0.6 and 2.5 <= rate <= 10
+    if not ok: print(f"  check: silence={sil:.2f} chars/sec={rate:.1f} dur={dur:.1f}s", file=sys.stderr)
+    return ok
 
 def _silence_ends(x, sr, min_len=0.22):
     f = int(sr * 0.02); n = len(x) // f
