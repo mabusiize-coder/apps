@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="毎日の講義">
+<meta name="theme-color" content="#ffffff">
+<link rel="apple-touch-icon" href="art/icon.png">
+<title>毎日の講義</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap">
+<style>
+:root{color-scheme:light;--paper:#fff;--ink:#141414;--sub:#555;--faint:#999;--rule:#DCDCDC;--cream:#F4EFE6;
+  --design:#E8452C;--video:#1F4FD8;--bk:var(--design);
+  --f-en:"Archivo","Helvetica Neue",Arial,sans-serif;--f-jp:"Noto Sans JP","Hiragino Sans",system-ui,sans-serif;
+  --gut:max(22px,env(safe-area-inset-left,0px))}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-jp);font-size:16px;line-height:2;letter-spacing:.04em;-webkit-font-smoothing:antialiased;padding-top:env(safe-area-inset-top,0px);overflow-x:hidden}
+body.listening{padding-bottom:150px}
+[hidden]{display:none!important}
+a{color:inherit}
+.in{max-width:660px;margin:0 auto;padding:0 var(--gut)}
+h1,h2,h3{word-break:auto-phrase}
+p{overflow-wrap:anywhere;margin:0 0 1em}
+.en{font-family:var(--f-en)}
+.runhead{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--ink);padding:14px 0 8px;font:800 12px/1 var(--f-en);letter-spacing:.08em}
+.runhead a{text-decoration:none}
+.tabs{display:flex;gap:6px}
+.tabs a{border:1.5px solid var(--ink);padding:5px 10px 4px;font:700 12px/1 var(--f-jp);letter-spacing:.06em}
+.tabs a.on{background:var(--ink);color:#fff}
+
+/* 表紙 */
+.cover{padding:26px 0 8px}
+.bkline{display:flex;align-items:center;gap:10px;font:700 13px/1.4 var(--f-jp);letter-spacing:.12em}
+.bkline .chip{background:var(--bk);color:#fff;padding:6px 10px 5px;font:800 12px/1 var(--f-en);letter-spacing:.1em}
+.no{font:900 clamp(64px,22vw,120px)/0.9 var(--f-en);letter-spacing:-.02em;margin:18px 0 4px;color:var(--bk)}
+.no small{font-size:.28em;color:var(--ink);letter-spacing:.06em;margin-left:6px}
+.kicker{font-weight:700;font-size:13px;letter-spacing:.16em;color:var(--sub);margin-top:6px}
+h1.ttl{font-weight:900;font-size:clamp(26px,7.6vw,38px);line-height:1.45;letter-spacing:.06em;margin:6px 0 18px}
+.lede{font-weight:500;font-size:15px;line-height:2}
+.listen{display:flex;align-items:center;gap:14px;margin:22px 0 6px;border:2px solid var(--ink);padding:12px 14px}
+.listen b{display:block;font-size:15px;letter-spacing:.08em}
+.listen span{display:block;font-size:12px;color:var(--sub);line-height:1.6}
+.go{margin-left:auto;display:flex;align-items:center;gap:6px;background:var(--ink);color:#fff;border:0;padding:12px 18px;font:700 15px/1 var(--f-jp);letter-spacing:.1em;cursor:pointer;flex:none}
+.go svg{width:14px;height:14px}
+
+/* 本文 */
+.toc{margin:26px 0 0;border-top:1px solid var(--ink)}
+.toc a{display:grid;grid-template-columns:34px 1fr auto;gap:8px;padding:9px 0;border-bottom:1px solid var(--rule);text-decoration:none;font-size:14px;line-height:1.6}
+.toc a i{font:800 13px/1.6 var(--f-en);font-style:normal;color:var(--bk)}
+.toc a em{font:500 12px/1.6 var(--f-en);font-style:normal;color:var(--faint)}
+section.blk{padding:34px 0 6px;border-top:1px solid var(--ink);margin-top:38px;scroll-margin-top:20px}
+section.blk.speaking h2::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--bk);margin-right:10px;vertical-align:.15em;animation:pulse 1.2s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.bh{font:800 12px/1 var(--f-en);letter-spacing:.14em;color:var(--bk)}
+h2{font-weight:900;font-size:clamp(21px,5.8vw,27px);line-height:1.55;letter-spacing:.05em;margin:8px 0 18px}
+figure{margin:6px 0 26px}
+figure .fg{background:var(--cream);border:1.5px solid var(--ink)}
+figure svg{display:block;width:100%;height:auto}
+figcaption{font-size:12.5px;line-height:1.7;color:var(--sub);margin-top:8px;padding-left:12px;border-left:3px solid var(--bk)}
+.term{text-decoration:underline dotted #999;text-underline-offset:4px;cursor:pointer}
+.tbox{display:block;background:var(--cream);font-size:13px;line-height:1.8;padding:8px 12px;margin:6px 0}
+.review{background:var(--cream);padding:18px 18px 8px;margin-top:30px}
+.review h3,.keys h3,.prac h3,.books h3{font:800 12px/1 var(--f-en);letter-spacing:.14em;margin:0 0 12px}
+.review dl{margin:0}.review dt{font-weight:700;font-size:15px;line-height:1.7}
+.review dd{margin:6px 0 16px;font-size:14px;line-height:1.8}
+.review dd button{border:1.5px solid var(--ink);background:#fff;font:700 12px/1 var(--f-jp);padding:6px 10px;cursor:pointer}
+.keys{margin-top:40px;border:2px solid var(--ink);padding:20px 18px 10px}
+.keys ol{margin:0;padding:0;list-style:none;counter-reset:k}
+.keys li{counter-increment:k;display:grid;grid-template-columns:34px 1fr;font-weight:700;font-size:15.5px;line-height:1.75;margin-bottom:14px}
+.keys li::before{content:counter(k);font:900 24px/1 var(--f-en);color:var(--bk)}
+.prac{margin-top:22px;background:var(--bk);color:#fff;padding:20px 18px 6px}
+.prac h4{font-size:19px;margin:0 0 10px;line-height:1.5}
+.prac p{font-size:14.5px;line-height:1.95}
+.prac label{display:flex;gap:10px;align-items:center;font-weight:700;font-size:14px;margin:4px 0 16px;cursor:pointer}
+.prac input{width:20px;height:20px;accent-color:#141414}
+.books{margin-top:30px}
+.books div{border-top:1px solid var(--rule);padding:10px 0}
+.books b{font-size:15px}.books span{font-size:12.5px;color:var(--sub);display:block;line-height:1.7}
+
+/* 目次（全体） */
+.map{padding:28px 0 40px}
+.prog{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0 26px}
+.prog div{border:1.5px solid var(--ink);padding:12px}
+.prog b{display:block;font-size:13px;letter-spacing:.1em}
+.prog .n{font:900 30px/1.1 var(--f-en)}
+.prog .bar{height:6px;background:var(--rule);margin-top:8px}.prog .bar i{display:block;height:100%}
+.book{margin-top:30px}
+.book h2{display:flex;align-items:baseline;gap:10px;margin:0 0 4px}
+.book h2 .chip{font:800 12px/1 var(--f-en);color:#fff;padding:6px 9px 5px;letter-spacing:.1em}
+.part{font:700 12.5px/1.6 var(--f-jp);color:var(--sub);margin:18px 0 4px;letter-spacing:.1em}
+.ls a,.ls div{display:grid;grid-template-columns:36px 1fr auto;gap:6px;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--rule);text-decoration:none;font-size:14.5px;line-height:1.6}
+.ls i{font:800 13px/1 var(--f-en);font-style:normal}
+.ls em{font-style:normal;font-size:11px;color:var(--faint)}
+.ls div{color:var(--faint)}
+.ls .cur{font-weight:700}
+.ls .next em{color:var(--ink);font-weight:700}
+.foot{font-size:12px;color:var(--faint);padding:30px 0 60px;line-height:1.8}
+
+/* プレイヤー */
+.player{position:fixed;left:0;right:0;bottom:0;background:var(--ink);color:#fff;padding:12px var(--gut) calc(12px + env(safe-area-inset-bottom,0px));z-index:9}
+.player .top{display:flex;align-items:center;gap:10px;max-width:660px;margin:0 auto}
+.pl-t{flex:1;min-width:0}
+.pl-t small{display:block;font:700 11px/1.4 var(--f-en);letter-spacing:.1em;color:#bbb}
+.pl-t div{font-weight:700;font-size:14px;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player button{background:none;border:0;color:#fff;cursor:pointer;padding:6px;font:700 13px/1 var(--f-en)}
+.player button svg{width:22px;height:22px;display:block}
+.player .pp{background:#fff;color:var(--ink);border-radius:50%;width:46px;height:46px;display:grid;place-items:center}
+.pbar{max-width:660px;margin:10px auto 0;height:4px;background:#444;position:relative;cursor:pointer}
+.pbar i{position:absolute;left:0;top:0;bottom:0;background:var(--bk)}
+.ptime{max-width:660px;margin:4px auto 0;display:flex;justify-content:space-between;font:500 11px/1 var(--f-en);color:#aaa}
+.err{color:#c00;font-size:13px}
+</style>
+</head>
+<body>
+<header class="in"><div class="runhead"><a href="./" class="en">DAILY LESSONS — DESIGN &amp; FILM</a>
+  <nav class="tabs"><a href="./" id="t-today">今日</a><a href="?map" id="t-map">目次</a></nav></div></header>
+<main id="main" class="in"><p style="padding:40px 0;color:#999">読み込み中…</p></main>
+<div class="player" id="player" hidden>
+  <div class="top">
+    <button id="pl-prev" aria-label="前の章"><svg viewBox="0 0 24 24"><path d="M6 5h2v14H6zM20 5v14L9 12z" fill="currentColor"/></svg></button>
+    <button class="pp" id="pl-pp" aria-label="再生"></button>
+    <button id="pl-next" aria-label="次の章"><svg viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM4 5v14l11-7z" fill="currentColor"/></svg></button>
+    <div class="pl-t"><small id="pl-sec"></small><div id="pl-ttl"></div></div>
+    <button id="pl-rate">1.0×</button>
+    <button id="pl-x" aria-label="閉じる"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4"/></svg></button>
+  </div>
+  <div class="pbar" id="pl-bar"><i></i></div>
+  <div class="ptime"><span id="pl-cur">0:00</span><span id="pl-dur">0:00</span></div>
+</div>
+<script>
+(function(){
+var M=document.getElementById('main'), Q=new URLSearchParams(location.search);
+var V='?v='+Math.floor(Date.now()/600000);  // 10分ごとに新しいデータを読む
+function j(u){return fetch(u+V).then(function(r){if(!r.ok)throw new Error(u+' '+r.status);return r.json();});}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function mmss(t){t=Math.max(0,Math.round(t||0));return Math.floor(t/60)+':'+('0'+t%60).slice(-2);}
+function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v);}catch(e){return null;}}
+var BAD=/<script|<foreignObject|<image|<iframe|<a[\s>]|href|\son\w+\s*=|url\(|javascript:|<style/i;
+function svg(s){if(!s||BAD.test(s))return '';return s.trim().indexOf('<svg')===0?s:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340">'+s+'</svg>';}
+function paras(t){return String(t||'').split(/\n+/).filter(Boolean).map(function(p){return '<p>'+esc(p)+'</p>';}).join('');}
+
+Promise.all([j('curriculum.json'),j('lessons/index.json').catch(function(){return[];})]).then(function(r){
+  var C=r[0], IDX=r[1];
+  if(Q.has('map')||!IDX.length){document.getElementById('t-map').className='on';return showMap(C,IDX);}
+  document.getElementById('t-today').className=Q.get('n')?'':'on';
+  var n=+Q.get('n')||IDX[IDX.length-1].no;
+  return j('lessons/'+('00'+n).slice(-3)+'.json').then(function(L){showLesson(C,IDX,L);});
+}).catch(function(e){M.innerHTML='<p class="err" style="padding:40px 0">読み込めませんでした（'+esc(e.message)+'）。少し待って再読み込みしてください。</p>';});
+
+function showMap(C,IDX){
+  var done={};IDX.forEach(function(x){done[x.no]=x;});
+  var last=IDX.length?IDX[IDX.length-1].no:0, h='<div class="map">';
+  h+='<h1 class="ttl" style="margin-top:20px">2冊の本を、1日1講ずつ</h1><p class="lede">デザインの本と映像の本を、1日おきに交互に進みます。毎朝5時台に新しい講が届きます。1講は約8〜11分。画面を消しても聞けます。</p><div class="prog">';
+  ['design','video'].forEach(function(b){var B=C.books[b],tot=C.lessons.filter(function(x){return x.book===b;}).length,
+    d=IDX.filter(function(x){return x.book===b;}).length;
+    h+='<div><b>'+esc(B.name)+'</b><span class="n en" style="color:var(--'+b+')">'+d+'</span><span class="en"> / '+tot+'</span><div class="bar"><i style="width:'+(d/tot*100)+'%;background:var(--'+b+')"></i></div></div>';});
+  h+='</div>';
+  ['design','video'].forEach(function(b){var B=C.books[b],part='';
+    h+='<div class="book"><h2><span class="chip" style="background:var(--'+b+')">'+B.en+'</span>'+esc(B.name)+'</h2><div style="font-size:13px;color:var(--sub)">'+esc(B.sub)+'</div><div class="ls">';
+    C.lessons.filter(function(x){return x.book===b;}).forEach(function(x){
+      if(x.part!==part){part=x.part;h+='<div class="part" style="display:block;border:0;color:var(--sub)">'+esc(part)+'</div>';}
+      var num='<i class="en" style="color:var(--'+b+')">'+x.n+'</i>';
+      if(done[x.no])h+='<a href="?n='+x.no+'" class="'+(x.no===last?'cur':'')+'">'+num+'<span>'+esc(x.title)+'</span><em>'+(store('learn-done-'+x.no)?'課題済 ':'')+mmss(done[x.no].dur)+'</em></a>';
+      else h+='<div class="'+(x.no===last+1?'next':'')+'">'+num+'<span>'+esc(x.title)+'</span><em>'+(x.no===last+1?'次回':'')+'</em></div>';});
+    h+='</div></div>';});
+  M.innerHTML=h+'</div><div class="foot">講義はAIが書いています。紹介する本や数字は確かめていますが、気になる点は原典でどうぞ。</div>';
+}
+
+function showLesson(C,IDX,L){
+  var B=C.books[L.book];document.documentElement.style.setProperty('--bk','var(--'+L.book+')');
+  document.title='第'+L.n+'講 '+L.title+'｜'+B.name;
+  var h='<div class="cover"><div class="bkline"><span class="chip">'+B.en+'</span>'+esc(B.name)+' ・ '+esc(L.part||'')+'</div>';
+  h+='<div class="no">'+('0'+L.n).slice(-2)+'<small>/ 30</small></div>';
+  if(L.kicker)h+='<div class="kicker">'+esc(L.kicker)+'</div>';
+  h+='<h1 class="ttl">'+esc(L.title)+'</h1><div class="lede">'+paras(L.lead)+'</div>';
+  if(L.audio)h+='<div class="listen"><div><b>聞いて学ぶ</b><span>約'+Math.round(L.audio.dur/60)+'分。画面を消しても続きます</span><span id="lsn-meta" class="err" hidden></span></div><button class="go" id="go"><svg viewBox="0 0 16 16"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>聞く</button></div>';
+  h+='<nav class="toc">';
+  L.sections.forEach(function(s,i){h+='<a href="#s'+i+'"><i>'+('0'+(i+1)).slice(-2)+'</i><span>'+esc(s.h)+'</span><em></em></a>';});
+  h+='</nav></div>';
+  if(L.review&&L.review.length){h+='<div class="review" data-ch="おさらい"><h3 class="en">REVIEW — おさらい</h3><dl>';
+    L.review.forEach(function(r){h+='<dt>'+esc(r.q)+'</dt><dd><button type="button">答えを見る</button><span hidden>'+esc(r.a)+'</span></dd>';});h+='</dl></div>';}
+  L.sections.forEach(function(s,i){
+    h+='<section class="blk" id="s'+i+'" data-ch="'+esc(s.h)+'"><div class="bh en">'+('0'+(i+1)).slice(-2)+'</div><h2>'+esc(s.h)+'</h2>';
+    var f=s.fig&&svg(s.fig.svg), body=paras(s.body), ps=body.split('</p>');
+    // 図は最初の段落のあとに置く
+    if(f){ps.splice(1,0,'<figure><div class="fg">'+f+'</div>'+(s.fig.cap?'<figcaption>'+esc(s.fig.cap)+'</figcaption>':'')+'</figure>');body=ps.join('</p>');}
+    h+=body+'</section>';});
+  h+='<div class="keys" data-ch="今日の要点"><h3 class="en">KEY POINTS — 今日の要点</h3><ol>'+L.keys.map(function(k){return '<li>'+esc(k)+'</li>';}).join('')+'</ol></div>';
+  var P=L.practice||{};
+  h+='<div class="prac" data-ch="今日の課題"><h3 class="en">PRACTICE — 今日の課題</h3><h4>'+esc(P.title)+'</h4>'+paras(P.body)+'<label><input type="checkbox" id="done">やった</label></div>';
+  if(L.books&&L.books.length){h+='<div class="books"><h3 class="en">BOOKS — もっと深く</h3>';L.books.forEach(function(b){h+='<div><b>『'+esc(b.title)+'』</b> '+esc(b.who)+'<span>'+esc(b.why)+'</span></div>';});h+='</div>';}
+  // 前後の講
+  var i=IDX.findIndex(function(x){return x.no===L.no;}),pv=IDX[i-1],nx=IDX[i+1],nextPlan=C.lessons[L.no];
+  h+='<div class="foot" style="display:flex;justify-content:space-between;gap:12px">'+(pv?'<a href="?n='+pv.no+'">← '+esc(C.books[pv.book].name)+' 第'+pv.n+'講</a>':'<span></span>')+
+     (nx?'<a href="?n='+nx.no+'">'+esc(C.books[nx.book].name)+' 第'+nx.n+'講 →</a>':(nextPlan?'<span>次回：'+esc(C.books[nextPlan.book].name)+'「'+esc(nextPlan.title)+'」</span>':''))+'</div>';
+  M.innerHTML=h;
+  // 用語：本文の最初の出現をタップで解説
+  (L.terms||[]).forEach(function(t){if(!t.w||t.w.length<2)return;
+    var ps=M.querySelectorAll('.blk p,.lede p');for(var k=0;k<ps.length;k++){var p=ps[k],x=p.innerHTML.indexOf(esc(t.w));
+      if(x>=0){p.innerHTML=p.innerHTML.slice(0,x)+'<span class="term" data-d="'+esc(t.d)+'">'+esc(t.w)+'</span>'+p.innerHTML.slice(x+esc(t.w).length);break;}}});
+  M.addEventListener('click',function(e){var t=e.target;
+    if(t.classList.contains('term')){var nx=t.nextElementSibling;if(nx&&nx.classList.contains('tbox'))nx.remove();else t.insertAdjacentHTML('afterend','<span class="tbox">'+esc(t.dataset.d)+'</span>');}
+    if(t.tagName==='BUTTON'&&t.parentNode.tagName==='DD'){t.nextElementSibling.hidden=false;t.remove();}});
+  var cb=document.getElementById('done');cb.checked=!!store('learn-done-'+L.no);
+  cb.addEventListener('change',function(){store('learn-done-'+L.no,cb.checked?'1':'');});
+  if(location.hash){var el=document.querySelector(location.hash);el&&el.scrollIntoView();}
+  if(L.audio)player(B,L);
+}
+
+function player(B,L){
+  var CH=L.audio.chapters,au=new Audio();au.preload='metadata';au.src='lessons/'+L.audio.src+V;
+  var pl=document.getElementById('player'),pp=document.getElementById('pl-pp'),bar=document.querySelector('#pl-bar i'),meta=document.getElementById('lsn-meta');
+  var PLAY='<svg viewBox="0 0 16 16"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>',PAUSE='<svg viewBox="0 0 16 16"><path d="M3.5 2.5h3v11h-3zM9.5 2.5h3v11h-3z" fill="currentColor"/></svg>';
+  var RATES=[1,1.2,1.4,1.6,0.9],ri=Math.max(0,RATES.indexOf(+store('learn-rate'))),PK='learn-pos-'+L.no,ci=-1,lastEl=null;
+  var blocks={};document.querySelectorAll('[data-ch]').forEach(function(e){blocks[e.dataset.ch]=e;});
+  pp.innerHTML=PLAY;document.getElementById('pl-dur').textContent=mmss(L.audio.dur);
+  function idx(t){var i=0;CH.forEach(function(c,k){if(c.t<=t+0.05)i=k;});return i;}
+  function show(scroll){var n=idx(au.currentTime);bar.style.width=(au.currentTime/(au.duration||L.audio.dur)*100)+'%';
+    document.getElementById('pl-cur').textContent=mmss(au.currentTime);
+    if(n===ci&&!scroll)return;ci=n;var c=CH[n];
+    document.getElementById('pl-sec').textContent=B.en+' '+L.n+' — '+(n+1)+' / '+CH.length;
+    document.getElementById('pl-ttl').textContent=c.title;
+    if(lastEl)lastEl.classList.remove('speaking');lastEl=blocks[c.title]||null;
+    if(lastEl){lastEl.classList.add('speaking');if(scroll&&!document.hidden)window.scrollTo({top:lastEl.getBoundingClientRect().top+scrollY-20,behavior:'smooth'});}
+    if('mediaSession' in navigator)try{navigator.mediaSession.metadata=new MediaMetadata({title:c.title,artist:B.name+' 第'+L.n+'講',album:L.title,artwork:[{src:'art/'+L.book+'.png',sizes:'512x512',type:'image/png'}]});}catch(e){}}
+  function setPP(){pp.innerHTML=au.paused?PLAY:PAUSE;}
+  function play(){pl.hidden=false;document.body.classList.add('listening');au.playbackRate=RATES[ri];
+    var p=au.play();if(p&&p.catch)p.catch(function(e){meta.hidden=false;meta.textContent='再生できませんでした。もう一度押してください';});}
+  function go(n){n=Math.max(0,Math.min(CH.length-1,n));au.currentTime=CH[n].t+0.01;show(true);}
+  au.addEventListener('play',setPP);au.addEventListener('pause',setPP);
+  au.addEventListener('timeupdate',function(){show(false);if(Math.floor(au.currentTime)%5===0)store(PK,au.currentTime);});
+  au.addEventListener('ended',function(){store(PK,'0');setPP();});
+  au.addEventListener('error',function(){meta.hidden=false;meta.textContent='音声を読み込めませんでした';});
+  document.getElementById('go').addEventListener('click',function(){var s=+store(PK)||0;if(au.currentTime<1&&s>5)au.currentTime=Math.max(0,s-3);play();show(true);});
+  pp.addEventListener('click',function(){au.paused?play():au.pause();});
+  document.getElementById('pl-prev').addEventListener('click',function(){var n=idx(au.currentTime);go(au.currentTime-CH[n].t>3?n:n-1);});
+  document.getElementById('pl-next').addEventListener('click',function(){go(idx(au.currentTime)+1);});
+  document.getElementById('pl-x').addEventListener('click',function(){au.pause();pl.hidden=true;document.body.classList.remove('listening');});
+  document.getElementById('pl-bar').addEventListener('click',function(e){var r=this.getBoundingClientRect();au.currentTime=(e.clientX-r.left)/r.width*(au.duration||L.audio.dur);show(true);});
+  var rb=document.getElementById('pl-rate');function setRate(){rb.textContent=RATES[ri].toFixed(1)+'×';au.playbackRate=RATES[ri];}setRate();
+  rb.addEventListener('click',function(){ri=(ri+1)%RATES.length;setRate();store('learn-rate',RATES[ri]);});
+  if('mediaSession' in navigator){var ms=navigator.mediaSession;try{ms.setActionHandler('play',play);ms.setActionHandler('pause',function(){au.pause();});
+    ms.setActionHandler('previoustrack',function(){document.getElementById('pl-prev').click();});
+    ms.setActionHandler('nexttrack',function(){document.getElementById('pl-next').click();});
+    ms.setActionHandler('seekbackward',function(){au.currentTime=Math.max(0,au.currentTime-15);});
+    ms.setActionHandler('seekforward',function(){au.currentTime+=15;});
+    ms.setActionHandler('seekto',function(e){au.currentTime=e.seekTime;});}catch(e){}}
+}
+})();
+</script>
+</body>
+</html>

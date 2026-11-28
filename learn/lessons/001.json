@@ -1,0 +1,134 @@
+{
+ "no": 1,
+ "book": "design",
+ "n": 1,
+ "part": "第1部 デザインの考え方",
+ "date": "2026-11-28",
+ "title": "デザインは「伝わる順番」を決める仕事",
+ "kicker": "色や書体を選ぶ前に、やることがある",
+ "lead": "デザインがうまい人と、そうでない人。差はどこでつくのだろう。センスだと思われがちだけれど、実はもっと手前で決まっている。作り始める前に、何を一番伝えるかを決めているかどうか。今日はこの本の出発点として、デザインとは何をする仕事なのかを考えてみたい。ここが分かると、このあと学ぶ文字や色や余白が、全部ひとつの目的のための道具に見えてくる。",
+ "sections": [
+  {
+   "h": "最初の3秒で、人は読むかどうかを決める",
+   "body": "ポスターでも、Webページでも、YouTubeのサムネイルでも同じだ。見る人は、こちらの作品をじっくり見てはくれない。最初の数秒で、自分に関係があるかどうかを判断する。関係がないと思えば、もう次へ行ってしまう。\nだからデザインの仕事は、飾ることではない。見る人の目が、どこから入って、どこを通って、どこで止まるか。その順番を決めることだ。いわば、展示会の順路を作るようなものだと思う。入口があって、見てほしい作品の前で自然に足が止まる。\n素人の作品は、たいてい全部を目立たせようとする。全部を大きく、全部を赤くする。すると不思議なことに、どこも目に入らなくなる。全員が大声で話している部屋で、誰の声も聞き取れないのと同じだ。",
+   "fig": {
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 340\" font-family=\"Noto Sans JP,sans-serif\">\n<rect width=\"600\" height=\"340\" fill=\"#F4EFE6\"/>\n<g transform=\"translate(40,30)\">\n<rect width=\"230\" height=\"250\" fill=\"#fff\" stroke=\"#141414\" stroke-width=\"3\"/>\n<rect x=\"18\" y=\"20\" width=\"194\" height=\"34\" fill=\"#E8452C\"/><rect x=\"18\" y=\"66\" width=\"150\" height=\"30\" fill=\"#141414\"/>\n<rect x=\"18\" y=\"108\" width=\"194\" height=\"30\" fill=\"#1F4FD8\"/><rect x=\"18\" y=\"150\" width=\"120\" height=\"30\" fill=\"#F4C744\"/>\n<rect x=\"18\" y=\"192\" width=\"194\" height=\"34\" fill=\"#E8452C\"/>\n<text x=\"115\" y=\"285\" font-size=\"20\" font-weight=\"700\" text-anchor=\"middle\" fill=\"#141414\">全部が主役</text>\n<text x=\"115\" y=\"308\" font-size=\"15\" text-anchor=\"middle\" fill=\"#555\">→ どこも見られない</text></g>\n<g transform=\"translate(330,30)\">\n<rect width=\"230\" height=\"250\" fill=\"#fff\" stroke=\"#141414\" stroke-width=\"3\"/>\n<rect x=\"18\" y=\"24\" width=\"194\" height=\"110\" fill=\"#E8452C\"/>\n<rect x=\"18\" y=\"152\" width=\"150\" height=\"16\" fill=\"#141414\"/><rect x=\"18\" y=\"178\" width=\"110\" height=\"10\" fill=\"#C9C2B6\"/>\n<rect x=\"18\" y=\"196\" width=\"130\" height=\"10\" fill=\"#C9C2B6\"/><rect x=\"18\" y=\"214\" width=\"90\" height=\"10\" fill=\"#C9C2B6\"/>\n<text x=\"115\" y=\"285\" font-size=\"20\" font-weight=\"700\" text-anchor=\"middle\" fill=\"#141414\">主役はひとつ</text>\n<text x=\"115\" y=\"308\" font-size=\"15\" text-anchor=\"middle\" fill=\"#555\">→ 順番に読まれる</text></g>\n</svg>",
+    "cap": "全部を強くすると、どこも見られない。主役をひとつに絞ると、目は順番に動く"
+   }
+  },
+  {
+   "h": "作る前に、一行を書く",
+   "body": "では、何を主役にすればいいのか。それを決めるために、プロは作る前に一行の文章を書く。「誰に、何を伝えて、どうしてほしいか」。たとえば「ゴルフ好きの30代に、100切りの近道があると伝えて、動画を再生してほしい」。これだけでいい。\nこの一行が書けないなら、まだ作り始める段階ではない。目的があいまいなまま色や書体を選ぶと、あとで必ず迷う。どの案がいいのか、比べる基準がないからだ。\n逆に一行が決まっていれば、迷ったときにそこへ戻れる。この写真は一行に役立っているか。この飾りは必要か。一行が、判断の物差しになる。クライアントと意見が割れたときも、好みの話ではなく、この一行に合っているかどうかで話ができる。これは仕事として、とても大きい。",
+   "fig": {
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 340\" font-family=\"Noto Sans JP,sans-serif\">\n<rect width=\"600\" height=\"340\" fill=\"#F4EFE6\"/>\n<text x=\"300\" y=\"48\" font-size=\"20\" font-weight=\"700\" text-anchor=\"middle\" fill=\"#141414\">作る前に書く「一行」</text>\n<g font-size=\"17\" text-anchor=\"middle\">\n<rect x=\"30\" y=\"80\" width=\"160\" height=\"96\" fill=\"#fff\" stroke=\"#141414\" stroke-width=\"3\"/>\n<text x=\"110\" y=\"118\" font-weight=\"700\" fill=\"#E8452C\">誰に</text><text x=\"110\" y=\"150\" font-size=\"14\" fill=\"#141414\">ゴルフ好きの30代に</text>\n<text x=\"210\" y=\"138\" font-size=\"28\" font-weight=\"700\" fill=\"#141414\">＋</text>\n<rect x=\"230\" y=\"80\" width=\"160\" height=\"96\" fill=\"#fff\" stroke=\"#141414\" stroke-width=\"3\"/>\n<text x=\"310\" y=\"118\" font-weight=\"700\" fill=\"#E8452C\">何を</text><text x=\"310\" y=\"150\" font-size=\"14\" fill=\"#141414\">100切りの近道を</text>\n<text x=\"410\" y=\"138\" font-size=\"28\" font-weight=\"700\" fill=\"#141414\">＋</text>\n<rect x=\"430\" y=\"80\" width=\"140\" height=\"96\" fill=\"#fff\" stroke=\"#141414\" stroke-width=\"3\"/>\n<text x=\"500\" y=\"118\" font-weight=\"700\" fill=\"#E8452C\">どうしてほしい</text><text x=\"500\" y=\"150\" font-size=\"14\" fill=\"#141414\">再生してほしい</text></g>\n<path d=\"M300 196 v40\" stroke=\"#141414\" stroke-width=\"3\"/><polygon points=\"290,232 310,232 300,248\" fill=\"#141414\"/>\n<rect x=\"90\" y=\"262\" width=\"420\" height=\"50\" fill=\"#141414\"/>\n<text x=\"300\" y=\"294\" font-size=\"17\" font-weight=\"700\" text-anchor=\"middle\" fill=\"#fff\">迷ったら、この一行に戻る＝判断の物差し</text>\n</svg>",
+    "cap": "誰に＋何を＋どうしてほしい。この一行が、すべての判断の基準になる"
+   }
+  },
+  {
+   "h": "見る場所と時間から逆算する",
+   "body": "一行を書いたら、もうひとつ想像してほしいことがある。この作品は、どこで、どれくらいの時間、見られるのか。\nYouTubeのサムネイルは、スマホの一覧の中で、親指くらいの大きさで、1秒ほどしか見られない。そこで伝えられるのは、せいぜい一つだ。駅のポスターは、歩きながら遠くから3秒くらい。二つまでなら届く。Webページは手元でスクロールしながら読まれるので、見出し、小見出し、本文と、3段か4段の階層を作れる。\nつまり、同じ内容でも、見られる場所によって削る量が変わる。サムネイルにWebページと同じ量の情報を入れると、どれも読めない。プロは作る前に、実際の大きさで見たときの姿を思い浮かべる。デザインをしている途中でも、ときどき実際のサイズに縮めて確かめる。大きなモニターの上でうまく見えても、それは作っている人だけが見る姿だからだ。",
+   "fig": {
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 340\" font-family=\"Noto Sans JP,sans-serif\">\n<rect width=\"600\" height=\"340\" fill=\"#F4EFE6\"/>\n<text x=\"300\" y=\"44\" font-size=\"20\" font-weight=\"700\" text-anchor=\"middle\" fill=\"#141414\">見る場所と時間で、段数が変わる</text>\n<g text-anchor=\"middle\" fill=\"#141414\">\n<rect x=\"30\" y=\"74\" width=\"170\" height=\"190\" fill=\"#fff\" stroke=\"#141414\" stroke-width=\"3\"/>\n<rect x=\"70\" y=\"96\" width=\"90\" height=\"56\" fill=\"#E8452C\"/>\n<text x=\"115\" y=\"186\" font-size=\"17\" font-weight=\"700\">サムネイル</text><text x=\"115\" y=\"212\" font-size=\"14\">約1秒・親指サイズ</text><text x=\"115\" y=\"240\" font-size=\"15\" font-weight=\"700\" fill=\"#E8452C\">伝わるのは1つ</text>\n<rect x=\"215\" y=\"74\" width=\"170\" height=\"190\" fill=\"#fff\" stroke=\"#141414\" stroke-width=\"3\"/>\n<rect x=\"262\" y=\"92\" width=\"76\" height=\"66\" fill=\"#1F4FD8\"/><rect x=\"262\" y=\"164\" width=\"50\" height=\"8\" fill=\"#141414\"/>\n<text x=\"300\" y=\"196\" font-size=\"17\" font-weight=\"700\">駅のポスター</text><text x=\"300\" y=\"222\" font-size=\"14\">約3秒・遠くから</text><text x=\"300\" y=\"250\" font-size=\"15\" font-weight=\"700\" fill=\"#E8452C\">2つまで</text>\n<rect x=\"400\" y=\"74\" width=\"170\" height=\"190\" fill=\"#fff\" stroke=\"#141414\" stroke-width=\"3\"/>\n<rect x=\"430\" y=\"92\" width=\"110\" height=\"20\" fill=\"#141414\"/><rect x=\"430\" y=\"120\" width=\"110\" height=\"7\" fill=\"#C9C2B6\"/><rect x=\"430\" y=\"133\" width=\"110\" height=\"7\" fill=\"#C9C2B6\"/><rect x=\"430\" y=\"146\" width=\"80\" height=\"7\" fill=\"#C9C2B6\"/><rect x=\"430\" y=\"159\" width=\"110\" height=\"7\" fill=\"#C9C2B6\"/>\n<text x=\"485\" y=\"196\" font-size=\"17\" font-weight=\"700\">Webページ</text><text x=\"485\" y=\"222\" font-size=\"14\">数十秒〜・手元で</text><text x=\"485\" y=\"250\" font-size=\"15\" font-weight=\"700\" fill=\"#E8452C\">3〜4段の階層</text></g>\n<text x=\"300\" y=\"306\" font-size=\"14\" text-anchor=\"middle\" fill=\"#555\">時間が短く、画面が小さいほど、主役以外を大胆に削る</text>\n</svg>",
+    "cap": "見られる時間が短く、画面が小さいほど、伝えられる数は減る"
+   }
+  },
+  {
+   "h": "1位は、ひとつだけ",
+   "body": "一行が決まったら、画面の中の要素に順位をつける。1位、2位、3位。そして、それ以外。ここで大事なのは、1位をひとつだけにすることだ。\n順位は、強さで表す。大きさ、色の濃さ、太さ、置く位置。1位は一番大きく、一番強い色にする。2位は1位よりはっきり弱くする。この差は、思っているより大きくつけたほうがいい。1位と2位が同じくらいの強さだと、目はどちらを先に見ればいいのか迷ってしまう。\n順位をつけることは、何かをあきらめることでもある。伝えたいことが5つあっても、最初に伝わるのはひとつだけ。残りは、見る人が興味を持ってくれたあとで読まれる。ちょっとさびしいけれど、そう割り切ったほうが、結果としてたくさん伝わる。",
+   "fig": {
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 340\" font-family=\"Noto Sans JP,sans-serif\">\n<rect width=\"600\" height=\"340\" fill=\"#F4EFE6\"/>\n<text x=\"300\" y=\"44\" font-size=\"20\" font-weight=\"700\" text-anchor=\"middle\" fill=\"#141414\">強さに順位をつける</text>\n<g font-size=\"16\" font-weight=\"700\" fill=\"#141414\">\n<text x=\"40\" y=\"112\">1位</text><rect x=\"100\" y=\"72\" width=\"440\" height=\"60\" fill=\"#E8452C\"/>\n<text x=\"40\" y=\"180\">2位</text><rect x=\"100\" y=\"156\" width=\"260\" height=\"34\" fill=\"#141414\"/>\n<text x=\"40\" y=\"232\">3位</text><rect x=\"100\" y=\"214\" width=\"170\" height=\"24\" fill=\"#555\"/>\n<text x=\"40\" y=\"282\">ほか</text><rect x=\"100\" y=\"268\" width=\"120\" height=\"14\" fill=\"#C9C2B6\"/><rect x=\"230\" y=\"268\" width=\"90\" height=\"14\" fill=\"#C9C2B6\"/><rect x=\"330\" y=\"268\" width=\"110\" height=\"14\" fill=\"#C9C2B6\"/></g>\n<text x=\"300\" y=\"320\" font-size=\"14\" text-anchor=\"middle\" fill=\"#555\">1位と2位の差は、はっきり大きく。似た強さが2つあると目が迷う</text>\n</svg>",
+    "cap": "1位を一番強く。2位との差ははっきり大きくつける"
+   }
+  },
+  {
+   "h": "足すより、削る",
+   "body": "もうひとつ、素人とプロを分ける習慣がある。うまくいかないとき、素人は足す。飾りを足し、色を足し、文字を足す。プロは削る。\n削るときの基準も、さっきの一行だ。一行に関係のない要素は、どんなに気に入っていても外す。すると、残ったものが急に強く見えてくる。部屋を片づけると、置いてある椅子がよく見えるのに似ている。\n確かめ方を一つ紹介しておく。できあがった画面から少し離れて、目を細めて見る。細かい文字はぼやけて、形と色の強さだけが残る。そのとき、1位にしたかったものが一番先に目に入るか。入らないなら、どこかが強すぎるか、1位が弱すぎる。シンプルだけれど、プロの現場でもよく使われるやり方だ。スマホなら、画面を縮小して見ても同じことが分かる。",
+   "fig": {
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 340\" font-family=\"Noto Sans JP,sans-serif\">\n<rect width=\"600\" height=\"340\" fill=\"#F4EFE6\"/>\n<text x=\"300\" y=\"44\" font-size=\"20\" font-weight=\"700\" text-anchor=\"middle\" fill=\"#141414\">一行に関係ないものを削る</text>\n<g transform=\"translate(40,70)\"><rect width=\"230\" height=\"200\" fill=\"#fff\" stroke=\"#141414\" stroke-width=\"3\"/>\n<rect x=\"16\" y=\"16\" width=\"198\" height=\"70\" fill=\"#E8452C\"/><circle cx=\"190\" cy=\"120\" r=\"22\" fill=\"#F4C744\"/>\n<rect x=\"16\" y=\"104\" width=\"140\" height=\"14\" fill=\"#141414\"/><rect x=\"16\" y=\"128\" width=\"100\" height=\"10\" fill=\"#C9C2B6\"/>\n<polygon points=\"40,150 70,150 55,178\" fill=\"#1F4FD8\"/><rect x=\"90\" y=\"152\" width=\"120\" height=\"30\" fill=\"none\" stroke=\"#1F4FD8\" stroke-width=\"3\"/>\n<path d=\"M170 98 l40 44 M210 98 l-40 44\" stroke=\"#141414\" stroke-width=\"4\"/><path d=\"M30 146 l40 36 M70 146 l-40 36\" stroke=\"#141414\" stroke-width=\"4\"/>\n<path d=\"M120 148 l60 38 M180 148 l-60 38\" stroke=\"#141414\" stroke-width=\"4\"/></g>\n<path d=\"M290 170 h30\" stroke=\"#141414\" stroke-width=\"3\"/><polygon points=\"316,160 316,180 332,170\" fill=\"#141414\"/>\n<g transform=\"translate(340,70)\"><rect width=\"230\" height=\"200\" fill=\"#fff\" stroke=\"#141414\" stroke-width=\"3\"/>\n<rect x=\"16\" y=\"16\" width=\"198\" height=\"96\" fill=\"#E8452C\"/><rect x=\"16\" y=\"130\" width=\"150\" height=\"18\" fill=\"#141414\"/><rect x=\"16\" y=\"158\" width=\"100\" height=\"10\" fill=\"#C9C2B6\"/></g>\n<text x=\"300\" y=\"312\" font-size=\"14\" text-anchor=\"middle\" fill=\"#555\">削ったぶん、残ったものが強くなる。目を細めて見て、1位が残るか確かめる</text>\n</svg>",
+    "cap": "一行に関係ないものを外すと、主役が強くなる"
+   }
+  },
+  {
+   "h": "この本で学ぶこと",
+   "body": "最後に、この本の全体を地図にしておく。全部で30講ある。\n第1部は、今日のような考え方の話。第2部から第4部は、配置と余白、文字、色という、デザインの基本の道具をひとつずつ学ぶ。第5部は写真と図。第6部でWebデザイン、第7部ではブランドやサムネイル、仕事の進め方まで、実務につなげていく。\nこの順番には理由がある。道具の使い方を知らないまま実務に入ると、なんとなくの判断が増える。逆に、道具をひとつずつ身につけてから組み合わせると、どんな仕事でも理由を持って作れるようになる。料理で言えば、包丁と火加減を覚えてからレシピに進むようなものだ。\n講義は、映像の本と1日おきに進む。毎回、最後に10分ほどでできる課題を出す。聞くだけでも少しずつ分かってくるけれど、手を動かすと、覚え方がまるで違う。できれば課題まで、やってみてほしい。",
+   "fig": {
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 340\" font-family=\"Noto Sans JP,sans-serif\">\n<rect width=\"600\" height=\"340\" fill=\"#F4EFE6\"/>\n<text x=\"300\" y=\"40\" font-size=\"20\" font-weight=\"700\" text-anchor=\"middle\" fill=\"#141414\">この本の地図（全30講）</text>\n<g font-size=\"15\" font-weight=\"700\" fill=\"#141414\">\n<rect x=\"40\" y=\"62\" width=\"250\" height=\"40\" fill=\"#E8452C\"/><text x=\"56\" y=\"88\" fill=\"#fff\">1 考え方　第1〜4講</text>\n<rect x=\"40\" y=\"110\" width=\"250\" height=\"40\" fill=\"#fff\" stroke=\"#141414\" stroke-width=\"2\"/><text x=\"56\" y=\"136\">2 配置と余白　第5〜9講</text>\n<rect x=\"40\" y=\"158\" width=\"250\" height=\"40\" fill=\"#fff\" stroke=\"#141414\" stroke-width=\"2\"/><text x=\"56\" y=\"184\">3 文字　第10〜14講</text>\n<rect x=\"40\" y=\"206\" width=\"250\" height=\"40\" fill=\"#fff\" stroke=\"#141414\" stroke-width=\"2\"/><text x=\"56\" y=\"232\">4 色　第15〜18講</text>\n<rect x=\"310\" y=\"62\" width=\"250\" height=\"40\" fill=\"#fff\" stroke=\"#141414\" stroke-width=\"2\"/><text x=\"326\" y=\"88\">5 写真と図　第19〜21講</text>\n<rect x=\"310\" y=\"110\" width=\"250\" height=\"40\" fill=\"#fff\" stroke=\"#141414\" stroke-width=\"2\"/><text x=\"326\" y=\"136\">6 Webデザイン　第22〜26講</text>\n<rect x=\"310\" y=\"158\" width=\"250\" height=\"40\" fill=\"#fff\" stroke=\"#141414\" stroke-width=\"2\"/><text x=\"326\" y=\"184\">7 プロとして　第27〜30講</text>\n<rect x=\"310\" y=\"206\" width=\"250\" height=\"40\" fill=\"#141414\"/><text x=\"326\" y=\"232\" fill=\"#fff\">毎回：聞く→課題10分</text></g>\n<text x=\"300\" y=\"290\" font-size=\"14\" text-anchor=\"middle\" fill=\"#555\">基礎の道具（配置・文字・色）を覚えてから、Webと実務で組み合わせる</text>\n<text x=\"300\" y=\"314\" font-size=\"14\" text-anchor=\"middle\" fill=\"#555\">映像の本と1日おきに進む</text>\n</svg>",
+    "cap": "全7部30講。基本の道具を覚えてから、Webと実務で組み合わせる"
+   }
+  }
+ ],
+ "keys": [
+  "デザインは飾りではなく、見る人の目が動く順番を決める仕事",
+  "作る前に「誰に、何を伝えて、どうしてほしいか」を一行で書く",
+  "1位はひとつだけ。うまくいかないときは足さずに削り、目を細めて確かめる"
+ ],
+ "practice": {
+  "title": "サムネイルを一枚、分解する",
+  "body": "自分が作ったサムネイルか、好きなチャンネルのサムネイルを1枚選んでください。まず、その一枚の「一行」を書いてみます。次に、画面の要素に1位、2位、3位をつけます。最後に、目を細めて見て、1位が一番先に目に入るかを確かめます。もし自分の作品で1位が弱かったら、何を削れば強くなるかを一つだけメモしておきましょう。全部で10分ほどです。"
+ },
+ "books": [
+  {
+   "title": "ノンデザイナーズ・デザインブック",
+   "who": "ロビン・ウィリアムズ",
+   "why": "近接・整列・反復・対比の4原則を、例を見ながら覚えられる定番の入門書。この本の第2部と重なる"
+  },
+  {
+   "title": "なるほどデザイン",
+   "who": "筒井美希",
+   "why": "プロがどう考えてレイアウトしているかを、図でやさしく見せてくれる"
+  }
+ ],
+ "terms": [
+  {
+   "w": "サムネイル",
+   "d": "動画や記事の内容を小さな画像で示したもの。一覧の中で選ばれるかどうかを左右する。"
+  },
+  {
+   "w": "クライアント",
+   "d": "仕事の依頼主。デザインや映像を発注する会社や人。"
+  }
+ ],
+ "audio": {
+  "src": "001.mp3",
+  "dur": 596.8,
+  "engine": "gemini:Kore",
+  "chapters": [
+   {
+    "t": 0.0,
+    "title": "はじめに"
+   },
+   {
+    "t": 45.08,
+    "title": "最初の3秒で、人は読むかどうかを決める"
+   },
+   {
+    "t": 111.32,
+    "title": "作る前に、一行を書く"
+   },
+   {
+    "t": 176.44,
+    "title": "見る場所と時間から逆算する"
+   },
+   {
+    "t": 267.24,
+    "title": "1位は、ひとつだけ"
+   },
+   {
+    "t": 333.76,
+    "title": "足すより、削る"
+   },
+   {
+    "t": 403.77,
+    "title": "この本で学ぶこと"
+   },
+   {
+    "t": 490.69,
+    "title": "今日の要点"
+   },
+   {
+    "t": 529.53,
+    "title": "今日の課題"
+   }
+  ]
+ }
+}
